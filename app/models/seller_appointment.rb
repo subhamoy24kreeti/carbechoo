@@ -1,0 +1,2 @@
+class SellerAppointment < ApplicationRecord
+end

@@ -1,0 +1,42 @@
+<style>
+table{
+    border-collapse: collapse;
+    width: 100%;
+}
+td,th{
+    border: 1px solid #dddddd;
+    text-align:left;
+    padding: 8px;
+}
+</style>
+<div class="wrapper">
+<%= render "admin/layouts/sidebar" %>
+<div class='container-fluid p-0'>
+   <%= render "admin/layouts/header" %>
+    <section>
+    <% if flash.key? :alert %>
+    <p><%= flash[:alert] %></p>
+    <% end %>
+    <div class="container-fluid mt-3">
+    <table>
+      <thead>
+       <tr>
+    <th>id</th>
+    <th>model name</th>
+    <th>barnd name </th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @car_models.each do |car_model| %>
+    <tr>
+    <td><%=car_model.id%></td>
+    <td><%=car_model.name%></td>
+    <td><%=car_model.brand.brand_name%></td>
+    </tr>
+    <% end %>
+    </tbody>
+    </table>
+    </div>
+    </section>
+</div>
+</div>

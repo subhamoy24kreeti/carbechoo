@@ -1,0 +1,21 @@
+
+<div class="wrapper">
+<%= render "admin/layouts/sidebar" %>
+<div class='container-fluid p-0'>
+   <%= render "admin/layouts/header" %>
+    <section>
+    <% if flash.key? :alert %>
+    <p><%= flash[:alert] %></p>
+    <% end %>
+    <div class="container">
+      <%= form_with url: admin_car_registration_create_path,  method: :post do |f|%>
+        <div class="form-group">
+           <%f.label 'car registration' %>
+           <%=f.text_field :state_code, class:"form-control" %>
+        </div>
+        <%=f.submit :add ,class:"btn btn-info" %>
+      <% end%>
+    </div>
+    </section>
+</div>
+</div>

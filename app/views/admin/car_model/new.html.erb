@@ -1,0 +1,34 @@
+
+<div class="wrapper">
+<%= render "admin/layouts/sidebar" %>
+<div class='container-fluid p-0'>
+   <%= render "admin/layouts/header" %>
+    <section>
+    <% if flash.key? :alert %>
+    <p><%= flash[:alert] %></p>
+    <% end %>
+    <% if @brands.blank? %>
+      you do not create a model name until you create a brand
+    <% else %>
+    <div class="container">
+      <%= form_with url: admin_car_model_create_path,  method: :post do |f|%>
+        <div class="form-group">
+           <%f.label 'model name' %>
+           <%=f.text_field :name, class:"form-control" %>
+        </div>
+        <div>
+        choose a brand
+        <select name="brand_id" class="form-select form-select-lg mb-3" aria-label="Default select">
+        <option>open the select menu</option>
+        <% @brands.each do |b| %>
+          <option value=<%=b.id%>> <%=b.brand_name %></option>
+        <% end %>
+        </select>
+        </div>
+        <%=f.submit :add ,class:"btn btn-info" %>
+      <% end%>
+    <% end %>
+    </div>
+    </section>
+</div>
+</div>

@@ -1,0 +1,2 @@
+class KillometerDriven < ApplicationRecord
+end
