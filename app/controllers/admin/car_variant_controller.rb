@@ -1,4 +1,7 @@
 class Admin::CarVariantController < ApplicationController
+
+    before_action :authorize_admin
+    
     def new
         @car_variant = CarVariant.new
     end
@@ -16,7 +19,7 @@ class Admin::CarVariantController < ApplicationController
  
     def delete
         p = CarVariant.destroy(params[:id])
-        redirect_to 'index'
+        redirect_to admin_car_variant_index_path
     end
  
     def index

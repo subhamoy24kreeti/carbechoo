@@ -1,0 +1,47 @@
+<style>
+    table{
+        border-collapse: collapse;
+        width: 100%;
+    }
+    td,th{
+        border: 1px solid #dddddd;
+        text-align:left;
+        padding: 8px;
+    }
+    </style>
+    <div class="wrapper">
+    <%= render "admin/layouts/sidebar" %>
+    <div class='container-fluid p-0'>
+       <%= render "admin/layouts/header" %>
+        <section>
+        <% if flash.key? :alert %>
+        <p><%= flash[:alert] %></p>
+        <% end %>
+        <div class="container-fluid mt-3">
+        <table>
+          <thead>
+           <tr>
+        <th>id</th>
+        <th> state name</th>
+        <th>country name</th>
+        <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @states.each do |state| %>
+        <tr>
+        <td><%=state.id%></td>
+        <td><%=state.name%></td>
+        <td><%=state.country.name %></td>
+        <td>
+        <%= link_to 'delete', admin_state_delete_path(state.id), class:"btn btn-danger" %>
+        <%= link_to 'update', admin_state_update_path(state.id), class:"btn btn-info" %>
+        </td>
+        </tr>
+        <% end %>
+        </tbody>
+        </table>
+        </div>
+        </section>
+    </div>
+    </div>

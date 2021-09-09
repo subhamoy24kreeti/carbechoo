@@ -1,0 +1,41 @@
+<style>
+table{
+    border-collapse: collapse;
+    width: 100%;
+}
+td,th{
+    border: 1px solid #dddddd;
+    text-align:left;
+    padding: 8px;
+}
+</style>
+<%= render 'user/layouts/header' %>
+<main>
+  <div class="container mt-3">
+    <table>
+      <thead>
+        <tr>
+        <th>appointment_id</th>
+        <th>date of apply</th>
+        <th>status</th>
+        <th>sheduled date</th>
+        <th>sheduled time</th>
+        <th>reject</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @all_buyer_appointments.each do |appointment| %>
+          <tr>
+          <td><%= appointment.id %></td>
+          <td><%= appointment.created_at %></td>
+          <td><%= appointment.status%></td>
+          <td><%= appointment.scheduled_date%></td>
+          <td><%= appointment.scheduled_time%></td>
+          <td><a href="" class="btn btn-primary">reject</a></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</main>
+<%= render 'user/layouts/footer' %>

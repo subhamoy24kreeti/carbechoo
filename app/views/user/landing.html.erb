@@ -1,1 +1,227 @@
-<%= render 'layouts/header' %>
+<style>
+    .sidebar {
+        width:270px;
+        background-color: cornflowerblue;
+    }
+    .main-outer {
+        width:100%;
+    }
+    .list-item {
+        padding:10px 20px 10px 20px;
+    }
+    .car-cards {
+        width: 25%;
+    }
+    .resize-car{
+        height:230px;
+    }
+    .img-fixed {
+        width: 100%;
+    }
+    .filter-head{
+      margin: 0px;
+      color: white;
+    }
+    @media screen and  (max-width: 768px){
+      .filter{
+        height: 100%;
+        flex-direction: column;
+      }
+      .resize{
+        overflow: scroll;
+        max-height: 300px;
+      }
+    }
+</style>
+<header id="fixed-head">
+<%= render "user/layouts/header" %>
+<section class="bg-dark bg-gradient">
+  <div class="container-fluid p-0 resize">
+    <!-- Example single danger button -->
+    <div class="d-flex justify-content-around pt-2 pb-2 flex-wrap filter">
+      <div>
+        <p class="filter-head">Cities</p>
+      <div class="btn-group">
+
+        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">cities
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="javascript:void(0)">Action</a>
+        </div>
+      </div>
+      </div>
+      <div>
+        <p class="filter-head">Brands</p>
+      <div class="btn-group">
+        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">brands
+
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">fair(<i class="fa fa-inr"></i> 1,26,532 - <i class="fa fa-inr"></i> 1,37,697)</a>
+        </div>
+      </div>
+      </div>
+      <div>
+        <p class="filter-head">Models</p>
+      <div class="btn-group">
+        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">models</button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Action</a>
+        </div>
+      </div>
+      </div>
+      <div>
+        <p class="filter-head">Registration year</p>
+      <div class="btn-group">
+        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Registration year</button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Separated link</a>
+        </div>
+      </div>
+      </div>
+      <div>
+        <p class="filter-head">Car variant</p>
+      <div class="btn-group">
+        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Car variant</button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Separated link</a>
+        </div>
+      </div>
+      </div>
+      <div>
+        <p class="filter-head">Registration state</p>
+  <div class="btn-group">
+    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Registration state
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="#">Action</a>
+    </div>
+  </div>
+  </div>
+  <div>
+    <p class="filter-head">km driven</p>  
+  <div class="btn-group">
+    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">killometer driven
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="#">Action</a>
+    </div>
+  </div>
+  </div>
+</div>
+
+      </section>
+    </header>
+      <section>
+          <div class="container">
+              <div class="main-outer">
+                  <div class="container-fluid pt-3" >
+                      <div class="d-flex full-width flex-wrap">
+                          <div class="car-cards p-3">
+                              <div class="img-box">
+                              <img class="img-fixed resize-car" src="image/lawyer.png" alt="">
+                              </div>
+                              <div class="car-description">
+                                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et dolor enim necessitatibus quasi explicabo, porro ea vero hic atque placeat!</p>
+                              </div>
+                              <div class="d-flex justify-content-between">
+                                  <div class="icon"><image src="image/icon1.png" style="height:25px;width:25px;"></image></div>
+                                  <div class="appointment">
+                                      <button class="btn btn-info">appoint</button>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="car-cards p-3">
+                            <div class="img-box">
+                            <img class="img-fixed resize-car" src="image/lawyer.png" alt="">
+                            </div>
+                            <div class="car-description">
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et dolor enim necessitatibus quasi explicabo, porro ea vero hic atque placeat!</p>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="icon"><image src="image/icon1.png" style="height:25px;width:25px;"></image></div>
+                                <div class="appointment">
+                                    <button class="btn btn-info">appoint</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="car-cards p-3">
+                            <div class="img-box">
+                            <img class="img-fixed resize-car" src="image/lawyer.png" alt="">
+                            </div>
+                            <div class="car-description">
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et dolor enim necessitatibus quasi explicabo, porro ea vero hic atque placeat!</p>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="icon"><image src="image/icon1.png" style="height:25px;width:25px;"></image></div>
+                                <div class="appointment">
+                                    <button class="btn btn-info">appoint</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="car-cards p-3">
+                            <div class="img-box">
+                            <img class="img-fixed resize-car" src="image/lawyer.png" alt="">
+                            </div>
+                            <div class="car-description">
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et dolor enim necessitatibus quasi explicabo, porro ea vero hic atque placeat!</p>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="icon"><image src="image/icon1.png" style="height:25px;width:25px;"></image></div>
+                                <div class="appointment">
+                                    <button class="btn btn-info">appoint</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="car-cards p-3">
+                            <div class="img-box">
+                            <img class="img-fixed resize-car" src="image/lawyer.png" alt="">
+                            </div>
+                            <div class="car-description">
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et dolor enim necessitatibus quasi explicabo, porro ea vero hic atque placeat!</p>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="icon"><image src="image/icon1.png" style="height:25px;width:25px;"></image></div>
+                                <div class="appointment">
+                                    <button class="btn btn-info">appoint</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="car-cards p-3">
+                            <div class="img-box">
+                            <img class="img-fixed resize-car" src="image/lawyer.png" alt="">
+                            </div>
+                            <div class="car-description">
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et dolor enim necessitatibus quasi explicabo, porro ea vero hic atque placeat!</p>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="icon"><image src="image/icon1.png" style="height:25px;width:25px;"></image></div>
+                                <div class="appointment">
+                                    <button class="btn btn-info">appoint</button>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+              </div>
+          </div>
+      </section>
+<style>
+    .fixed{
+        position: fixed;
+        width: 100%;
+    }
+</style>
+<script>
+  $(window).scroll(function(e){
+    var ot = $(window).scrollTop();
+    if(ot>50){
+      if(!$("#fixed-head").hasClass('fixed')){
+        $("#fixed-head").addClass('fixed')
+      }
+    }else{
+      $("#fixed-head").removeClass('fixed')
+    }
+  })
+</script>

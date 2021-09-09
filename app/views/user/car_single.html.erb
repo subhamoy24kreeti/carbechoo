@@ -1,0 +1,177 @@
+<style>
+.slider-img{
+	width:100px;
+	border: 1px solid black;
+}
+.slider {
+	max-width: 450px;
+	overflow: hidden;
+}
+.splide__slide{
+   padding: 0px 5px 0px 5px;
+}
+
+.back-for{
+	outline: none;
+	border-radius: 50%;
+	border: none;
+	background-color: white;
+	height: 30px;
+	width: 30px;
+	display: flex;
+	align-items: center;
+
+}
+.slider-image {
+    width: 100px;
+    border: 1px solid black;
+}
+.img-item{
+    padding: 0 5px 0px 5px;
+}
+.slider{
+    max-width: 400px;
+    overflow: hidden;
+}
+.for-back{
+    width: 30px;
+    height: 30px;
+    background-color: gray;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+}
+.for-back:hover{
+    background-color: black;
+    color: white;
+    border: none;
+}
+.for-back:focus{
+    border: none;
+    outline: none;
+}
+#lop{
+    margin-left: -4px;
+}
+      .slider-image{
+          cursor: pointer;
+          opacity: 0.5;
+      }
+      .active {
+          opacity: 1;
+      }
+      .main-content {
+          width: 500px;
+      }
+
+      .img-fix{
+          height: 400px;
+          width: 400px;
+      }
+      .car-gallery{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+      }
+
+
+</style>
+<header>
+<%= render "user/layouts/header" %>
+</header>
+<main>
+<%= form_with url:create_buyer_appointment_path, id:"appoint-form", method:"post" do |f|%>
+<div class="container pt-5">
+<div class="row">
+<div class="col-md-6 col-lg-6 col-xl-6">
+<div class="car-gallery">
+<div class="main-thumb">
+    <%= image_tag "car_image.jpeg", alt:"", class:"img-fix", id:"main-img" %>
+</div>
+<div class="d-flex align-items-center">
+<button class="for-back" onclick="slide('1')">
+    <i class="fa fa-angle-left"></i>
+</button>
+    <ul class="list-unstyled slider d-flex mb-0">
+        <li class="img-item">
+        <%= image_tag "car_image.jpeg", alt:"", class:"slider-image"%>
+        </li>
+        <li class="img-item">
+        <%= image_tag "car_image.jpeg", alt:"", class:"slider-image"%>
+        </li>
+        <li class="img-item">
+        <%= image_tag "car_image.jpeg", alt:"", class:"slider-image"%>
+        </li>
+        <li class="img-item">
+        <%= image_tag "car_image.jpeg", alt:"", class:"slider-image" %>
+        </li>
+        <li class="img-item">
+		<%= image_tag "car_image.jpeg", alt:"", class:"slider-image" %>
+        </li>
+        <li class="img-item">
+		<%= image_tag "car_image.jpeg", alt:"", class:"slider-image" %>
+        </li>
+    </ul>
+    <button class="for-back"onclick="slide('0')" >
+        <i class="fa fa-angle-right"></i>
+    </button>              
+</div>
+</div>
+</div>
+<div class="col-md-6 col-lg-6 col-xl-6">
+<div class="car-description">
+Lorem ipsum dolor sit amet consectetur, adipisicing elit. Obcaecati, dolore quam corrupti numquam suscipit tempore adipisci sapiente, dolores molestias eos, quasi ipsa. Nam optio distinctio a amet, obcaecati sapiente maxime earum necessitatibus facilis corporis inventore tenetur laudantium quae asperiores adipisci repellendus numquam assumenda, placeat accusamus. Iure nostrum maxime quaerat optio.
+</div>
+<div class="price-appoint d-flex  justify-content-between">
+<div class="price">
+$56p
+</div>
+<%= f.text_field 'seller_user_id', type:"hidden", value:@seller_appointment.user_id %>
+<%= f.text_field 'user_id', type:"hidden", value:current_user.id%>
+<div class="appoint">
+<%= f.submit "appoint",class:"btn btn-primary"%>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<% end %>
+</main>
+<script>
+        function slide(f){
+            if(f == "1"){
+              $(".slider").animate({scrollLeft: "-=100"},"fast")
+            }else{
+              $(".slider").animate({scrollLeft: "+=100"},"fast")
+            }
+        }
+        $(".slider-image").on('click', function(){
+            if($(this).hasClass("active")){
+                return false
+            }else{
+                $(".slider-image").removeClass("active")
+                $(this).addClass("active")
+                console.log($(this).attr('src'))
+                console.log($("#main-img").attr('src'))
+                var image =  $("#main-img")
+                var selectedurl = $(this).attr('src')
+                image.fadeOut('fast', function(){
+                    image.attr('src', selectedurl)
+                    image.fadeIn('fast')
+                })
+            }
+        })
+        $(#appoint-form).submit(
+            function(e){
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        )  
+</script>	
+<%= render "user/layouts/footer" %>

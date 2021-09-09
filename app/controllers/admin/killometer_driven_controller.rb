@@ -1,4 +1,7 @@
 class Admin::KillometerDrivenController < ApplicationController
+
+    before_action :authorize_admin
+    
     def new
         @killometer_driven = KillometerDriven.new
     end
@@ -13,10 +16,19 @@ class Admin::KillometerDrivenController < ApplicationController
             redirect_to new_admin_killometer_driven_path
         end
     end
+
+    def edit
+        @killometer_driven = KillometerDriven.find_by_id(params[:id])
+    end
+
+    def update
+        KillometerDriven.where(id: params[:id]).update(killometer_range: params[:killometer_range])
+        redirect_to admin_killometer_driven_index_path
+    end
  
     def delete
-        p = KillometerDriven.destroy(params[:id])
-        redirect_to 'index'
+        KillometerDriven.destroy(params[:id])
+        redirect_to admin_killometer_driven_index_path
     end
  
     def index

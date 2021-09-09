@@ -1,0 +1,3 @@
+class CostRange < ApplicationRecord
+    
+end

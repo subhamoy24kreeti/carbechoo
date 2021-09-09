@@ -3,7 +3,11 @@ class SessionController < ApplicationController
         user = User.find_by_email(params[:email])
         if user && user.authenticate(params[:password])
           session[:user_id] = user.id
-          render "new"
+          if user.role.eql?'seller'
+            redirect_to seller_dashboard_path, notice: "successfully logged in seller" 
+          else
+            redirect_to buyer_dashboard_path, notice: "successfully logged in buyer"
+          end
           #redirect_to posts_path, notice: "Logged in!"
         else
           flash.now[:alert] = "Email or password is invalid"
@@ -12,9 +16,9 @@ class SessionController < ApplicationController
     end
     
     def admin_login
-        admin = User.find_by_email(params[:email])
-        if  !admin.blank? && admin.is_admin? && admin.authenticate(params[:password])
-            session[:admin_user_id] = admin.id
+        user = User.find_by_email(params[:email])
+        if  !user.blank? && user.is_admin? && user.authenticate(params[:password])
+            session[:user_id] = user.id
             redirect_to admin_dashboard_path, notice: "Logged in!"
         else
             flash.now[:error] = "Email or password is invalid"

@@ -1,4 +1,7 @@
 class Admin::CarRegistrationController < ApplicationController
+
+    before_action :authorize_admin
+    
     def new
         @car_registration = CarRegistration.new
     end
@@ -13,10 +16,18 @@ class Admin::CarRegistrationController < ApplicationController
             redirect_to new_admin_car_registration_path
         end
     end
+
+    def edit 
+
+    end
+
+    def update
+
+    end
  
     def delete
         p = CarRegistration.destroy(params[:id])
-        redirect_to 'index'
+        redirect_to admin_car_registration_index_path
     end
  
     def index

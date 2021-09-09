@@ -1,0 +1,4 @@
+<h3> Hi , <%=@user[:first_name]+" "+@user[:last_name]%><h3> 
+<p>please hit the below link to verify your email <p>
+
+<%=link_to "email", @verify_link, class: "btn btn-primary" %>

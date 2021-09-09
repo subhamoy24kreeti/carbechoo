@@ -7,13 +7,24 @@ Rails.application.routes.draw do
   draw :admin
   draw :api
   
-  get "seller/register", to:"seller#new", as:"seller_registration"
-  post "seller/create", to:"seller#create", as:"seller_create"
-  get "seller/dashboard", to:"seller#dashboard", as:"seller_dashboard"
-
+  
+  scope :seller do
+    get "verify-email/:id", to:"seller#confirm_email", as:"seller_email_verification"
+    get "register", to:"seller#new", as:"seller_registration"
+    post "create", to:"seller#create", as:"seller_create"
+    get "dashboard", to:"seller#dashboard", as:"seller_dashboard"
+    get "add-car-details", to:"seller#add_car_details"
+    post "create-seller-appointment", to:'seller#create_seller_appointment', as:'create_seller_appointment'
+  end
+  
+  get 'login', to:"user#login", as:"user_login_get"
+  post 'login', to:"session#user_login", as:"user_login_post" 
   get "buyer/register", to:"buyer#new", as:"buyer_registration"
   post "buyer/create", to:"buyer#create", as:"buyer_create"
   get "buyer/dashboard", to:"buyer#dashboard", as:"buyer_dashboard"
+  post "buyer/create-appointment", to:"buyer#create_appointment", as: "create_buyer_appointment"
+  get "buyer/:id/all-appointments", to:"buyer#all_appointments", as: "all_buyer_appointments"
+  get "car-single/:id", to:"user#car_single", as:"car_single"  
   root "user#landing"
 
 end
