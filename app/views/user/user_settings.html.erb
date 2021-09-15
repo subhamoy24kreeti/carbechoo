@@ -1,0 +1,177 @@
+<%= render 'user/layouts/header' %>
+<style>
+.cover-img-wrap{
+  position: relative;
+  height: 400px;
+  width: 100%;
+  background-color: thistle;
+  border: 1px solid black;
+}
+.cover-img {
+  height: 100%;
+  width: 100%;
+}
+.profile-img{
+  width: 100%;
+  height: 100%;
+}
+#cover-img-upload {
+  all:unset;
+  font-size: 35px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+#upload-cover {
+  display: none;
+  margin-right: 20px;
+}
+.cover-wrap{
+  position: absolute;
+  bottom: 2%;
+  width: 100%;
+  justify-content: space-between;
+}
+#profile-img-upload {
+  all: unset;
+  position: absolute;
+  bottom: 30%;
+  left: 35%;
+  font-size: 40px;
+  cursor: pointer;
+}
+.profile-img-wrap{
+  position: relative;
+  height: 150px;
+  width: 150px;
+  background-color: thistle;
+  border: 1px solid black;
+}
+#upload-profile{
+  display: none;
+}
+</style>
+<div class="container">
+  <div class="cover-image">
+      <section>
+        <div class="image-view">
+            <div class="cover-img-wrap">
+              <% if @user.cover_pic.attached? %>
+              <%= image_tag @user.cover_pic, class:'cover-img'%>
+              <% else %>
+               <img src="" class="cover-img" alt=""/>
+              <% end %>
+              <div class="d-flex cover-wrap">
+              <button id="cover-img-upload" onclick="document.getElementById('cover-img-hidden').click()"><i class="fa fa-camera"></i></button>
+              <input type="file" hidden="true" id="cover-img-hidden"/>
+              <button id="upload-cover" class="btn btn-primary" onclick="upload_cover_img('<%= @user.id %>')">upload</button>
+               </div>
+            </div>
+            <div class="profile-img-wrap">
+              <%if @user.profile_pic.attached? %>
+              <%= image_tag @user.profile_pic, class:"profile-img", alt:""%>
+              <% else %>
+              <img src="" class="profile-img" alt=""/>
+              <% end %>
+              <div class="d-flex">
+              <button id="profile-img-upload" onclick="document.getElementById('profile-img-hidden').click()"><i class="fa fa-camera"></i></button>
+              <input type="file" hidden="true" id="profile-img-hidden"/>
+              <button id="upload-profile" class="btn btn-primary" onclick="upload_profile_img('<%= @user.id %>')">upload</button>
+               </div>
+            </div>
+          </div>
+      </section>
+      <section>
+          <%= form_with url: user_update_profile_path, method: :put do |f|%>
+      
+          <%= f.text_field :id, type:"hidden", value: @user.id %>
+          <div class="form-group">
+            <%= f.label 'first name' ,class:"form-lebel"%>
+            <%= f.text_field :first_name, required: true ,class: "form-control", value: @user.first_name%>
+          </div>
+          <div class="form-group">
+            <%= f.label 'last name' ,class:"form-lebel"%>
+            <%= f.text_field :last_name, required: true ,class: "form-control", value: @user.last_name%>
+          </div>
+          <div class="form-group">
+            <%= f.label :email ,class:"form-lebel"%>
+            <%= email_field_tag :email, "", required: true ,class: "form-control", value: @user.email%>
+          </div>
+      
+          <div class="form-group">
+            <%=f.label 'choose your country'%>
+            <%=select_tag(:country_id, options_for_select(@countries, selected: @user_country_id), class:"custom-select custom-select-lg mb-3", id:"country", :include_blank => "--select your country--", selected: @user_country_id) %>
+          </div>
+          <div class="form-group">
+            <%=f.label 'choose your state'%>
+            <%=select_tag(:state_id, options_for_select(@states, selected: @user_state_id), class:"custom-select custom-select-lg mb-3", id:"state", selected: @user_state_id) %>
+          </div>
+      
+          <div class="form-group">
+            <%=f.label 'choose your city'%>
+            <%=select_tag(:city_id, options_for_select(@cities, selected: @user_city_id), class:"custom-select custom-select-lg mb-3", id:"city", selected: @user_city_id ) %>
+          </div>
+      
+          <div class="form-group">
+            <%=f.label 'zip code'%>
+            <%=f.text_field 'zip_code', class: 'form-control', value: @user.zip_code %>
+          </div>
+        
+          <div class="actions">
+            <%= f.submit "update" ,class: "btn btn-primary w-100"%>
+          </div>
+          <%end%>
+      </section>
+  </div>
+</div>
+<script>
+  function upload_cover_img(user_id){
+    var fd = new FormData();
+    fd.append('id', user_id )
+    fd.append('cover_pic', $('#cover-img-hidden').prop('files')[0] )
+    $.ajax({
+      type: 'post',
+      url: '<%=  ws_upload_user_cover_pic_path %>',
+      processData: false,
+      contentType: false,
+      data: fd,
+      success: function(res){
+        console.log(res)
+        $('.cover-img').attr('src',res.image)
+      },
+      error: function(err){
+
+      }
+    })
+  }
+
+  function upload_profile_img(user_id){
+    var fd = new FormData();
+    fd.append('id', user_id) 
+    fd.append('profile_pic', $('#profile-img-hidden').prop('files')[0]);
+    $.ajax({
+      type: 'post',
+      url: '<%= ws_upload_user_profile_pic_path %>',
+      processData: false,
+      contentType: false,
+    
+      data: fd,
+      success: function(res){
+        console.log(res)
+        $(".profile-img").attr('src', res.image)
+      },
+      error: function(err){
+
+      }
+    })
+  }
+  $("#cover-img-hidden").change(function(){
+
+    $('#upload-cover').css('display','block')
+  })
+
+  $("#profile-img-hidden").change(function(){
+    $('#upload-profile').css('display','block')
+  })
+
+</script>
+<%= render 'layouts/helper_address' %>

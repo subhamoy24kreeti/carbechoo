@@ -1,0 +1,102 @@
+<%= render 'user/layouts/header'%>
+<style>
+.image-view{
+  position: relative;
+}
+.cover-img{
+  width: 100%;
+  height: 400px;
+}
+.profile-img{
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+.profile-img-wrap{
+  position: absolute;
+  top: 80%;
+  left: 45%;
+}
+.about-user{
+  margin-top: 100px;
+}
+</style>
+<div class="container border rounded">
+  <div class="image-view">
+    <div class="cover-img-wrap">
+      <% if @seller.cover_pic.attached? %>
+        <%= image_tag @seller.cover_pic, class:"cover-img", alt:"cover-img" %>
+      <%else %>
+      <%= image_tag '', class:"cover-img", alt:"cover-img" %>
+      <% end %>
+    </div>
+    <div class="profile-img-wrap">
+      <% if @seller.profile_pic.attached? %>
+      <%= image_tag @seller.profile_pic, class:"profile-img", alt: "profile-img" %>
+      <% else %>
+      <%= image_tag '', class: "profile-img", alt: "profile-img" %>
+      <% end %>
+    </div>
+  </div>
+  <section>
+    <div class="container about-user">
+      <h5>
+        About Seller
+      </h5>
+      <div class="about">
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita fuga at a! Corrupti adipisci culpa illum eum in, temporibus deleniti, quibusdam ut voluptatum alias at nobis aliquid sapiente, doloremque perferendis!
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="address">
+      <div class="seller-city">
+        city: <b><%= @seller.city %></b>
+      </div>
+      <div class="seller-state">
+        state: <b><%= @seller.state %></b>
+      </div>
+      <div class="country">
+        country: <b><%= @seller.country %></b>
+      </div>
+      <div class="zip-code">
+        zip code: <b><%= @seller.zip_code %></b>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3><b>Latest items</b></h3>
+    <div class="latest-items">
+      <div class="container">
+        <div class="d-flex flex-wrap">
+          <% if !@seller_items.blank? %>
+          <% @seller_items.each do |item| %>
+          <div class="border rounded">
+            <div class="seller-item">
+              <% if item.car_images.attached? %>
+              <%= image_tag item.car_images[0], class:"img-fluid" %>
+              <% end %>
+            </div>
+            <div class="description">
+              <%= item.description %>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <button class="btn btn-success">
+                view
+              </button>
+
+              <button class="btn btn-primary">
+                appoint
+              </button>
+            </div>
+          </div>
+          <% end %>
+        <% end %>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

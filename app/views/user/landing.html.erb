@@ -43,70 +43,98 @@
         <p class="filter-head">Cities</p>
       <div class="btn-group">
 
-        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">cities
+        <button type="button" id="btn-city" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">cities
         </button>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="javascript:void(0)">Action</a>
+          <% @cities.each do |city|%>
+          <a class="dropdown-item cities" href="javascript:void(0)" data-id="<%=city[1]%>"><%=city[0]%></a>
+          <% end %>
         </div>
       </div>
       </div>
       <div>
         <p class="filter-head">Brands</p>
       <div class="btn-group">
-        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">brands
+        <button type="button" id="btn-brand" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">brands
 
         </button>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">fair(<i class="fa fa-inr"></i> 1,26,532 - <i class="fa fa-inr"></i> 1,37,697)</a>
+          <% @brands.each do |brand| %>
+          <a class="dropdown-item brands" href="javascript:void(0)" data-id="<%=brand[1]%>"><%=brand[0]%></a>
+          <% end %>
         </div>
       </div>
       </div>
       <div>
         <p class="filter-head">Models</p>
       <div class="btn-group">
-        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">models</button>
+        <button type="button" id="btn-car-model" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">models</button>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">Action</a>
+          <% @car_models.each do |car_model| %>
+          <a class="dropdown-item car-models" href="javascript:void(0)" data-id="<%=car_model[1]%>"><%=car_model[0] %></a>
+          <% end %>
         </div>
       </div>
       </div>
       <div>
         <p class="filter-head">Registration year</p>
       <div class="btn-group">
-        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Registration year</button>
+        <button type="button" id="btn-registartion-year" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Registration year</button>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">Separated link</a>
+          <% @car_registrations.each do |car_registration| %>
+          <a class="dropdown-item car-registrations" href="javascript:void(0)" data-id="<%=car_registration[1]%>"><%= car_registration[0] %></a>
+          <% end %>
         </div>
       </div>
       </div>
       <div>
         <p class="filter-head">Car variant</p>
       <div class="btn-group">
-        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Car variant</button>
+        <button type="button" id="btn-car-variant" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Car variant</button>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">Separated link</a>
+          <% @car_variants.each do |car_variant| %>
+          <a class="dropdown-item car-variants" href="javascript:void(0)" data-id="<%=car_variant[1]%>"><%=car_variant[0] %></a>
+          <% end %>
         </div>
       </div>
       </div>
       <div>
         <p class="filter-head">Registration state</p>
   <div class="btn-group">
-    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Registration state
+    <button type="button" id="btn-car-registration" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Registration state
     </button>
     <div class="dropdown-menu">
-      <a class="dropdown-item" href="#">Action</a>
+      <% @car_registrations.each do |car_registration| %>
+        <a class="dropdown-item car-registrations" href="javascript:void(0)" data-id="<%=car_registration[1]%>"><%= car_registration[0] %></a>
+      <% end %>
     </div>
   </div>
   </div>
   <div>
     <p class="filter-head">km driven</p>  
   <div class="btn-group">
-    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">killometer driven
+    <button type="button" id="btn-km-driven" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">killometer driven
     </button>
     <div class="dropdown-menu">
-      <a class="dropdown-item" href="#">Action</a>
+      <% @killometer_drivens.each do |killometer_driven| %>
+        <a class="dropdown-item killometer-drivens" href="javascript:void(0)" data-id="<%=killometer_driven[1]%>"><%= killometer_driven[0] %></a>
+      <% end %>
     </div>
   </div>
+  </div>
+  <div>
+    <p class="filter-head">
+      cost ranges
+    </p>
+    <div class="btn-group">
+      <button type="button" id="btn-cost-range" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">cost ranges
+      </button>
+      <div class="dropdown-menu">
+        <% @cost_ranges.each do |cost_range| %>
+          <a class="dropdown-item cost-ranges" href="javascript:void(0)" data-id="<%=cost_range[1]%>"><%= cost_range[0] %></a>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -117,90 +145,24 @@
               <div class="main-outer">
                   <div class="container-fluid pt-3" >
                       <div class="d-flex full-width flex-wrap">
-                          <div class="car-cards p-3">
+                        <% @cars.each do |car| %>
+                          <div class="car-cards p-3 rounded border">
                               <div class="img-box">
-                              <img class="img-fixed resize-car" src="image/lawyer.png" alt="">
+                              <% if car.car_images.attached? %>
+                              <%= image_tag car.car_images[0], class:"img-fixed resize-car", alt:"car images" %>
+                              <% end %>
                               </div>
                               <div class="car-description">
-                                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et dolor enim necessitatibus quasi explicabo, porro ea vero hic atque placeat!</p>
+                                  <p><%= car.description %></p>
                               </div>
                               <div class="d-flex justify-content-between">
-                                  <div class="icon"><image src="image/icon1.png" style="height:25px;width:25px;"></image></div>
+                                  <div class="icon"><%= car.price %></div>
                                   <div class="appointment">
                                       <button class="btn btn-info">appoint</button>
                                   </div>
                               </div>
                           </div>
-                          <div class="car-cards p-3">
-                            <div class="img-box">
-                            <img class="img-fixed resize-car" src="image/lawyer.png" alt="">
-                            </div>
-                            <div class="car-description">
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et dolor enim necessitatibus quasi explicabo, porro ea vero hic atque placeat!</p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <div class="icon"><image src="image/icon1.png" style="height:25px;width:25px;"></image></div>
-                                <div class="appointment">
-                                    <button class="btn btn-info">appoint</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="car-cards p-3">
-                            <div class="img-box">
-                            <img class="img-fixed resize-car" src="image/lawyer.png" alt="">
-                            </div>
-                            <div class="car-description">
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et dolor enim necessitatibus quasi explicabo, porro ea vero hic atque placeat!</p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <div class="icon"><image src="image/icon1.png" style="height:25px;width:25px;"></image></div>
-                                <div class="appointment">
-                                    <button class="btn btn-info">appoint</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="car-cards p-3">
-                            <div class="img-box">
-                            <img class="img-fixed resize-car" src="image/lawyer.png" alt="">
-                            </div>
-                            <div class="car-description">
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et dolor enim necessitatibus quasi explicabo, porro ea vero hic atque placeat!</p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <div class="icon"><image src="image/icon1.png" style="height:25px;width:25px;"></image></div>
-                                <div class="appointment">
-                                    <button class="btn btn-info">appoint</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="car-cards p-3">
-                            <div class="img-box">
-                            <img class="img-fixed resize-car" src="image/lawyer.png" alt="">
-                            </div>
-                            <div class="car-description">
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et dolor enim necessitatibus quasi explicabo, porro ea vero hic atque placeat!</p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <div class="icon"><image src="image/icon1.png" style="height:25px;width:25px;"></image></div>
-                                <div class="appointment">
-                                    <button class="btn btn-info">appoint</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="car-cards p-3">
-                            <div class="img-box">
-                            <img class="img-fixed resize-car" src="image/lawyer.png" alt="">
-                            </div>
-                            <div class="car-description">
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et dolor enim necessitatibus quasi explicabo, porro ea vero hic atque placeat!</p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <div class="icon"><image src="image/icon1.png" style="height:25px;width:25px;"></image></div>
-                                <div class="appointment">
-                                    <button class="btn btn-info">appoint</button>
-                                </div>
-                            </div>
-                        </div>
+                        <% end %>
                       </div>
                   </div>
               </div>
@@ -214,6 +176,9 @@
     }
 </style>
 <script>
+  let page = 0;
+  let serach_cats = new Map();
+
   $(window).scroll(function(e){
     var ot = $(window).scrollTop();
     if(ot>50){
@@ -224,4 +189,47 @@
       $("#fixed-head").removeClass('fixed')
     }
   })
+
+  $('.cities').click(function(){
+    console.log('city')
+    console.log($(this).data('id'))
+    $("#btn-city").html($(this).html())
+  })
+
+  $(".brands").click(function(){
+    console.log('brands')
+    console.log($(this).data('id'))
+    $("#btn-brand").html($(this).html())
+  })
+
+  $(".car-models").click(function(){
+    console.log('car_models')
+    console.log($(this).data('id'))
+    $("#btn-car-model").html($(this).html())
+  })
+
+  $(".car-registrations").click(function(){
+    console.log('car_registration')
+    console.log($(this).data('id'))
+    $("#btn-car-registration").html($(this).html())
+  })
+
+  $(".car-variants").click(function(){
+    console.log('car_variants')
+    console.log($(this).data('id'))
+    $("#btn-car-variant").html($(this).html())
+  })
+
+  $(".cost-ranges").click(function(){
+    console.log('cost_ranges')
+    console.log($(this).data('id'))
+    $("#btn-cost-range").html($(this).html())
+  })
+  
+  $(".killometer-drivens").click(function(){
+    console.log('k')
+    console.log($(this).data('id'))
+    $("#btn-km-driven").html($(this).html())
+  })
+
 </script>

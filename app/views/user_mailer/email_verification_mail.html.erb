@@ -1,0 +1,6 @@
+
+
+<h3> Hi, <%=@user.full_name %><h3> 
+<p>please hit the below link to veify your email <p>
+        
+<%=link_to "verify", user_email_verification_url(@user.confirm_token_email), class: "btn btn-primary" %>

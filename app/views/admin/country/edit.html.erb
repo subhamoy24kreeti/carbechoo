@@ -1,0 +1,21 @@
+
+<div class="wrapper">
+    <%= render "admin/layouts/sidebar" %>
+    <div class='container-fluid p-0'>
+       <%= render "admin/layouts/header" %>
+        <section>
+        <% if flash.key? :alert %>
+        <p><%= flash[:alert] %></p>
+        <% end %>
+        <div class="container pt-3">
+          <%= form_with url: admin_country_update_path(@country.id),  method: :put do |f|%>
+            <div class="form-group">
+              <%=f.label :name %>
+              <%=f.text_field :name, class:"form-control", value: @country.name %>
+            </div>
+            <%=f.submit :add ,class:"btn btn-info" %>
+          <% end%>
+          </div>
+        </section>
+    </div>
+    </div>

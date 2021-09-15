@@ -6,15 +6,6 @@ class SellerController < ApplicationController
        render 'signup'
     end
 
-    def confirm_email
-        @seller = User.find_by_confirm_token_email(params[:id])
-        if @seller
-            @seller.activate_email
-            redirect_to root_path, flash: { notice: "Successfully verified email"} 
-        else
-            redirect_to root_path, flash: { alert: "Some thing went wrong"}
-        end
-    end
 
     def create
         Rails.logger.info(params)
@@ -30,7 +21,7 @@ class SellerController < ApplicationController
         end
 
         if !params[:state_id].blank?
-            seller[:state] = State.find_by_id(params[:country_id]).name
+            seller[:state] = State.find_by_id(params[:state_id]).name
         end
 
         if !params[:city_id].blank?
@@ -53,16 +44,23 @@ class SellerController < ApplicationController
     end
 
     def dashboard
+        @cars = SellerAppointment.where(status: 'approved')
         render 'user/dashboard'
     end
 
     def add_car_details
-        @cities = City.all.map { |city| [city.city, city.id] }
+        @cities = City.all.map { |city| [city.name, city.id] }
         @killometer_drivens = KillometerDriven.all.map{|km| [km.killometer_range, km.id]}
         @brands = Brand.all.map{|b| [b.brand_name , b.id]}
         @car_variants = CarVariant.all.map{|v| [v.variant, v.id]}
         @car_models = CarModel.all.map{|c| [c.name, c.id]}
         @car_registrations = CarRegistration.all.map{|cr| [cr.state_code, cr.id]}
+        @countries = Country.all.map{|city| [city.name, city.id]}
+        @car_registration_year = CarRegistrationYear.first
+        @years = []
+        for year in @car_registration_year.range1..@car_registration_year.range2
+            @years.append([year, year])
+        end
         render 'add_car_details'
     end
 
@@ -74,18 +72,31 @@ class SellerController < ApplicationController
         seller_appointment[:car_model_id] = params[:car_model_id]
         seller_appointment[:car_registration_id] = params[:car_registration_id]
         seller_appointment[:brand_id] = params[:brand_id]
+        seller_appointment[:country_id] = params[:country_id]
+        seller_appointment[:state_id] = params[:state_id]
+        seller_appointment[:city_id] = params[:city_id]
+        seller_appointment[:zip_code] = params[:zip_code]
         seller_appointment[:status] = 'processing'
         seller_appointment[:price] = params[:price]
         seller_appointment[:description] = params[:description]
         seller_appointment[:car_images] = params[:car_images]
         seller_appointment[:user_id] = params[:user_id]
+        seller_appointment[:year_of_buy] = params[:year_of_buy]
         
         se = SellerAppointment.new(seller_appointment)
+        @user = User.find(params[:user_id])
         if se.save
+            SellerMailer.appointment_submission_mail(@user, se.id)
             redirect_to add_car_details_path, notice: "successfully created an appointment"
         else
+            Rails.logger.info(se.errors.full_messages)
             redirect_to add_car_details_path, notice: "there is some error while creating appointment"
         end
+    end
+
+    def all_appointments
+        @all_seller_appointments = SellerAppointment.all
+        render 'all_appointments'
     end
     
     def index

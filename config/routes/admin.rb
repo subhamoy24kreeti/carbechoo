@@ -13,7 +13,7 @@ namespace :admin do
     resources :buyer_appointment
     resources :cost_range
     post "brand/create", to:"brand#create", as: 'brand_create'
-    post "car-registration-year/create", to:"car_registration_year#create", as: 'car_registration_ye_create'
+    post "car-registration-year/create", to:"car_registration_year#create", as: 'car_registration_year_create'
     post "car-registration/create", to:"car_registration#create", as: 'car_registration_create'
     post "car-variant/create", to:"car_variant#create", as: 'car_variant_create'
     post "car-model/create", to:"car_model#create", as: 'car_model_create'
@@ -48,8 +48,8 @@ namespace :admin do
     put 'state/update/:id', to: "state#update", as: "state_update"
     put 'country/update/:id', to: "country#update", as: "country_update"
     put 'cost-range/update/:id', to: "cost_range#update", as:"cost_range_update"
-    put 'killometer_driven/update/:id', to: "killometer_driven#update", as: "killometer_driven_update"
-    put 'seller_appointment/update/:id', to: "seller_appointment#update", as: "seller_appointment_update"
+    put 'killometer-driven/update/:id', to: "killometer_driven#update", as: "killometer_driven_update"
+    put 'seller-appointment/update/:id', to: "seller_appointment#update", as: "seller_appointment_update"
 end
 scope :admin do
     post "login/auth" , to:"session#admin_login", as: 'admin_login_auth'

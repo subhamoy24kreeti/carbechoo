@@ -91,33 +91,24 @@
 <div class="col-md-6 col-lg-6 col-xl-6">
 <div class="car-gallery">
 <div class="main-thumb">
-    <%= image_tag "car_image.jpeg", alt:"", class:"img-fix", id:"main-img" %>
+    <% if @car.car_images.attached? %>
+    <%= image_tag @car.car_images[0], alt:"car image", class:"img-fix", id:"main-img" %>
+    <% end %>
 </div>
 <div class="d-flex align-items-center">
 <button class="for-back" onclick="slide('1')">
     <i class="fa fa-angle-left"></i>
 </button>
+    <% if @car.car_images.attached? %>
     <ul class="list-unstyled slider d-flex mb-0">
-        <li class="img-item">
-        <%= image_tag "car_image.jpeg", alt:"", class:"slider-image"%>
-        </li>
-        <li class="img-item">
-        <%= image_tag "car_image.jpeg", alt:"", class:"slider-image"%>
-        </li>
-        <li class="img-item">
-        <%= image_tag "car_image.jpeg", alt:"", class:"slider-image"%>
-        </li>
-        <li class="img-item">
-        <%= image_tag "car_image.jpeg", alt:"", class:"slider-image" %>
-        </li>
-        <li class="img-item">
-		<%= image_tag "car_image.jpeg", alt:"", class:"slider-image" %>
-        </li>
-        <li class="img-item">
-		<%= image_tag "car_image.jpeg", alt:"", class:"slider-image" %>
-        </li>
+          <% @car.car_images.each do |image| %>
+            <li class="img-item">
+              <%= image_tag image, alt:"car image", class:"slider-image"%>
+            </li>
+         <% end %>
     </ul>
-    <button class="for-back"onclick="slide('0')" >
+    <% end %>
+    <button class="for-back" onclick="slide('0')" >
         <i class="fa fa-angle-right"></i>
     </button>              
 </div>
@@ -125,17 +116,19 @@
 </div>
 <div class="col-md-6 col-lg-6 col-xl-6">
 <div class="car-description">
-Lorem ipsum dolor sit amet consectetur, adipisicing elit. Obcaecati, dolore quam corrupti numquam suscipit tempore adipisci sapiente, dolores molestias eos, quasi ipsa. Nam optio distinctio a amet, obcaecati sapiente maxime earum necessitatibus facilis corporis inventore tenetur laudantium quae asperiores adipisci repellendus numquam assumenda, placeat accusamus. Iure nostrum maxime quaerat optio.
+  <%= @car.description %>
 </div>
 <div class="price-appoint d-flex  justify-content-between">
 <div class="price">
-$56p
+<%= @car.price %>
 </div>
-<%= f.text_field 'seller_user_id', type:"hidden", value:@seller_appointment.user_id %>
+<%= f.text_field 'seller_user_id', type:"hidden", value:@car.user_id %>
 <%= f.text_field 'user_id', type:"hidden", value:current_user.id%>
+<% if current_user.role == 'buyer' %>
 <div class="appoint">
 <%= f.submit "appoint",class:"btn btn-primary"%>
 </div>
+<% end %>
 </div>
 </div>
 </div>
@@ -143,7 +136,28 @@ $56p
 </div>
 <% end %>
 </main>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="verify-email" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="text-center">
+            <button type="button" class="btn btn-primary" onclick="generate_verification_email()" >verify email</button>
+            </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
 <script>
+var user = <%= current_user.to_json.html_safe %>
+
         function slide(f){
             if(f == "1"){
               $(".slider").animate({scrollLeft: "-=100"},"fast")
@@ -167,11 +181,43 @@ $56p
                 })
             }
         })
-        $(#appoint-form).submit(
-            function(e){
-                e.preventDefault();
-                e.stopPropagation();
-            }
-        )  
+
+function generate_verification_email(){
+  data = {
+    user_id: '<%=current_user.id %>',
+  }
+  $.ajax({
+    type: 'get',
+    data: data,
+    url: "<%= email_verification_request_generate_url %>",
+    success: function(data){
+      console.log(data)
+    },
+    error: function(err){
+      console.log(err)
+    }
+  }
+  )
+}
+
+$('#appoint-form').submit(function(e){
+  console.log(user)
+  var email_verified = user.email_confirmed
+  console.log(email_verified)
+  if(email_verified){
+    p = confirm("are you sure of this appointment");
+    return p
+  }
+
+  if(!user){
+    window.location.href = '<%= buyer_registration_url %>'
+  }
+  $("#verify-email").modal('show')
+  return false 
+})
+$('.for-back').click(function(e){
+  e.preventDefault()
+})
+
 </script>	
 <%= render "user/layouts/footer" %>

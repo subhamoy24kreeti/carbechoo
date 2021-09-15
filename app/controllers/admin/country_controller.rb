@@ -18,11 +18,12 @@ class Admin::CountryController < ApplicationController
     end
 
     def edit 
-
+        @country = Country.find_by_id(params[:id])
     end
 
     def update
-
+        Country.where(id: params[:id]).update(name: params[:name])
+        redirect_to admin_country_index_path
     end
  
     def delete

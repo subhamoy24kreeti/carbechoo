@@ -40,6 +40,10 @@ class BuyerController < ApplicationController
     end
 
     def create_appointment
+        if current_user.blank?
+            redirect_to 'buyer_login_path'
+        end        
+        
         buyer_appointment = BuyerAppointment.new(user_id: params[:user_id], seller_user_id: params[:seller_user_id]);
         if buyer_appointment.save
             render 'appointment_success', info: "Successfully created an appointment"
@@ -48,13 +52,39 @@ class BuyerController < ApplicationController
         end
     end
 
+    def check_status_buyer_appointment
+        appointment_id = params[:appointment_id]
+        appointment = BuyerAppointment.find(appointment_id);
+        if !appointment.blank?
+            render json: {status: 1, error: 0, msg: appointment[0].status}
+        else
+            render json: {status: 0, error: 1, msg: 'not found'}
+        end
+    rescue
+        render json: {status: 0, error: 1, msg: 'not found'}
+    end
+
     def all_appointments
         @all_buyer_appointments = BuyerAppointment.where(user_id: params[:id])
         render "all_appointments"
     end
 
     def dashboard
-       render 'user/dashboard'
+        @cities = City.all.map{|city| [city.name, city.id]}
+        @brands = Brand.all.map{|brand| [brand.brand_name, brand.id]}
+        @car_models = CarModel.all.map{|car_model| [car_model.name, car_model.id]}
+        @car_variants = CarVariant.all.map{|car_variant| [car_variant.variant, car_variant.id]}
+        @car_registrations = CarRegistration.all.map{|car_registration| [car_registration.state_code, car_registration.id]}
+        @killometer_drivens = KillometerDriven.all.map{|killometer_driven| [killometer_driven.killometer_range, killometer_driven.id]}
+        @cost_ranges = CostRange.all.map{|cost_range| [cost_range.currency+cost_range.range1.to_s+"-"+cost_range.range2.to_s, cost_range.id]}
+        @car_registration_year = CarRegistrationYear.first()
+        @years = []
+        for year in @car_registration_year.range1..@car_registration_year.range2
+            @years.append([year, year])
+        end
+        @cars = SellerAppointment.where(status: 'approved')
+
+        render 'user/dashboard'
     end
 
     def index

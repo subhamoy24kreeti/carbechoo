@@ -29,33 +29,32 @@
 <div><a class="p-3"></a></div>
 </nav>
 <div>
- <%=form_with url: create_seller_appointment_path, method: :post  do |f|%>
+ <%=form_with url: create_seller_appointment_path, id: "car-details", method: :post  do |f|%>
   <%=f.text_field :user_id, value: current_user.id, hidden: "true"%>
-  <div class="d-flex flex-wrap">
-  <div>
+  
+  <div class="form-group">
   <%=f.label 'choose the brand'%>
-  <%= select_tag(:brand_id, options_for_select(@brands), class:"custom-select custom-select-lg mb-3") %>
+  <%= select_tag(:brand_id, options_for_select(@brands), class:"custom-select custom-select-lg mb-3", id: "brand", include_blank: '--selecr your brand--') %>
   </div>
-  <div>
-  <%=f.label 'choose cities'%>
-  <%=select_tag(:city_id, options_for_select(@cities), class:"custom-select custom-select-lg mb-3") %>
-  </div>
-  <div>
-  <%=f.label 'choose the range'%>
-  <%=select_tag(:killometer_driven_id, options_for_select(@killometer_drivens), class:"custom-select custom-select-lg mb-3") %>
-  </div> 
-  <div>
-  <%=f.label 'choose the registered state code'%>
-  <%=select_tag(:car_registration_id, options_for_select(@car_registrations), class:"custom-select custom-select-lg mb-3") %>
-  </div>
-  <div>
-  <%=f.label 'choose the type'%>
-  <%=select_tag(:car_variant_id, options_for_select(@car_variants), class:"custom-select custom-select-lg mb-3") %>
-  </div>
-  <div>
+
+  <div class="form-group">
   <%=f.label 'choose the model'%>
-  <%=select_tag(:car_model_id, options_for_select(@car_models), class:"custom-select custom-select-lg mb-3") %>
+  <%=select_tag(:car_model_id, options_for_select('<option></option>'), class:"custom-select custom-select-lg mb-3", id:"car-model") %>
   </div>
+
+  <div class="form-group">
+  <%=f.label 'choose the range'%>
+  <%=select_tag(:killometer_driven_id, options_for_select(@killometer_drivens), class:"custom-select custom-select-lg mb-3", id:'killometer-driven') %>
+  </div> 
+
+  <div class="form-group">
+  <%=f.label 'choose the registered state code'%>
+  <%=select_tag(:car_registration_id, options_for_select(@car_registrations), class:"custom-select custom-select-lg mb-3", id:"car-registration", required: true) %>
+  </div>
+
+  <div class="form-group">
+  <%=f.label 'choose the type'%>
+  <%=select_tag(:car_variant_id, options_for_select(@car_variants), class:"custom-select custom-select-lg mb-3", id: "car-variant", required: true) %>
   </div>
 
   <div class="form-group">
@@ -65,7 +64,32 @@
 
   <div class="form-group field">
    <%=f.label "expected price"%>
-   <%=f.number_field :price ,required: true, class: "form-control" %>
+   <%=f.number_field :price ,required: true, class: "form-control", id: "expected-price", required: true %>
+  </div>
+
+  <div class="form-group field">
+    <%=f.label "year of buy"%>
+    <%=select_tag(:year_of_buy, options_for_select(@years), class:"custom-select custom-select-lg mb-3", id: "year", required: true) %>
+   </div>
+
+  <div class="form-group">
+    <%=f.label "seller's country" %>
+    <%=select_tag(:country_id, options_for_select(@countries), class:"custom-select custom-select-lg mb-3", id:"country", include_blank: '--selecr your country--') %>
+  </div>
+  
+  <div class="form-group">
+    <%=f.label 'choose your state'%>
+    <%=select_tag(:state_id, options_for_select('<option></option>'), class:"custom-select custom-select-lg mb-3", id:"state") %>
+  </div>
+
+  <div class="form-group">
+    <%=f.label 'choose your city'%>
+    <%=select_tag(:city_id, options_for_select('<option></option>'), class:"custom-select custom-select-lg mb-3", id:"city") %>
+  </div>
+
+  <div class="form-group">
+    <%=f.label 'zip code' %>
+    <%=f.text_field :zip_code, id: "zip-code", class: "form-control"%>
   </div>
 
   <div class="form-group field" id="uio">
@@ -74,20 +98,85 @@
   </div>
   <div class="quote-imgs-thumbs quote-imgs-thumbs--hidden" id="img_preview" aria-live="polite"></div>
   </div>
-  <div class="form-group">
-  <%=f.text_field :location, id: :location, class: "form-control"%>
-  </div>
 
-  <%= f.text_field :longitude, id: :longitude %>
-  <%= f.text_field :latitude, id: :latitude %>
+  <%= f.text_field :longitude, id: 'longitude', type: "hidden" %>
+  <%= f.text_field :latitude, id: 'latitude', type: "hidden" %>
   <div class="form-group">
   <%=f.submit :submit , class:"btn btn-primary" %>
   </div>
  <% end%>
 <div>
 </div>
+<%= render 'layouts/helper_address' %>
 
 <script>
+
+  $("#car-details").submit(
+    function(e){
+      var b = $('#brand').val()
+      var cm = $('#car-model').val()
+      var kd = $("#killometer-driven").val()
+      var cr = $("#car-registration").val()
+      var cv = $("#car-variant").val()
+      var d = $("#description").val()
+      var ep = $("#expected-price").val()
+      var c = $("#country").val()
+      var st = $("#state").val()
+      var ci = $("#city").val()
+      var y =$("#year").val()
+      var f = $('#upload_imgs').prop('files').length
+      console.log(b)
+      console.log(cm)
+      console.log(kd)
+      console.log(cr)
+      console.log(cv)
+      console.log(d)
+      console.log(ep)
+      console.log(c)
+      console.log(st)
+      console.log(ci)
+      console.log(f)
+      if(b && cm && kd && cr && cv && d && ep && c && st && ci && f && y){
+        console.log("pop0")
+        return true
+      }else{
+        console.log("pop")
+        e.preventDefault();
+        return false
+      }
+
+    }
+  )
+   $("#brand").change(
+      function(){
+        var p = $("#brand").val();
+        if(!p){
+          $("#car-model").html("");
+          return;
+        }
+        console.log(p);
+        $.ajax(
+          {
+            type: 'get',
+            url: '<%= ws_get_car_models_path %>',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: {
+              brand_id : $("#brand").val()  
+            },
+            success: function(res){
+              console.log(res)
+              $('#car-model').html(res.html)
+            },
+            error: function(err){
+
+            }
+          }
+        )
+
+      }
+
+    )
   $('#upload-btn').click(function(e){
     e.preventDefault();
     document.getElementById('upload_imgs').click()
