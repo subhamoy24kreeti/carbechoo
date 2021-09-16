@@ -53,8 +53,20 @@
       width: 50%;
     }
   }
+  #elastic-search {
+    text-align: center;
+    width: 100%;
+  }
+  #search-field{
+      text-align: center;
+      width: 500px;
+    }
   @media screen and (max-width: 576px){
     .car-cards{
+      width: 100%;
+    }
+    #search-field{
+      text-align: center;
       width: 100%;
     }
   }
@@ -68,6 +80,12 @@
 <section class="bg-dark bg-gradient" id = "filter-wrap">
 <div class="container-fluid p-0 resize">
   <!-- Example single danger button -->
+  <div>
+    <form action="" id='elastic-search'>
+      <input type="text" id="search-field" class="rounded p-2">
+      <button type="submit" class="btn btn-primary">search</button>
+    </form>
+  </div>
   <div class="d-flex justify-content-around pt-2 pb-2 flex-wrap filter">
     <div>
       <p class="filter-head">Cities</p>
@@ -191,15 +209,24 @@
                             <%= image_tag car.car_images[0], class:"img-fixed resize-car", alt:"car images" %>
                             <% end %>
                             </div>
+                            <div class="p-2">
                             <div class="car-description">
                                 <p><%= car.description %></p>
                             </div>
                             <div class="d-flex justify-content-between">
-                                <div class="icon"><%= car.price %></div>
+                              <div class="icon">
+                                <%if !car.currency.blank? %>
+                                <%= car.currency %>
+                                <span class="icon"><%= car.price %></span>
+                                <% else %>
+                                ₹
+                                <span class="icon"><%= car.price %></span>
+                                <% end %>
+                              </div>
                                 <div class="appointment d-flex">
                                   <%= link_to "view", car_single_path(car.id), class: "btn btn-outline-success" %>
-                                  <button class="ml-3 btn btn-info">appoint</button>
                                 </div>
+                            </div>
                             </div>
                         </div>
                       </div>
@@ -249,19 +276,25 @@ function fetchMore(){
 function generate_html(cars){
   html = ""
   cars.forEach((car)=>{
-    html += `<div class="car-cards p-3 rounded border">
+    html += `<div class="car-cards p-3">
+              <div class="rounded border">
               <div class="img-box">
                 <img src=${car.image_url} class="img-fixed resize-car" alt="car images" %>
               </div>
+              <div class= "p-2">
               <div class="car-description">
                   <p>${ car.description }</p>
               </div>
               <div class="d-flex justify-content-between">
-                <div class="icon">${car.price}</div>
+                <div class="price">
+                ${car.currency? car.currency: '₹'}
+                <span class="icon">${car.price}</span>
+                </div>
                     <div class="appointment d-flex">
                       <button class="btn btn-outline-success"> view </button>   
-                      <button class="ml-3 btn btn-info">appoint</button>
                     </div>
+                </div>
+                </div>
                 </div>
               </div>`
   })
@@ -273,6 +306,7 @@ function generate_html(cars){
 }
 function get_all_cars(){
   var data = serach_cats
+  console.log(data)
   $.ajax(
     {
       data: data,

@@ -16,4 +16,10 @@ class ApplicationController < ActionController::Base
           redirect_to main_app.root_path unless current_user.is_admin?
       end
     end
+
+    def authorize_user
+      if current_user.blank?
+          redirect_to main_app.root_path
+      end
+    end
 end

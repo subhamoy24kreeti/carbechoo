@@ -1,6 +1,6 @@
 class UserController < ApplicationController
 
-    before_action :user_authorization, only: [:user_settings, :user_profile_update ]
+    before_action :authorize_user, only: [:user_settings, :user_profile_update ]
 
     def landing
         @cities = City.all.map{|city| [city.name, city.id]}
@@ -36,13 +36,13 @@ class UserController < ApplicationController
             if @user_data.save
                 UserMailer.forget_password_change_mail(@user_data).deliver
                 @response = "Successfully link sent to your mail"
-                render 'forget_password_response'
+                render 'forget_password_response', flash: { notice: "Successfully Created! account"})
             
             else
-                redirect_back(fallback_location: {action: 'forget_password_request'}, flash: { notice: "Successfully Created! account"})
+                redirect_back(fallback_location: {action: :forget_password_request}, flash: { notice: "Successfully Created! account"})
             end
         else
-            redirect_back(fallback_location: {action: 'forget_password_request'})
+            redirect_back(fallback_location: {action: :forget_password_request})
         end
     end
 
@@ -84,10 +84,6 @@ class UserController < ApplicationController
             @response = "Invalid authentication|404"
             render 'forget_password_response'
         end
-    end
-
-    def password_update
-
     end
 
     def email_verification_request_generate
@@ -273,7 +269,7 @@ class UserController < ApplicationController
         query = ""
         params_for_filter = {}
         page = 0
-        if( !params[:page].blank? == 0)
+        if( !params[:page].blank?)
             page = params[:page]
         end
 

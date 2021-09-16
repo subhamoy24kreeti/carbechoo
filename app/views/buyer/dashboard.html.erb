@@ -53,9 +53,22 @@
         width: 50%;
       }
     }
+    #elastic-search {
+      text-align: center;
+      width: 100%;
+    }
+    #search-field {
+      text-align: center;
+      width: 400px;
+      padding: 5px;
+    }
     @media screen and (max-width: 576px){
       .car-cards{
         width: 100%;
+      }
+      #search-field {
+      text-align: center;
+      width: 100%;
       }
     }
   </style>
@@ -66,7 +79,14 @@
     <button class="btn btn-info" id="filter-open"> filter</button>
   </div>
   <section class="bg-dark bg-gradient" id = "filter-wrap">
+    <div>
+      <form action="" id='elastic-search'>
+        <input type="text" id="search-field" class="rounded">
+        <button type="submit" class="btn btn-primary">search</button>
+      </form>
+    </div>
   <div class="container-fluid p-0 resize">
+
     <!-- Example single danger button -->
     <div class="d-flex justify-content-around pt-2 pb-2 flex-wrap filter">
       <div>
@@ -196,7 +216,15 @@
                                   <p><%= car.description %></p>
                               </div>
                               <div class="d-flex justify-content-between">
-                                  <div class="icon"><%= car.price %></div>
+                                <div class="price">
+                                <%if !car.currency.blank? %>
+                                <%= car.currency %>
+                                <span class="icon"><%= car.price %></span>
+                                <% else %>
+                                ₹
+                                <span class="icon"><%= car.price %></span>
+                                <% end %>
+                                </div>
                                   <div class="appointment d-flex">
                                     <%= link_to "view", car_single_path(car.id), class: "btn btn-outline-success" %>
                                   </div>
@@ -258,7 +286,10 @@
                     <p>${ car.description }</p>
                 </div>
                 <div class="d-flex justify-content-between">
-                  <div class="icon">${car.price}</div>
+                      <div class="price">
+                        ${car.currency? car.currency: '₹'}
+                        <span class="icon">${car.price}</span>
+                      </div>
                       <div class="appointment d-flex">
                         <button class="btn btn-outline-success"> view </button>   
                         <button class="ml-3 btn btn-info">appoint</button>

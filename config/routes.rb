@@ -29,7 +29,8 @@ Rails.application.routes.draw do
   #login paths for user
   get 'login', to:"user#login", as:"user_login_get"
   post 'login', to:"session#user_login", as:"user_login_post" 
-
+ 
+  get 'logout', to:"session#destroy", as: "user_logout"
   #forget password
   get 'forget-password-request', to:'user#forget_password_request', as: 'forget_password_request'
   put 'forget-password-request-generate', to:'user#forget_password_request_generate', as: 'forget_password_request_generate'

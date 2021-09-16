@@ -50,6 +50,7 @@
         </div>
       </li>
     </ul>
+    <%= link_to 'Logout', user_logout_path, class: "btn btn-outline-success my-2 my-sm-0 ml-3" %>
     <% else %>
     <%= link_to 'Buy', buyer_registration_url, class: "btn btn-outline-info my-2 my-sm-0 ml-3" %>
     <%= link_to 'Sell', seller_registration_url, class: "btn btn-outline-info my-2 my-sm-0 ml-3" %>
