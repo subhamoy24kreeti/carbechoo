@@ -1,0 +1,169 @@
+<style>
+    .sidebar {
+        width:270px;
+        background-color: cornflowerblue;
+    }
+    .main-outer {
+        width:100%;
+    }
+    .list-item {
+        padding:10px 20px 10px 20px;
+    }
+    .car-cards {
+        width: 25%;
+    }
+    .resize-car{
+        height:230px;
+    }
+    .img-fixed {
+        width: 100%;
+    }
+    .dropdown-menu{
+      max-height: 400px;
+      overflow-y:  scroll;
+    }
+    .filter-head{
+      margin: 0px;
+      color: white;
+    }
+    #filter-open {
+      display: none;
+    }
+    @media screen and  (max-width: 998px) {
+      .filter {
+        height: 100%;
+        flex-direction: column;
+      }
+      .resize {
+        overflow: scroll;
+        max-height: 300px;
+      }
+  
+      #filter-wrap {
+        margin: 0 20px;
+        border-radius: 5px;
+        display: none;
+      }
+  
+      #filter-open {
+        display: block;
+      }
+  
+      .car-cards{
+        width: 50%;
+      }
+    }
+    @media screen and (max-width: 576px){
+      .car-cards{
+        width: 100%;
+      }
+    }
+  </style>
+  <header id="fixed-head">
+  <%= render "user/layouts/header" %>
+  </header>
+      <section class="appointments-under-process">
+          <div class="container">
+              <h3>Appointments under processing</h3>
+              <div class="main-outer">
+                  <div class="container-fluid pt-3" >
+                      <div class="d-flex full-width flex-wrap" id="car-content">
+                        <% @appointment_under_process.each do |car| %>
+                         <div class="p-3 car-cards">
+                          <div class="rounded border">
+                              <div class="img-box">
+                              <% if car.car_images.attached? %>
+                              <%= image_tag car.car_images[0], class:"img-fixed resize-car", alt:"car images" %>
+                              <% end %>
+                              </div>
+                              <div class="car-description">
+                                  <p><%= car.description %></p>
+                              </div>
+                              <div class="d-flex justify-content-between">
+                                  <div class="icon"><%= car.price %></div>
+                                  <div class="appointment d-flex">
+                                    <%= link_to "view", car_single_path(car.id), class: "btn btn-outline-success" %>
+                                    <button class="ml-3 btn btn-info">details</button>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                        <% end %>
+                      </div>
+                  </div>
+              </div>
+              </div>
+          </div>
+      </section>
+      <section class="appointments-under-process">
+        <div class="container">
+            <h3>Appointments under investigation</h3>
+            <div class="main-outer">
+                <div class="container-fluid pt-3" >
+                    <div class="d-flex full-width flex-wrap" id="car-content">
+                      <% @appointment_under_investigation.each do |car| %>
+                       <div class="p-3 car-cards">
+                        <div class="rounded border">
+                            <div class="img-box">
+                            <% if car.car_images.attached? %>
+                            <%= image_tag car.car_images[0], class:"img-fixed resize-car", alt:"car images" %>
+                            <% end %>
+                            </div>
+                            <div class="car-description">
+                                <p><%= car.description %></p>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="icon"><%= car.price %></div>
+                                <div class="appointment d-flex">
+                                  <%= link_to "view", car_single_path(car.id), class: "btn btn-outline-success" %>
+                                  <button class="ml-3 btn btn-info">details</button>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <% end %>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+    <section class="appointments-under-process">
+      <div class="container">
+          <h3>Appointments approved</h3>
+          <div class="main-outer">
+              <div class="container-fluid pt-3" >
+                  <div class="d-flex full-width flex-wrap" id="car-content">
+                    <% @appointment_approved.each do |car| %>
+                     <div class="p-3 car-cards">
+                      <div class="rounded border">
+                          <div class="img-box">
+                          <% if car.car_images.attached? %>
+                          <%= image_tag car.car_images[0], class:"img-fixed resize-car", alt:"car images" %>
+                          <% end %>
+                          </div>
+                          <div class="car-description">
+                              <p><%= car.description %></p>
+                          </div>
+                          <div class="d-flex justify-content-between">
+                              <div class="icon"><%= car.price %></div>
+                              <div class="appointment d-flex">
+                                <%= link_to "view", car_single_path(car.id), class: "btn btn-outline-success" %>
+                                <button class="ml-3 btn btn-info">details</button>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                    <% end %>
+                  </div>
+              </div>
+          </div>
+          </div>
+      </div>
+  </section>
+  <style>
+    .fixed{
+        position: fixed;
+        width: 100%;
+    }
+  </style>

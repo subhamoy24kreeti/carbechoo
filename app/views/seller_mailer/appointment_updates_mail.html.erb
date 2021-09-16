@@ -1,0 +1,30 @@
+<h3>hi, <%=@appointment.user.full_name %></h3>
+
+<p>
+here is a update related your car selling appointment Id:   <%=@appointment.id %>
+
+<% if @appointment.status == 'investigating' %>
+<p>your appointment under investigation </p>
+<% if !@appointment.scheduled_date.blank?  %>
+ <div><i><b>your appointment date sheduled at: </b></i><span><b><%= @appointment.scheduled_date %></b></span></div>  
+ <%if !@appointment.scheduled_date.blank? %>
+ <div><i><b>your appointment time sheduled at:</b></i><span><b><%= @appointment.scheduled_time.strftime("%I:%M %p") %></b></span></div>
+ <% end %>
+<%end %>
+
+<% elsif @appointment.status == 'approved' %>
+<p>Congratulations, your appoint is approved</p>
+
+<% elsif @appointment.status == 'sold out' %>
+<p>Congratulations, your appointment is sold out</p>
+
+<% elsif @appointment.status == 'rejected'%>
+<p>We regretfully tell you, your appointment is got rejected</p>
+
+<% else %>
+<p>your process is under process</p>
+
+<% end %>
+</p>
+
+<p>Thanks for joining and have a great day!</p>

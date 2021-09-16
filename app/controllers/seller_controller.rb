@@ -1,5 +1,17 @@
 class SellerController < ApplicationController
+    before_action :seller_authorization, except: [:new, :create]
 
+    def seller_authorization
+        if current_user.blank? 
+            redirect_to root_path
+            return
+        end
+        if current_user.role == 'buyer'
+            redirect_to buyer_dashboard_path
+            return
+        end
+    end
+    
     def new
        @seller = User.new 
        @countries = Country.all.map{|country|  [country.name, country.id]}
@@ -42,13 +54,16 @@ class SellerController < ApplicationController
             render "signup", flash: { alert: "there is something wrong while creating account"}
         end
     end
-
     def dashboard
-        @cars = SellerAppointment.where(status: 'approved')
-        render 'user/dashboard'
+        @appointment_under_process = SellerAppointment.limit(5).where(user_id: current_user.id, status: 'processing').order('updated_at DESC')
+        @appointment_under_investigation = SellerAppointment.limit(5).where(user_id: current_user.id, status: 'investigating').order('updated_at DESC')
+        @appointment_approved = SellerAppointment.limit(5).where(user_id: current_user.id, status: 'approved').order('updated_at DESC')
     end
 
     def add_car_details
+        if current_user.email_confirmed.blank?
+            redirect_to seller_dashboard_path
+        end
         @cities = City.all.map { |city| [city.name, city.id] }
         @killometer_drivens = KillometerDriven.all.map{|km| [km.killometer_range, km.id]}
         @brands = Brand.all.map{|b| [b.brand_name , b.id]}
@@ -61,7 +76,6 @@ class SellerController < ApplicationController
         for year in @car_registration_year.range1..@car_registration_year.range2
             @years.append([year, year])
         end
-        render 'add_car_details'
     end
 
     def create_seller_appointment
@@ -82,11 +96,12 @@ class SellerController < ApplicationController
         seller_appointment[:car_images] = params[:car_images]
         seller_appointment[:user_id] = params[:user_id]
         seller_appointment[:year_of_buy] = params[:year_of_buy]
+        seller_appointment[:currency] = params[:currency]
         
         se = SellerAppointment.new(seller_appointment)
         @user = User.find(params[:user_id])
         if se.save
-            SellerMailer.appointment_submission_mail(@user, se.id)
+            SellerMailer.appointment_submission_mail(@user, se.id).deliver
             redirect_to add_car_details_path, notice: "successfully created an appointment"
         else
             Rails.logger.info(se.errors.full_messages)

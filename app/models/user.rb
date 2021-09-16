@@ -16,8 +16,8 @@ class User < ApplicationRecord
     enum role: {admin: "admin", seller: "seller", buyer: "buyer"}
     validates :first_name, presence: true, allow_blank: false
     validates :last_name, presence: true, allow_blank: false
-    validates :email, presence: true, allow_blank: false, uniqueness: { case_sensitive: false }, if: :email_changed?
-    validates :phone, numericality: true, allow_blank: false, length: {minimum: 10, maximum: 15}, if: :phone_present_changed?
+    validates :email, format: {with: URI::MailTo::EMAIL_REGEXP }, uniqueness: { case_sensitive: false }, if: :email_changed?
+    validates :phone, numericality: true, length: {minimum: 10, maximum: 15}, if: :phone_present_changed?
 
     validates :password, presence: true, allow_blank: false, confirmation: true, length: {in: 6..20}, if: :password_changed?
     validates_confirmation_of :password, message: "should match", if: :password_changed?
@@ -26,8 +26,6 @@ class User < ApplicationRecord
 
     has_many :seller_appointments, :dependent => :destroy
     has_many :buyer_appointments, :dependent => :destroy
-    has_many :buyer_appointments_seller, class_name: "BuyerAppointment", foreign_key: "seller_user_id", :dependent => :destroy
-    
     has_many :cities, :through => :seller_appointments
 
     has_one_attached :cover_pic, :dependent => :destroy

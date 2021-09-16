@@ -39,9 +39,11 @@
     </div>
   </div>
   <section>
-    <div class="container about-user">
+    <div class="container about-user p-0">
       <h5>
+        <b>
         About Seller
+        </b>
       </h5>
       <div class="about">
       Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita fuga at a! Corrupti adipisci culpa illum eum in, temporibus deleniti, quibusdam ut voluptatum alias at nobis aliquid sapiente, doloremque perferendis!
@@ -70,8 +72,8 @@
     <h3><b>Latest items</b></h3>
     <div class="latest-items">
       <div class="container">
+        <% if !@seller_items.blank? %>
         <div class="d-flex flex-wrap">
-          <% if !@seller_items.blank? %>
           <% @seller_items.each do |item| %>
           <div class="border rounded">
             <div class="seller-item">
@@ -94,8 +96,12 @@
             </div>
           </div>
           <% end %>
-        <% end %>
         </div>
+        <% else %>
+         <div class="d-flex justify-content-center">
+          <div><h4 class="text-center"> <b>till now no cars</b></h4></div>
+         </div>
+         <%end %>
       </div>
     </div>
   </section>

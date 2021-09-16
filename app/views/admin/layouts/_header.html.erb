@@ -46,12 +46,12 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <button class="btn btn-info" id="sidebarCollapse">
-            <i class="fas fa-align-left"></i>
+            <i class="fa fa-right-arrow"></i>
                 <span>toggle</span>
         </button>
         <div>
             <i class="fa fa-user"></i>
-            <span>Name</span>
+            <span><%= current_user.full_name %></span>
         </div>
     </div>
 </nav>

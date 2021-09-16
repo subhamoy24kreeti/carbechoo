@@ -36,7 +36,8 @@ namespace :admin do
     get 'country/delete/:id', to: "country#delete", as: "country_delete"
     get 'cost-range/delete/:id', to: "cost_range#delete", as:"cost_range_delete"
     get 'killometer_driven/delete/:id', to: "killometer_driven#delete", as: "killometer_driven_delete"
-    get 'seller_appointment/delete/:id', to: "seller_appointment#delete", as: "seller_appointment_delete"
+    get 'seller-appointment/delete/:id', to: "seller_appointment#delete", as: "seller_appointment_delete"
+    get 'buyer-appointment/delete/:id', to: "buyer_appointment#destroy", as: "buyer_appointment_delete"
 
     #update path
     put 'brand/update/:id', to: "brand#update", as:"brand_update"
@@ -50,6 +51,7 @@ namespace :admin do
     put 'cost-range/update/:id', to: "cost_range#update", as:"cost_range_update"
     put 'killometer-driven/update/:id', to: "killometer_driven#update", as: "killometer_driven_update"
     put 'seller-appointment/update/:id', to: "seller_appointment#update", as: "seller_appointment_update"
+    put 'buyer-appointment/update/:id', to: "buyer_appointment#update", as: "buyer_appointment_update"
 end
 scope :admin do
     post "login/auth" , to:"session#admin_login", as: 'admin_login_auth'

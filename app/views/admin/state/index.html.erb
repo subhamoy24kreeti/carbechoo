@@ -35,7 +35,7 @@
         <td><%=state.country.name %></td>
         <td>
         <%= link_to 'delete', admin_state_delete_path(state.id), class:"btn btn-danger" %>
-        <%= link_to 'update', admin_state_update_path(state.id), class:"btn btn-info" %>
+        <%= link_to 'edit', admin_state_update_path(state.id), class:"btn btn-info" %>
         </td>
         </tr>
         <% end %>

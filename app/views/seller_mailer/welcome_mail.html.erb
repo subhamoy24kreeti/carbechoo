@@ -1,9 +1,10 @@
-<h3>welocome to carbechoo.com, <%=@user.first_name+" "+@user.last_name %></h3>
+<h4>carbechoo seller</h4>
+<h3>welocome to carbechoo.com, <%=@user.full_name %></h3>
 <p>
 you have successfully signed up to carbechoo.com,
 
 please go to below link that
-<%=link_to "profile", @url %>
+<%=link_to "profile", seller_dashboard_url %>
 
 <p>thanks for joining and have a great day!</p>
 </p>

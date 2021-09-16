@@ -51,12 +51,21 @@ class Admin::SellerAppointmentController < ApplicationController
         seller_appointment[:scheduled_date] = params[:scheduled_date]
         seller_appointment[:scheduled_time] = params[:scheduled_time]
         seller_appointment[:year_of_buy] = params[:year_of_buy]
+
         if !params[:cost_range_id].blank?
             seller_appointment[:cost_range_id] = params[:cost_range_id];
         end
+
         Rails.logger.info(seller_appointment)
-        @seller_appointment = SellerAppointment.find(params[:id])
+        @seller_appointment = SellerAppointment.includes(:user).find(params[:id])
+        @seller_appointment.status = params[:status]
+        check= @seller_appointment.changed?
         p = @seller_appointment.update(seller_appointment)
+        if p
+            if check
+                SellerMailer.appointment_updates_mail(@seller_appointment).deliver
+            end
+        end
         redirect_to admin_seller_appointment_index_path
     end
 

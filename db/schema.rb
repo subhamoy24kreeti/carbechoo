@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_14_080217) do
+ActiveRecord::Schema.define(version: 2021_09_15_190959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,13 +51,13 @@ ActiveRecord::Schema.define(version: 2021_09_14_080217) do
 
   create_table "buyer_appointments", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "seller_user_id", null: false
     t.string "status", default: "processing", null: false
     t.date "scheduled_date"
     t.time "scheduled_time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["seller_user_id"], name: "index_buyer_appointments_on_seller_user_id"
+    t.bigint "seller_appointment_id"
+    t.index ["seller_appointment_id"], name: "index_buyer_appointments_on_seller_appointment_id"
     t.index ["user_id"], name: "index_buyer_appointments_on_user_id"
   end
 
@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(version: 2021_09_14_080217) do
     t.time "scheduled_time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "currency", limit: 12
     t.index ["brand_id"], name: "index_seller_appointments_on_brand_id"
     t.index ["car_model_id"], name: "index_seller_appointments_on_car_model_id"
     t.index ["car_registration_id"], name: "index_seller_appointments_on_car_registration_id"
@@ -193,8 +194,8 @@ ActiveRecord::Schema.define(version: 2021_09_14_080217) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "buyer_appointments", "seller_appointments"
   add_foreign_key "buyer_appointments", "users"
-  add_foreign_key "buyer_appointments", "users", column: "seller_user_id"
   add_foreign_key "car_models", "brands"
   add_foreign_key "cities", "states"
   add_foreign_key "seller_appointments", "brands"

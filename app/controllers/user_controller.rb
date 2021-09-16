@@ -1,5 +1,7 @@
 class UserController < ApplicationController
 
+    before_action :user_authorization, only: [:user_settings, :user_profile_update ]
+
     def landing
         @cities = City.all.map{|city| [city.name, city.id]}
         @brands = Brand.all.map{|brand| [brand.brand_name, brand.id]}
@@ -9,6 +11,11 @@ class UserController < ApplicationController
         @killometer_drivens = KillometerDriven.all.map{|killometer_driven| [killometer_driven.killometer_range, killometer_driven.id]}
         @cost_ranges = CostRange.all.map{|cost_range| [cost_range.currency+cost_range.range1.to_s+"-"+cost_range.range2.to_s, cost_range.id]}
         @cars = SellerAppointment.where(status: 'approved') 
+        @car_registration_year = CarRegistrationYear.first()
+        @years = []
+        for year in @car_registration_year.range1..@car_registration_year.range2
+            @years.append([year, year])
+        end
         render 'landing'
     end
 
@@ -108,6 +115,17 @@ class UserController < ApplicationController
         end
     end
 
+    def verify_email
+        user = User.find(params[:user_id])
+        if user.email_confirmed
+            render json: {status: 1, error: 0, msg: 'email verified'}
+        else
+            render json: {status: 0, error:1, msg: 'email not verified'}
+        end
+    rescue
+        render json: {status: 0, error: 1, msg: 'not found'}
+    end
+
 
     def ws_get_cities
         @cities = City.where(state_id: params[:state_id])
@@ -137,8 +155,8 @@ class UserController < ApplicationController
 
     def user_profile
         @seller = User.find(params[:id])
-        @seller_items = SellerAppointment.where(user_id: params[:id], status: 'approved')
-        render 'user/user_profile'
+        @latest_seller_items = SellerAppointment.limit(5).where(user_id: params[:id], status: 'approved').order('updated_at DESC')
+        render 'user_profile'
     end
 
     def nearest_seller
@@ -203,11 +221,13 @@ class UserController < ApplicationController
         if p
             if(email_changed)
                 Rails.logger.info(user.email)
-                SellerMailer.welcome_mail(user).deliver_now
-                verify_link = seller_email_verification_url(user.confirm_token_email)
-                SellerMailer.email_verification_mail(user, verify_link).deliver
+                UserMailer.email_verification_mail(user).deliver
             end
-            redirect_to root_path, flash: { notice: "Successfully Created! account"}
+            if user.role == 'seller'
+                redirect_to seller_dashboard_path, flash: { notice: "Successfully Created! account"}
+            else
+                redirect_to buyer_dashboard_path, flash: { notice: "Successfully Created! account"}
+            end
         else
             session[:user_id] = user.id
             redirect_to user_settings_path(params[:id]), flash: { alert: "there is something wrong while creating account"}
@@ -230,6 +250,23 @@ class UserController < ApplicationController
             options = options + "<option value=#{car_model.id}>#{car_model.name}</option>"
         end
         render json: {html: options}
+    end
+
+    def check_status_appointment
+        appointment_id = params[:appointment_id]
+        role = params[:role]
+        if role == 'buyer'
+            appointment = BuyerAppointment.find(appointment_id);
+        else
+            appointment = SellerAppointment.find(appointment_id);
+        end
+        if !appointment.blank?
+            render json: {status: 1, error: 0, msg: appointment.status}
+        else
+            render json: {status: 0, error: 1, msg: 'not found'}
+        end
+    rescue
+        render json: {status: 0, error: 1, msg: 'not found'}
     end
 
     def get_filtered_cars

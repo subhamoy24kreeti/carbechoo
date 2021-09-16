@@ -1,0 +1,62 @@
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  td,th {
+    border: 1px solid #dddddd;
+    text-align:left;
+    padding: 8px;
+  }
+</style>
+<div class="wrapper">
+  <%= render "admin/layouts/sidebar" %>
+  <div class='container-fluid p-0'>
+  <%= render "admin/layouts/header" %>
+  <section>
+    <% if flash.key? :notice %>
+    <div class="alert alert-success">
+      <%= flash[:notice] %>
+    </div>
+    <% end %>
+  <div class="container-fluid mt-3">
+    <table>
+      <thead>
+        <tr>
+        <th>id</th>
+        <th>buyer name</th>
+        <th>seller name</th>
+        <th>appoint_id</th>
+        <th>brand</th>
+        <th>car model</th>
+        <th>actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @buyer_appointments.each do |ba| %>
+        <tr>
+        <td><%=ba.id%></td>
+        <td><%=ba.user.full_name%></td>
+        <% if !ba.seller_appointment.blank? %>
+        <td><%=ba.seller_appointment.user.full_name%></td>
+        <td><%=ba.seller_appointment.id %></td>
+        <td><%=ba.seller_appointment.brand.brand_name %></td>
+        <td><%=ba.seller_appointment.car_model.name%></td>
+        <%else %>
+        <td>--</td>
+        <td>--</td>
+        <td>--</td>
+        <td>--</td>
+        <%end %>
+        <td>
+        <%= link_to 'delete', admin_buyer_appointment_delete_path(ba.id), class: 'btn btn-danger' %>
+        <%= link_to 'edit', edit_admin_buyer_appointment_path(ba.id), class:'btn btn-info' %>
+        </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  </section>
+</div>
+</div>

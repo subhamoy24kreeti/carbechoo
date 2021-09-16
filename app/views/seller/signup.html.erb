@@ -19,7 +19,7 @@
 
     <div class="form-group">
       <%=f.label 'choose your country'%>
-      <%=select_tag(:country_id, options_for_select(@countries), class:"custom-select custom-select-lg mb-3", id:"country", :include_blank => "--select your country--") %>
+      <%=select_tag(:country_id, options_for_select(@countries, :include_blank => "--select your country--"), class:"custom-select custom-select-lg mb-3", id:"country") %>
     </div>
     <div class="form-group">
       <%=f.label 'choose your state'%>

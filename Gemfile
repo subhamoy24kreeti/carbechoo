@@ -28,6 +28,10 @@ gem 'image_processing', '~> 1.2'
 #for latitude and longitude 
 gem 'geocoder'
 
+#rubocop
+gem 'rubocop', require: false
+
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
@@ -45,6 +49,8 @@ group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
 end
 
 group :test do
