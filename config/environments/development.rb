@@ -77,17 +77,16 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :smtp
-  host = 'localhost:3000'
   config.action_mailer.default_url_options = { :host => 'localhost:3000', protocol: 'http' }
   # SMTP settings for gmail
   config.action_mailer.smtp_settings = {
-    :address              => "smtp.gmail.com",
-    :port                 => 587,
-    :user_name            => "subuamoydas24@gmail.com",
-    :password             => "subhamoy2406",
+    :address              => '<%= ENV["MAIL_DOMAIN"] %>',
+    :port                 => '<%= ENV["MAIL_PORT"] %>',
+    :user_name            => '<%= ENV["MAIL_USERNAME"]%>',
+    :password             => '<%= ENV["MAIL_PASSWORD"]%>',
     :authentication       => "plain",
     :enable_starttls_auto => true,
-    :domain               => "smtp.gmail.com",
-  :openssl_verify_mode  => "none"
-}
+    :domain               => '<%= ENV["MAIL_DOMAIN"] %>',
+    :openssl_verify_mode  => "none"
+  }
 end

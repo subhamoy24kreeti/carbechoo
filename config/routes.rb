@@ -45,6 +45,8 @@ Rails.application.routes.draw do
   get 'request-for-email-veification', to:'user#email_verification_request_generate', as: "email_verification_request_generate"
   get "verify-email/:id", to:"user#confirm_email", as:"user_email_verification"
 
+  put 'save-user-phone', to:"user#save_user_phone", as:"save_user_phone"
+
   get 'verify-user-email', to: "user#verify_email", as:"email_verification"
   
   

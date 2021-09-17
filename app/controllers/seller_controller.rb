@@ -61,9 +61,6 @@ class SellerController < ApplicationController
     end
 
     def add_car_details
-        if current_user.email_confirmed.blank?
-            redirect_to seller_dashboard_path
-        end
         @cities = City.all.map { |city| [city.name, city.id] }
         @killometer_drivens = KillometerDriven.all.map{|km| [km.killometer_range, km.id]}
         @brands = Brand.all.map{|b| [b.brand_name , b.id]}
@@ -102,10 +99,10 @@ class SellerController < ApplicationController
         @user = User.find(params[:user_id])
         if se.save
             SellerMailer.appointment_submission_mail(@user, se.id).deliver
-            redirect_to add_car_details_path, notice: "successfully created an appointment"
+            redirect_to seller_add_car_details_path, notice: "successfully created an appointment"
         else
             Rails.logger.info(se.errors.full_messages)
-            redirect_to add_car_details_path, notice: "there is some error while creating appointment"
+            redirect_to seller_add_car_details_path, notice: "there is some error while creating appointment"
         end
     end
 

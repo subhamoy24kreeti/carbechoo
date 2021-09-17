@@ -83,7 +83,7 @@
   <div>
     <form action="" id='elastic-search'>
       <input type="text" id="search-field" class="rounded p-2">
-      <button type="submit" class="btn btn-primary">search</button>
+      <button type="submit" class="btn btn-outline-success my-2 my-sm-0">search</button>
     </form>
   </div>
   <div class="d-flex justify-content-around pt-2 pb-2 flex-wrap filter">
@@ -193,8 +193,7 @@
   </div>
 </div>
 </div>
-
-    </section>
+</section>
   </header>
     <section>
         <div class="container">
@@ -230,6 +229,90 @@
                             </div>
                         </div>
                       </div>
+                      <div class="p-3 car-cards">
+                        <div class="rounded border">
+                            <div class="img-box">
+                            <% if car.car_images.attached? %>
+                            <%= image_tag car.car_images[0], class:"img-fixed resize-car", alt:"car images" %>
+                            <% end %>
+                            </div>
+                            <div class="p-2">
+                            <div class="car-description">
+                                <p><%= car.description %></p>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                              <div class="icon">
+                                <%if !car.currency.blank? %>
+                                <%= car.currency %>
+                                <span class="icon"><%= car.price %></span>
+                                <% else %>
+                                ₹
+                                <span class="icon"><%= car.price %></span>
+                                <% end %>
+                              </div>
+                                <div class="appointment d-flex">
+                                  <%= link_to "view", car_single_path(car.id), class: "btn btn-outline-success" %>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="p-3 car-cards">
+                        <div class="rounded border">
+                            <div class="img-box">
+                            <% if car.car_images.attached? %>
+                            <%= image_tag car.car_images[0], class:"img-fixed resize-car", alt:"car images" %>
+                            <% end %>
+                            </div>
+                            <div class="p-2">
+                            <div class="car-description">
+                                <p><%= car.description %></p>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                              <div class="icon">
+                                <%if !car.currency.blank? %>
+                                <%= car.currency %>
+                                <span class="icon"><%= car.price %></span>
+                                <% else %>
+                                ₹
+                                <span class="icon"><%= car.price %></span>
+                                <% end %>
+                              </div>
+                                <div class="appointment d-flex">
+                                  <%= link_to "view", car_single_path(car.id), class: "btn btn-outline-success" %>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="p-3 car-cards">
+                        <div class="rounded border">
+                            <div class="img-box">
+                            <% if car.car_images.attached? %>
+                            <%= image_tag car.car_images[0], class:"img-fixed resize-car", alt:"car images" %>
+                            <% end %>
+                            </div>
+                            <div class="p-2">
+                            <div class="car-description">
+                                <p><%= car.description %></p>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                              <div class="icon">
+                                <%if !car.currency.blank? %>
+                                <%= car.currency %>
+                                <span class="icon"><%= car.price %></span>
+                                <% else %>
+                                ₹
+                                <span class="icon"><%= car.price %></span>
+                                <% end %>
+                              </div>
+                                <div class="appointment d-flex">
+                                  <%= link_to "view", car_single_path(car.id), class: "btn btn-outline-success" %>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                      </div>
                       <% end %>
                     </div>
                 </div>
@@ -237,6 +320,7 @@
             </div>
         </div>
     </section>
+    <%= render 'user/layouts/footer' %>
 <style>
   .fixed{
       position: fixed;
@@ -245,8 +329,24 @@
 </style>
 <script>
 let page = 0;
-let serach_cats = {};
+let search_cats = {};
 let lock = false;
+$('#elastic-search').submit(function(e){
+  e.preventDefault()
+  page = 0;
+  console.log(page)
+  var search_key = $('#search-field').val()
+  if(!search_key){
+    if('search' in search_cats){
+      delete search_cats['search']
+    }
+    get_all_cars()
+    return
+  }
+  search_cats['search'] = search_key
+  get_all_cars()
+  return
+})
 $(window).scroll(function(e){
   var ot = $(window).scrollTop();
   if(ot>50){
@@ -269,7 +369,7 @@ function fetchMore(){
   if(lock == false){
     lock = true
     page++;
-    serach_cats['page'] = page
+    search_cats['page'] = page
     get_all_cars()
   }
 }
@@ -305,7 +405,8 @@ function generate_html(cars){
   }
 }
 function get_all_cars(){
-  var data = serach_cats
+  search_cats['page'] = page
+  var data = search_cats
   console.log(data)
   $.ajax(
     {
@@ -326,14 +427,14 @@ function get_all_cars(){
 $('.cities').click(function(){
   page = 0
   //console.log('city')
-  //console.log(serach_cats)
+  //console.log(search_cats)
   if(!$(this).data('id')){
     $("#btn-city").html('all')
-    delete serach_cats['city_id']
+    delete search_cats['city_id']
     get_all_cars()
     return
   }
-  serach_cats['city_id'] = $(this).data('id')
+  search_cats['city_id'] = $(this).data('id')
   console.log($(this).data('id'))
   $("#btn-city").html($(this).html())
   get_all_cars()
@@ -342,15 +443,15 @@ $('.cities').click(function(){
 $(".brands").click(function(){
   page = 0;
   //console.log('brands')
-  //console.log(serach_cats)
+  //console.log(search_cats)
   if(!$(this).data('id')){
     $("#btn-brand").html('all')
-    delete serach_cats['brand_id']
+    delete search_cats['brand_id']
     get_all_cars()
     return
   }
   console.log($(this).data('id'))
-  serach_cats['brand_id'] = $(this).data('id')
+  search_cats['brand_id'] = $(this).data('id')
   $("#btn-brand").html($(this).html())
   get_all_cars()
 })
@@ -358,14 +459,14 @@ $(".brands").click(function(){
 $(".car-models").click(function(){
   page = 0
   //console.log('car_models')
-  //console.log(serach_cats)
+  //console.log(search_cats)
   if(!$(this).data('id')){
     $("#btn-car-model").html('all')
-    delete serach_cats['car_model_id']
+    delete search_cats['car_model_id']
     get_all_cars()
     return
   }
-  serach_cats['car_model_id'] = $(this).data('id')
+  search_cats['car_model_id'] = $(this).data('id')
   $("#btn-car-model").html($(this).html())
   get_all_cars()
 })
@@ -373,28 +474,28 @@ $(".car-models").click(function(){
 $(".car-registrations").click(function(){
   page = 0;
   //console.log('car_registration')
-  //console.log(serach_cats)
+  //console.log(search_cats)
   if(!$(this).data('id')){
     $("#btn-car-registration").html('all')
-    delete serach_cats['car_registration_id']
+    delete search_cats['car_registration_id']
     get_all_cars()
     return
   }
-  serach_cats['car_registration_id'] = $(this).data('id')
+  search_cats['car_registration_id'] = $(this).data('id')
   $("#btn-car-registration").html($(this).html())
   get_all_cars()
 })
 
 $(".car-variants").click(function(){
   page = 0;
-  console.log(serach_cats)
+  console.log(search_cats)
   if(!$(this).data('id')){
     $("#btn-car-variant").html('all')
-    delete serach_cats['car_variant_id']
+    delete search_cats['car_variant_id']
     get_all_cars()
     return
   }
-  serach_cats['car_variant_id'] = $(this).data('id')
+  search_cats['car_variant_id'] = $(this).data('id')
   $("#btn-car-variant").html($(this).html())
   get_all_cars()
 })
@@ -402,14 +503,14 @@ $(".car-variants").click(function(){
 $(".cost-ranges").click(function(){
   page = 0;
   //console.log('cost_ranges')
-  //console.log(serach_cats)
+  //console.log(search_cats)
   if(!$(this).data('id')){
     $("#btn-cost-range").html('all')
-    delete serach_cats['cost_range_id']
+    delete search_cats['cost_range_id']
     get_all_cars()
     return
   }
-  serach_cats['cost_range_id'] = $(this).data('id')
+  search_cats['cost_range_id'] = $(this).data('id')
   $("#btn-cost-range").html($(this).html())
   get_all_cars()
 })
@@ -417,14 +518,14 @@ $(".cost-ranges").click(function(){
 $(".killometer-drivens").click(function(){
   page = 0;
   console.log('k')
-  console.log(serach_cats)
+  console.log(search_cats)
   if(!$(this).data('id')){
     $("#btn-km-driven").html('all')
-    delete serach_cats['killometer_driven_id']
+    delete search_cats['killometer_driven_id']
     get_all_cars()
     return
   }
-  serach_cats['killometer_driven_id'] =$(this).data('id')
+  search_cats['killometer_driven_id'] =$(this).data('id')
   $("#btn-km-driven").html($(this).html())
   get_all_cars()
 })
@@ -432,11 +533,11 @@ $(".killometer-drivens").click(function(){
 $('.years').click(function(){
   if(!$(this).data('id')){
     $('#btn-year').html('all')
-    delete serach_cats['year_of_buy']
+    delete search_cats['year_of_buy']
     get_all_cars()
     return
   }
-  serach_cats['year_of_buy'] = $(this).data('id')
+  search_cats['year_of_buy'] = $(this).data('id')
   $('#btn-year').html($(this).html())
   get_all_cars()
 })

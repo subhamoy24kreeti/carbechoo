@@ -5,20 +5,18 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
-
-* System dependencies
-
 * Configuration
+ include below settings in your .env file
 
-* Database creation
+* database settings
+  DATABASE_NAME = your db name
+  DATABASE_USERNAME = your user name
+  DATABASE_PASSWORD =  your db password
+  DATABASE_HOST = your db host
+  DATABASE_PORT = your db port
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* mail settings
+  MAIL_USERNAME = your mail provider  user name
+  MAIL_PASSWORD = your provider password
+  MAIL_HOST_NAME = your mail provider host name
+  MAIL_PORT = your mail provider port number

@@ -3,6 +3,15 @@ class UserController < ApplicationController
     before_action :authorize_user, only: [:user_settings, :user_profile_update ]
 
     def landing
+        if !current_user.blank?
+            if current_user == 'seller'
+                redirect_to seller_dashboard_path
+                return
+            else
+                redirect_to buyer_dashboard_path
+                return
+            end
+        end
         @cities = City.all.map{|city| [city.name, city.id]}
         @brands = Brand.all.map{|brand| [brand.brand_name, brand.id]}
         @car_models = CarModel.all.map{|car_model| [car_model.name, car_model.id]}
@@ -36,7 +45,7 @@ class UserController < ApplicationController
             if @user_data.save
                 UserMailer.forget_password_change_mail(@user_data).deliver
                 @response = "Successfully link sent to your mail"
-                render 'forget_password_response', flash: { notice: "Successfully Created! account"})
+                render 'forget_password_response', flash: { notice: "Successfully Created! account"}
             
             else
                 redirect_back(fallback_location: {action: :forget_password_request}, flash: { notice: "Successfully Created! account"})
@@ -44,6 +53,20 @@ class UserController < ApplicationController
         else
             redirect_back(fallback_location: {action: :forget_password_request})
         end
+    end
+
+    def save_user_phone
+        params[:user_id]
+        params[:phone]
+        @user = User.find(params[:user_id])
+        @user.phone = params[:phone]
+        if @user.save
+            render json: {status: 1, error: 0, msg: "phone number updated" }
+        else
+            render json: {status: 0, error: 1, msg:"error occured"}
+        end
+    rescue
+        render json: {status: 0, error: 1, msg:"error occured"}
     end
 
     def forget_password_reset

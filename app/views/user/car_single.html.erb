@@ -78,7 +78,14 @@
         flex-direction: column;
 
       }
-
+      .notify-success {
+        text-align: center;
+        color: green;
+      }
+      .notify-error {
+        text-align: center;
+        color: red
+      }
 
 </style>
 <header>
@@ -137,7 +144,44 @@
 </div>
 <% end %>
 </main>
-  
+<div class="modal fade" id="phone-modal" tabindex="-1" role="dialog" aria-labelledby="phonelLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="phoneLabel">please enter your mobile number</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="phone-put">
+          <div class="form-group">
+            <input type="text" class="form-control" id="user-phone"  pattern="[1-9]{1}[0-9]{9}">
+          </div>
+          <button type="submit" class="btn btn-primary">save number</button>
+          <div class="notify-success notify-phone-success"></div>
+          <div class="notify-error notify-phone-error"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="register-user" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="rgister-user">for appointment register first</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <%= link_to 'register', buyer_registration_url, class: "btn btn-primary" %>
+          <%= link_to 'login', user_login_get_url, class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+</div>
   <!-- Modal -->
   <div class="modal fade" id="verify-email" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -155,6 +199,8 @@
               <button type="button" class="btn btn-primary" onclick="generate_verification_email()" >send email</button>
               <button type="button" class="btn btn-primary" onclick="verify_email()" >verify email</button>
             </div>
+            <div class="notify-success notify-email-success"></div>
+            <div class="notify-error notify-email-error"></div>
         </div>
         
       </div>
@@ -187,6 +233,38 @@ var user = <%= current_user.to_json.html_safe %>
             }
         })
 let user_email_verified = false;
+$('#phone-put').submit(function(e){
+  e.preventDefault()
+  var re = /^[1-9]{1}[0-9]{9}$/im
+  
+  p = $('#user-phone').val()
+  console.log(p)
+  if(re.test(p)){
+    $.ajax({
+      method: 'put',
+      data: {
+        phone: p,
+        user_id: '<%= current_user.id %>'
+      },
+      url: "<%= save_user_phone_path %>",
+      success: function(data){
+        console.log(data)
+        if(data.status == 1){
+          phone = true
+          $('.notify-phone-success').text('')
+          $('.notify-phone-error').text(data.msg)
+          $('#phone-modal').modal('hide')
+          $("#car-details").submit()
+        }
+      },
+      error: function(error){
+        console.log(error)
+        $('.notify-phone-success').text('')
+        $('.notify-phone-error').text('there is some error occured')
+      }
+    })
+  }
+})
 function generate_verification_email(){
   data = {
     user_id: '<%=current_user.id %>',
@@ -197,9 +275,18 @@ function generate_verification_email(){
     url: "<%= email_verification_request_generate_url %>",
     success: function(data){
       console.log(data)
+      if(data.status == 1){
+        $('.notify-email-success').text(data.msg)
+        $('.notify-email-error').text('')
+      }else{
+        $('.notify-email-success').text('')
+        $('.notify-email-error').text(data.msg)
+      }
     },
     error: function(err){
       console.log(err)
+      $('.notify-email-success').text('')
+      $('.notify-email-error').text('there is some error occured')
     }
   }
   )
@@ -217,11 +304,15 @@ function verify_email(){
       console.log(data)
       if(data.status == 1){
         user_email_verified = true
+        $('.notify-email-success').text(data.msg)
+        $('.notify-email-error').text('')
         $("#verify-email").hide()
       }
     },
     error: function(error){
       console.log(error)
+      $('.notify-email-success').text('')
+      $('.notify-email-error').text('there is some error occured')
     }
   })
 }
@@ -229,15 +320,17 @@ function verify_email(){
 $('#appoint-form').submit(function(e){
   console.log(user)
   var email_verified = user.email_confirmed
+
+  if(!user){
+    $('register-modal').modal('show')
+  }
+
   console.log(email_verified)
   if(email_verified || user_email_verified){
     p = confirm("are you sure of this appointment");
     return p
   }
 
-  if(!user){
-    window.location.href = '<%= buyer_registration_url %>'
-  }
   $("#verify-email").modal('show')
   return false 
 })
