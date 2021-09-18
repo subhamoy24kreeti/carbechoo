@@ -52,4 +52,12 @@ class SellerAppointment < ApplicationRecord
         statuses = { 'processing' => 0, 'investigating' => 1, 'approved' => 2, 'rejecting' => 3, 'sold out'=> 4 }
         return statuses[self.status]
     end
+
+    def get_price
+        if currency.blank?
+            return '₹'+" "+price.to_s
+        else
+            return currency+" "+price.to_s
+        end
+    end
 end

@@ -214,13 +214,7 @@
                             </div>
                             <div class="d-flex justify-content-between">
                               <div class="icon">
-                                <%if !car.currency.blank? %>
-                                <%= car.currency %>
-                                <span class="icon"><%= car.price %></span>
-                                <% else %>
-                                ₹
-                                <span class="icon"><%= car.price %></span>
-                                <% end %>
+                                <span class="icon"><%= car.get_price %></span>
                               </div>
                                 <div class="appointment d-flex">
                                   <%= link_to "view", car_single_path(car.id), class: "btn btn-outline-success" %>
@@ -303,8 +297,7 @@ function generate_html(cars){
               </div>
               <div class="d-flex justify-content-between">
                 <div class="price">
-                ${car.currency? car.currency: '₹'}
-                <span class="icon">${car.price}</span>
+                ${car.price}
                 </div>
                     <div class="appointment d-flex">
                       <button class="btn btn-outline-success"> view </button>   

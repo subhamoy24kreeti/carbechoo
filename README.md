@@ -20,3 +20,6 @@ Things you may want to cover:
   * MAIL_PASSWORD = your provider password
   * MAIL_HOST_NAME = your mail provider host name
   * MAIL_PORT = your mail provider port number
+
+* google maps
+  * MAP_KEY= your google map key

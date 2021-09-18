@@ -337,7 +337,7 @@ class UserController < ApplicationController
 
         cars.order('updated_at DESC')
     
-        cars = cars.map{|car| {:description => car.description, :price => car.price, :image_url => url_for(car.car_images[0]), :single_link => car_single_path(car.id) }}
+        cars = cars.map{|car| {:description => car.description, :price => car.get_price, :image_url => url_for(car.car_images[0]), :single_link => car_single_path(car.id) }}
         
         render json: { cars: cars }
     end

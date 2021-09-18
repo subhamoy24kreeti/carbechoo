@@ -94,7 +94,7 @@
 <main>
 <%= form_with url:create_buyer_appointment_path, id:"appoint-form", method:"post" do |f|%>
 <%= f.text_field :seller_appointment_id, type: 'hidden', value: @car.id %>
-<div class="container pt-5">
+<div class="container pt-5 pb-5">
 <div class="row">
 <div class="col-md-6 col-lg-6 col-xl-6">
 <div class="car-gallery">
@@ -128,15 +128,12 @@
 </div>
 <div class="price-appoint d-flex  justify-content-between">
 <div class="price">
-<%= @car.price %>
+<%= @car.get_price %>
 </div>
 <%= f.text_field 'seller_user_id', type:"hidden", value:@car.user_id %>
-<%= f.text_field 'user_id', type:"hidden", value:current_user.id%>
-<% if current_user.role == 'buyer' %>
 <div class="appoint">
 <%= f.submit "appoint",class:"btn btn-primary"%>
 </div>
-<% end %>
 </div>
 </div>
 </div>
@@ -244,7 +241,7 @@ $('#phone-put').submit(function(e){
       method: 'put',
       data: {
         phone: p,
-        user_id: '<%= current_user.id %>'
+        user_id: '<%= (!current_user.blank?)?(current_user.id):"" %>'
       },
       url: "<%= save_user_phone_path %>",
       success: function(data){
@@ -267,7 +264,7 @@ $('#phone-put').submit(function(e){
 })
 function generate_verification_email(){
   data = {
-    user_id: '<%=current_user.id %>',
+    user_id: '<%= (!current_user.blank?)?(current_user.id):"" %>',
   }
   $.ajax({
     type: 'get',
@@ -294,7 +291,7 @@ function generate_verification_email(){
 
 function verify_email(){
   data ={
-    user_id: '<%= current_user.id %>'
+    user_id: '<%= (!current_user.blank?)?(current_user.id):"" %>'
   }
   $.ajax({
     type: 'get',
@@ -319,12 +316,12 @@ function verify_email(){
 
 $('#appoint-form').submit(function(e){
   console.log(user)
-  var email_verified = user.email_confirmed
 
   if(!user){
-    $('register-modal').modal('show')
+    $('#register-modal').modal('show')
+    return false
   }
-
+  var email_verified = user.email_confirmed
   console.log(email_verified)
   if(email_verified || user_email_verified){
     p = confirm("are you sure of this appointment");
