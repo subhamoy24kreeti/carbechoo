@@ -9,10 +9,8 @@ class Admin::CountryController < ApplicationController
     def create
         p = Country.new(name: params[:name])
         if p.save
-            flash.now[:alert] = "successfully created brand"
-            redirect_to new_admin_country_path
+            redirect_to new_admin_country_path, flash: {notice: "Successfully updated"}
         else
-            flash.now[:alert] = "error occured"
             redirect_to new_admin_country_path
         end
     end
@@ -22,8 +20,12 @@ class Admin::CountryController < ApplicationController
     end
 
     def update
-        Country.where(id: params[:id]).update(name: params[:name])
-        redirect_to admin_country_index_path
+        check = Country.where(id: params[:id]).update(name: params[:name])
+        if check
+            redirect_to admin_country_index_path, 
+        else
+            redirect_to admin_country_index_path, flash: {error: 'an error occured' }
+        end
     end
  
     def delete

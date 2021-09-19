@@ -10,20 +10,24 @@ class Admin::StateController < ApplicationController
     def create
         p = State.new(country_id: params[:country_id], name: params[:name])
         if p.save
-            flash.now[:alert] = "successfully created brand"
-            redirect_to new_admin_state_path
+            redirect_to new_admin_state_path, flash: {notice: "Successfully created"}
         else
-            flash.now[:alert] = "error occured"
-            redirect_to new_admin_state_path
+            redirect_to new_admin_state_path, flash: {error: 'an error occured' }
         end
     end
 
     def edit 
-
+        @countries = Country.all.map{|country| [country.name, country.id]}
+        @state = State.find(params[:id])
     end
 
     def update
-
+        check = State.where(id: params[:id]).update(name: params[:name], country_id: params[:country_id])
+        if check
+            redirect_to admin_state_index_path, flash: {notice: "Successfully updated"}
+        else
+            redirect_to admin_state_index_path, flash: {error: "an error occured"}
+        end
     end
  
     def destroy

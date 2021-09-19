@@ -13,9 +13,9 @@ class Admin::CostRangeController < ApplicationController
         currency = params[:currency]
         @cost_range = CostRange.new(quality: quality, range1: cost_range1, range2: cost_range2, currency: currency)
         if(@cost_range.save)
-            redirect_to new_admin_cost_range_path, notice: "you are successfully created a cost range"
+            redirect_to new_admin_cost_range_path, flash: {notice: "Successfully updated"}
         else
-            redirect_to new_admin_cost_range_path, notice: "sorry there is a problem of creating cost range"
+            redirect_to new_admin_cost_range_path, flash: {error: 'an error occured' }
         end
     end
 
@@ -28,8 +28,12 @@ class Admin::CostRangeController < ApplicationController
         cost_range1 = params[:range1]
         cost_range2 = params[:range2]
         currency = params[:currency]
-        CostRange.where(id: params[:id]).update(quality: quality, range1: cost_range1, range2: cost_range2, currency: currency)
-        redirect_to admin_cost_range_index_path, notice: "you are successfully created a cost range"
+        check = CostRange.where(id: params[:id]).update(quality: quality, range1: cost_range1, range2: cost_range2, currency: currency)
+        if check
+            redirect_to admin_cost_range_index_path, 
+        else
+            redirect_to admin_cost_range_index_path, flash: {error: 'an error occured' }
+        end
     end
 
     def index

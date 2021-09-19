@@ -9,11 +9,9 @@ class Admin::KillometerDrivenController < ApplicationController
     def create
         p = KillometerDriven.new(killometer_range: params[:killometer_range])
         if p.save
-            flash.now[:alert] = "successfully created brand"
-            redirect_to new_admin_killometer_driven_path
+            redirect_to new_admin_killometer_driven_path, flash: {notice: "Successfully updated"}
         else
-            flash.now[:alert] = "error occured"
-            redirect_to new_admin_killometer_driven_path
+            redirect_to new_admin_killometer_driven_path, flash: {error: 'an error occured' }
         end
     end
 
@@ -22,8 +20,13 @@ class Admin::KillometerDrivenController < ApplicationController
     end
 
     def update
-        KillometerDriven.where(id: params[:id]).update(killometer_range: params[:killometer_range])
-        redirect_to admin_killometer_driven_index_path
+        check = KillometerDriven.where(id: params[:id]).update(killometer_range: params[:killometer_range])
+        
+        if check
+            redirect_to admin_killometer_driven_index_path, lash: {error: 'Successfully created' }
+        else
+            redirect_to admin_killometer_driven_index_path, flash: {error: 'an error occured' }
+        end
     end
  
     def delete

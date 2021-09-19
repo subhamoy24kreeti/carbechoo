@@ -11,13 +11,13 @@
           <%= form_with url: admin_car_registration_year_update_path(@car_registration_year.id),  method: :put do |f|%>
             <div class="form-group">
              <%=f.label :range1 %>
-             <%=f.text_field :range1, class:"form-control",  value: @cost_range.range1 %>
+             <%=f.text_field :range1, class:"form-control",  value: @car_registration_year.range1 %>
             </div>
             <div class="form-group">
               <%=f.label :range2 %>
-              <%=f.text_field :range2, class:"form-control", value: @cost_range.range2 %>
+              <%=f.text_field :range2, class:"form-control", value: @car_registration_year.range2 %>
              </div>
-            <%=f.submit :add ,class:"btn btn-info" %>
+            <%=f.submit :update ,class:"btn btn-info" %>
           <% end%>
           </div>
         </section>

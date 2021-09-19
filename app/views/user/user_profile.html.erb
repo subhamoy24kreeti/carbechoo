@@ -6,11 +6,13 @@
 .cover-img{
   width: 100%;
   height: 400px;
+  background-color: white;
 }
 .profile-img{
   width: 150px;
   height: 150px;
   border-radius: 50%;
+  background-color: white;
 }
 .profile-img-wrap{
   position: absolute;
@@ -21,20 +23,20 @@
   margin-top: 100px;
 }
 </style>
-<div class="container border rounded">
+<div class="container border rounded mt-3">
   <div class="image-view">
     <div class="cover-img-wrap">
       <% if @seller.cover_pic.attached? %>
         <%= image_tag @seller.cover_pic, class:"cover-img", alt:"cover-img" %>
       <%else %>
-      <%= image_tag '', class:"cover-img", alt:"cover-img" %>
+      <%= image_tag 'default_user.png', class:"cover-img", alt:"cover-img" %>
       <% end %>
     </div>
     <div class="profile-img-wrap">
       <% if @seller.profile_pic.attached? %>
       <%= image_tag @seller.profile_pic, class:"profile-img", alt: "profile-img" %>
       <% else %>
-      <%= image_tag '', class: "profile-img", alt: "profile-img" %>
+      <%= image_tag "default_user.png", class: "profile-img", alt: "profile-img" %>
       <% end %>
     </div>
   </div>

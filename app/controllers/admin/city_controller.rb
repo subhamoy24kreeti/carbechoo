@@ -11,16 +11,18 @@ class Admin::CityController < ApplicationController
     def create
         p = City.new(state_id:params[:state_id], name: params[:name])
         if p.save
-            flash.now[:alert] = "successfully created brand"
-            redirect_to new_admin_city_path
+            redirect_to new_admin_city_path, flash: {notice: "Successfully updated"}
         else
-            flash.now[:alert] = "error occured"
             redirect_to new_admin_city_path
         end
     end
 
     def edit 
-
+        @city = City.find(params[:id])
+        state = State.find(@city.state_id)
+        @countries = Country.all.map{|country| [country.name, country.id]}
+        @selected_country_id = state.country_id
+        @states = State.where('country_id=?', state.country_id).map{|country| [country.name, country.id]}
     end
 
     def update

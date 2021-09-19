@@ -55,10 +55,9 @@ Rails.application.routes.draw do
   get 'check-status', to: 'user#check_status_appointment', as: 'check_status_appointment'
   get 'user-profile/:id', to:"user#user_profile", as:"user_profile"
   put 'user-profile-upadte', to:"user#user_profile_update", as:"user_update_profile"
-  get 'nearest-seller', to:"user#nearest_seller", as:'nearest_seller'
+  get 'sellers', to:"user#sellers", as:'sellers'
   get 'user-settings/:id', to:'user#user_settings', as:'user_settings'
 
   root "user#landing"
-
 
 end

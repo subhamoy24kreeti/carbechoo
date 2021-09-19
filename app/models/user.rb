@@ -18,7 +18,6 @@ class User < ApplicationRecord
     validates :last_name, presence: true, allow_blank: false
     validates :email, format: {with: URI::MailTo::EMAIL_REGEXP }, uniqueness: { case_sensitive: false }, if: :email_changed?
     validates :phone, numericality: true, length: {minimum: 10, maximum: 15}
-
     validates :password, presence: true, allow_blank: false, confirmation: true, length: {in: 6..20}, if: :password_changed?
     validates_confirmation_of :password, message: "should match", if: :password_changed?
 

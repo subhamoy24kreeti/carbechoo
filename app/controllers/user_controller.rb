@@ -29,8 +29,10 @@ class UserController < ApplicationController
     end
 
     def car_single
-        @car = SellerAppointment.find(params[:id]);
+        @car = SellerAppointment.find(params[:id]).where(status: 'approved');
         render 'car_single'
+    rescue
+        render 
     end
 
     def forget_password_request
@@ -178,9 +180,21 @@ class UserController < ApplicationController
         render 'user_profile'
     end
 
-    def nearest_seller
-        @sellers = User.where(role: 'seller')
-        render 'buyer/nearest_sellers'
+    def sellers
+        @sellers = User.limit(10).where(role: 'seller')
+        render 'buyer/sellers'
+    end
+
+    def ws_get_seller_profiles
+        page = 0
+        if !params[:page].blank?
+            page = params[:page].to_i
+        end
+        offset = page*10
+        sellers = User.limit(10).offset(offset).where(role: 'seller')
+        root_link = root_url
+        sellers.map{|seller| {:id => seller.id, :profile_url => user_profile_path(seller.id), :profile_pic_url => (seller.profile_pic)?url_for(seller.profile_pic):(root_link+'assets/images/default_profile.png'), :about=> seller.about, :name => seller.full_name, :city => seller.city, :state => seller.state, :country => seller.country}}
+        render json: {sellers: sellers}
     end
 
     def user_settings

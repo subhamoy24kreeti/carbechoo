@@ -12,9 +12,9 @@ class Admin::CarRegistrationYearController < ApplicationController
     car_registration_year[:range2] = params[:range2]
     @car_registration_year = CarRegistrationYear.new(car_registration_year)
     if @car_registration_year.save
-        redirect_to admin_car_registration_year_index_path
+        redirect_to admin_car_registration_year_index_path, flash: {notice: "Successfully updated"}
     else
-        redirect_to new_admin_car_registration_year_path
+        redirect_to new_admin_car_registration_year_path,  flash: {notice: "an error occured"}
     end
   end
 
@@ -23,7 +23,13 @@ class Admin::CarRegistrationYearController < ApplicationController
   end
 
   def update
-
+    p = CarRegistrationYear.where(id: params[:id]).update(range1: params[:range1], range2: params[:range2])
+    if p 
+        redirect_to admin_car_registration_year_index_path, flash: {notice: "Successfully updated"}
+    else 
+        redirect_to admin_car_registration_year_index_path, flash: {error: 'an error occured' }
+  
+    end
   end
 
   def index

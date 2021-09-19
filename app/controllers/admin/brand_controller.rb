@@ -9,11 +9,9 @@ class Admin::BrandController < ApplicationController
     def create
         @brand = Brand.new(brand_name: params[:brand_name])
         if @brand.save
-            flash.now[:alert] = "successfully created brand"
-            redirect_to new_admin_brand_path
+            redirect_to new_admin_brand_path, flash: {notice: 'Scccessfully created brand' }
         else
-            flash.now[:alert] = "error occured"
-            redirect_to new_admin_brand_path
+            redirect_to new_admin_brand_pathm, flash: {error: 'an error occured' }
         end
     end
 
@@ -27,8 +25,13 @@ class Admin::BrandController < ApplicationController
     end
 
     def delete
-        Brand.destroy(params[:id])
-        redirect_to admin_brand_index_path
+        p = Brand.destroy(params[:id])
+        if p
+            redirect_to admin_brand_index_path, flash:{notice: 'Successfully deleted brand'}
+        else
+            redirect_to admin_brand_index_path, flash:{error: 'cannot delete'}
+        end
+
     end
 
     def index

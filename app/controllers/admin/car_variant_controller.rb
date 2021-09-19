@@ -9,12 +9,23 @@ class Admin::CarVariantController < ApplicationController
     def create
         p = CarVariant.new(variant: params[:variant])
         if p.save
-            flash.now[:alert] = "successfully created brand"
-            redirect_to new_admin_car_variant_path
+            redirect_to new_admin_car_variant_path, flash: {notice: "Successfully updated"}
         else
-            flash.now[:alert] = "error occured"
-            redirect_to new_admin_car_variant_path
+            redirect_to new_admin_car_variant_path, flash: {error: 'an error occured' }
         end
+    end
+
+    def update
+        check = CarVariant.where(id: params[:id]).update(variant: params[:variant])
+        if check
+            redirect_to admin_car_variant_index_path, flash: {notice: "Successfully updated"}
+        else
+            redirect_to admin_car_variant_index_path, flash: {error: 'an error occured' }
+        end
+    end
+
+    def edit
+        @car_variant = CarVariant.find(params[:id])
     end
  
     def delete

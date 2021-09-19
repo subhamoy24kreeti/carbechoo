@@ -25,7 +25,7 @@
               <%=f.label :currency %>
               <%=select_tag(:currency, options_for_select([['INR','₹'],['USD','$']]), selcted: @cost_range.currency, class:"custom-select custom-select-lg mb-3") %>
              </div>
-            <%=f.submit :add ,class:"btn btn-info" %>
+            <%=f.submit :update ,class:"btn btn-info" %>
           <% end%>
           </div>
         </section>

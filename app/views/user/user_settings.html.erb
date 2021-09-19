@@ -43,6 +43,7 @@
   position: relative;
   height: 150px;
   width: 150px;
+  border-radius: 50%;
   background-color: thistle;
   border: 1px solid black;
 }
@@ -56,9 +57,9 @@
         <div class="image-view">
             <div class="cover-img-wrap">
               <% if @user.cover_pic.attached? %>
-              <%= image_tag @user.cover_pic, class:'cover-img'%>
+              <%= image_tag @user.cover_pic, class:'cover-img', alt: "user-cover"%>
               <% else %>
-               <img src="" class="cover-img" alt=""/>
+               <%= image_tag 'default_user.png'. class: 'cover-img', alt: "user-cover" %>
               <% end %>
               <div class="d-flex cover-wrap">
               <button id="cover-img-upload" onclick="document.getElementById('cover-img-hidden').click()"><i class="fa fa-camera"></i></button>
@@ -68,9 +69,9 @@
             </div>
             <div class="profile-img-wrap">
               <%if @user.profile_pic.attached? %>
-              <%= image_tag @user.profile_pic, class:"profile-img", alt:""%>
+              <%= image_tag @user.profile_pic, class:"profile-img", alt:"user-profile"%>
               <% else %>
-              <img src="" class="profile-img" alt=""/>
+              <%= image_tag 'default_user.png', class: 'profile-img', alt: "user-profile" %>
               <% end %>
               <div class="d-flex">
               <button id="profile-img-upload" onclick="document.getElementById('profile-img-hidden').click()"><i class="fa fa-camera"></i></button>

@@ -1,33 +1,28 @@
-
 <div class="wrapper">
-    <%= render "admin/layouts/sidebar" %>
-    <div class='container-fluid p-0'>
-       <%= render "admin/layouts/header" %>
-        <section>
-        <% if flash.key? :alert %>
-        <p><%= flash[:alert] %></p>
-        <% end %>
-        <div class="container pt-3">
-          <%= form_with url: admin_cost_range_update_path(@cost_range.id),  method: :put do |f|%>
-            <div class="form-group">
-              <%=f.label :quality %>
-              <%=f.text_field :quality, class:"form-control", value: @cost_range.quality %>
-            </div>
-            <div class="form-group">
-             <%=f.label :range1 %>
-             <%=f.text_field :range1, class:"form-control",  value: @cost_range.range1 %>
-            </div>
-            <div class="form-group">
-              <%=f.label :range2 %>
-              <%=f.text_field :range2, class:"form-control", value: @cost_range.range2 %>
-             </div>
-             <div class="form-group">
-              <%=f.label :currency %>
-              <%=select_tag(:currency, options_for_select([['INR','₹'],['USD','$']]), selcted: @cost_range.currency, class:"custom-select custom-select-lg mb-3") %>
-             </div>
-            <%=f.submit :add ,class:"btn btn-info" %>
-          <% end%>
+  <%= render "admin/layouts/sidebar" %>
+  <div class='container-fluid p-0'>
+     <%= render "admin/layouts/header" %>
+      <section>
+      <% if flash.key? :alert %>
+      <p><%= flash[:alert] %></p>
+      <% end %>
+      <div class="container">
+        <% if @countries.blank? %>
+         <h5>you have to create a country first to create a state</h5>
+        <% else %>
+        <%= form_with url: admin_state_update_path,  method: :put do |f|%>
+          <div class="form-group">
+             <% f.label :name %>
+             <%= f.text_field :name, class:"form-control", value: @state.name %>
           </div>
-        </section>
-    </div>
-    </div>
+          <div class="form-group">
+              <%= f.label 'Choose the country'%>
+              <%= select_tag(:country_id, options_for_select(@countries, selected: @state.country_id), class:"custom-select custom-select-lg mb-3") %>
+          </div>
+          <%=f.submit :update ,class:"btn btn-info" %>
+        <% end %>
+        <% end %>
+      </div>
+      </section>
+  </div>
+</div>
