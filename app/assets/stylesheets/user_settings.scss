@@ -1,0 +1,50 @@
+.cover-img-wrap{
+    position: relative;
+    height: 400px;
+    width: 100%;
+    background-color: thistle;
+    border: 1px solid black;
+  }
+  .cover-img {
+    height: 100%;
+    width: 100%;
+  }
+  .profile-img{
+    width: 100%;
+    height: 100%;
+  }
+  #cover-img-upload {
+    all:unset;
+    font-size: 35px;
+    margin-left: 20px;
+    cursor: pointer;
+  }
+  #upload-cover {
+    display: none;
+    margin-right: 20px;
+  }
+  .cover-wrap{
+    position: absolute;
+    bottom: 2%;
+    width: 100%;
+    justify-content: space-between;
+  }
+  #profile-img-upload {
+    all: unset;
+    position: absolute;
+    bottom: 30%;
+    left: 35%;
+    font-size: 40px;
+    cursor: pointer;
+  }
+  .profile-img-wrap{
+    position: relative;
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    background-color: thistle;
+    border: 1px solid black;
+  }
+  #upload-profile{
+    display: none;
+  }

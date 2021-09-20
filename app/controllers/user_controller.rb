@@ -29,10 +29,8 @@ class UserController < ApplicationController
     end
 
     def car_single
-        @car = SellerAppointment.find(params[:id]).where(status: 'approved');
+        @car = SellerAppointment.where(status: 'approved').find(params[:id])
         render 'car_single'
-    rescue
-        render 
     end
 
     def forget_password_request

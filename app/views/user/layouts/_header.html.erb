@@ -36,7 +36,7 @@
             <p id="inform"></p>
             <button class="btn btn-outline-success", id="status" type="submit">check</button>
           </form>
-          <%= link_to 'sellers', nearest_seller_path, class: "dropdown-item" %>
+          <%= link_to 'sellers', sellers_path, class: "dropdown-item" %>
           <div class="dropdown-divider"></div>
           <%= link_to raw('<i class="fa fa-cog"></i> Settings'), user_settings_path(current_user.id), class:"dropdown-item" %>
           </div>

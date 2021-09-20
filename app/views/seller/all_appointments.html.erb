@@ -1,17 +1,10 @@
-<style>
-    table{
-        border-collapse: collapse;
-        width: 100%;
-    }
-    td,th{
-        border: 1px solid #dddddd;
-        text-align:left;
-        padding: 8px;
-    }
-    </style>
+
+    <% content_for :stylesheets do %>
+    <%= stylesheet_link_tag 'all_appointments' , media: 'all', 'data-turbolinks-track': 'reload'%>
+    <% end %>
     <%= render 'user/layouts/header' %>
-    <main>
-      <div class="container mt-3">
+    <main class="all-appointments">
+      <div class="container mt-3 mb-3">
         <%= link_to "add car details", seller_add_car_details_path,  class:"btn btn-info" %>
         <table>
           <thead>

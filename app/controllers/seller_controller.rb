@@ -43,15 +43,14 @@ class SellerController < ApplicationController
         seller[:zip_code] = params[:zip_code]
 
         @seller = User.new(seller)
+        @countries = Country.all.map{|country| [country.name, country.id]}
         if @seller.save
             session[:user_id] = @seller.id
-            SellerMailer.welcome_mail(@seller).deliver_now
-            verify_link = seller_email_verification_url(@seller.confirm_token_email)
-            SellerMailer.email_verification_mail(@seller, verify_link).deliver
+            SellerMailer.welcome_mail(@seller).deliver
+            UserMailer.email_verification_mail(@seller).deliver
             redirect_to root_path, flash: { notice: "Successfully Created! account"}
         else
-            session[:user_id] = @seller.id
-            render "signup", flash: { alert: "there is something wrong while creating account"}
+            redirect_to seller_registration_path, flash: { error: @seller.errors.full_messages}
         end
     end
     def dashboard
@@ -107,7 +106,7 @@ class SellerController < ApplicationController
     end
 
     def all_appointments
-        @all_seller_appointments = SellerAppointment.all
+        @all_seller_appointments = SellerAppointment.where(user_id: params[:id])
         render 'all_appointments'
     end
     

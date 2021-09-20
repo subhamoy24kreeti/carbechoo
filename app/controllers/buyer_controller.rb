@@ -43,17 +43,14 @@ class BuyerController < ApplicationController
         buyer[:zip_code] = params[:zip_code]
 
         @buyer = User.new(buyer)
-        
+        @countries = Country.all.map{|country| [country.name, country.id]}
         if @buyer.save
             session[:user_id] = @buyer.id
-            flash[:notice] = "Successfully Created! account"
             BuyerMailer.welcome_mail(@buyer).deliver
             UserMailer.email_verification_mail(@buyer).deliver
-            redirect_to buyer_dashboard_path
+            redirect_to buyer_dashboard_path, flash: {error: "Successfully Created! account" }
         else
-            session[:user_id] = @buyer.id
-            flash.now[:error] = "there is something wrong while creating account"
-            render 'signup'
+            redirect_to buyer_registration_path, flash: {error: @buyer.errors.full_messages }
         end
     end
 

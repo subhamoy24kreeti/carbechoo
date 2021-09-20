@@ -1,105 +1,8 @@
-<style>
-.slider-img{
-	width:100px;
-	border: 1px solid black;
-}
-.slider {
-	max-width: 450px;
-	overflow: hidden;
-}
-.splide__slide{
-   padding: 0px 5px 0px 5px;
-}
 
-.back-for{
-	outline: none;
-	border-radius: 50%;
-	border: none;
-	background-color: white;
-	height: 30px;
-	width: 30px;
-	display: flex;
-	align-items: center;
+<% content_for :stylesheets do %>
+<%= stylesheet_link_tag 'car_single' , media: 'all', 'data-turbolinks-track': 'reload'%>
+<% end %>
 
-}
-.slider-image {
-    width: 100px;
-    border: 1px solid black;
-}
-.img-item{
-    padding: 0 5px 0px 5px;
-}
-.slider{
-    max-width: 400px;
-    overflow: hidden;
-}
-.for-back{
-    width: 30px;
-    height: 30px;
-    background-color: gray;
-    border-radius: 50%;
-    border: none;
-    outline: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 25px;
-}
-.for-back:hover{
-    background-color: black;
-    color: white;
-    border: none;
-}
-.for-back:focus{
-    border: none;
-    outline: none;
-}
-#lop{
-    margin-left: -4px;
-}
-      .slider-image{
-          cursor: pointer;
-          opacity: 0.5;
-      }
-      .active {
-          opacity: 1;
-      }
-      .main-content {
-          width: 500px;
-      }
-
-      .img-fix{
-          height: 400px;
-          width: 400px;
-      }
-      .car-gallery{
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-
-      }
-      .notify-success {
-        text-align: center;
-        color: green;
-      }
-      .notify-error {
-        text-align: center;
-        color: red
-      }
-      .profile-pic-user {
-        height: 70px;
-        width: 70px;
-        border-radius: 50%;
-      }
-
-      .seller-details {
-        display: flex;
-      }
-      .desription-header {
-        background-color: greenyellow;
-      }
-
-</style>
 <header>
 <%= render "user/layouts/header" %>
 </header>
@@ -152,7 +55,7 @@
     </b>
   </div>
   <div class="seller-name d-flex align-items-center">
-    <b><%= @car.user.full_name %></b>
+   <b> <%= link_to @car.user.full_name, user_profile_path(@car.id) %> </b>
   </div>
 </div>
 <div class="car-description mt-3">
@@ -172,10 +75,10 @@
 <div class="car-details row mt-3">
   <div class="col-md-12 col-xl-12 col-xg-12">
   <div class="form-group bg-light">
-    <div class="desription-header p-2 border" >
+    <div class="description-header p-2 border" >
       description
     </div>
-    <div class="container">
+    <div class="container p-2">
       <%= @car.description %>
     </div>
   </div>
@@ -186,9 +89,15 @@
         specifications
       </div>
       <div class="container">
-        <ul class="list-unstyled">
+        <ul class="list-unstyled car-details-list">
           <li>
-            <i>car vaiant:</i> <span>@car.variant.name</span>
+            <i>car vaiant:</i> <span><%= @car.car_variant.variant %></span>
+          </li>
+          <li>
+            <i>killometer driven:</i> <span><%= @car.killometer_driven.killometer_range %></span>
+          </li>
+          <li>
+            <i>car registration:</i> <span><%= @car.car_registration.state_code %></span>
           </li>
         </ul>
       </div>
