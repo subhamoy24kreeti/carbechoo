@@ -95,7 +95,7 @@ class UserController < ApplicationController
         @user = User.find(params[:id])
         if !@user.password_reset_token.blank? && @user.password_reset_token == params[:password_token]
             @user.updating_password = true
-            check = @user.update(password: params[:password], password_confirmation: params[:password_confirmation], password_reset_token: null, password_reset_token_sent_at: null)           
+            check = @user.update(password: params[:password], password_confirmation: params[:password_confirmation], password_reset_token: nil, password_reset_token_sent_at: nil)           
             if check 
                 @response = "Successfully updated your password please login now"
                 render 'forget_password_response'
