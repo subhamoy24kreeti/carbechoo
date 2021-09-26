@@ -1,21 +1,21 @@
 
 <div class="wrapper">
-    <%= render "admin/layouts/sidebar" %>
-    <div class='container-fluid p-0'>
-       <%= render "admin/layouts/header" %>
-        <section>
-        <% if flash.key? :alert %>
-        <p><%= flash[:alert] %></p>
-        <% end %>
-        <div class="container">
-          <%= form_with url: admin_killometer_driven_update_path(@killometer_driven.id),  method: :put do |f|%>
-            <div class="form-group">
-               <%f.label 'killometer ranges' %>
-               <%=f.text_field :killometer_range, class:"form-control", value: @killometer_driven.killometer_range %>
-            </div>
-            <%=f.submit :update ,class:"btn btn-info" %>
-          <% end%>
-        </div>
-        </section>
+  <%= render "admin/layouts/sidebar" %>
+  <div class='container-fluid p-0'>
+     <%= render "admin/layouts/header" %>
+    <section>
+    <% if flash.key? :alert %>
+    <p><%= flash[:alert] %></p>
+    <% end %>
+    <div class="container">
+      <%= form_with url: admin_killometer_driven_update_path(@killometer_driven.id),  method: :put do |f|%>
+      <div class="form-group">
+         <%f.label 'killometer ranges' %>
+         <%=f.text_field :killometer_range, class:"form-control", value: @killometer_driven.killometer_range %>
+      </div>
+      <%=f.submit :update ,class:"btn btn-info" %>
+      <% end%>
     </div>
-    </div>
+    </section>
+  </div>
+  </div>

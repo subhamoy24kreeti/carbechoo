@@ -23,183 +23,203 @@
     max-width: 140px;
     padding: 0.25rem;
   }
+  .car-image-album {
+    width: 400px;
+    height: 400px;
+  }
   </style>
-  
+
   <div class="wrapper">
-    <%= render "admin/layouts/sidebar" %>
-    <div class="container-fluid p-0">
-      <%= render "admin/layouts/header" %>
-      <div class="container pt-3">
+	<%= render "admin/layouts/sidebar" %>
+	<div class="container-fluid p-0">
+	  <%= render "admin/layouts/header" %>
+	  <div class="container pt-3">
    <%=form_with url: admin_seller_appointment_update_path(@seller_appointment.id), id: "car-details", method: :put  do |f|%>
-    <%=f.text_field :user_id, value: current_user.id, hidden: "true"%>
-    
-    <div class="form-group">
-    <%=f.label 'choose the brand'%>
-    <%= select_tag(:brand_id, options_for_select(@brands, selected: @seller_appointment.brand_id), class:"custom-select custom-select-lg mb-3", id: "brand", include_blank: '--selecr your brand--') %>
-    </div>
-  
-    <div class="form-group">
-    <%=f.label 'choose the model'%>
-    <%=select_tag(:car_model_id, options_for_select(@car_models,  selected: @seller_appointment.car_model_id), class:"custom-select custom-select-lg mb-3", id:"car-model" ) %>
-    </div>
-  
-    <div class="form-group">
-    <%=f.label 'choose the range'%>
-    <%=select_tag(:killometer_driven_id, options_for_select(@killometer_drivens, selected: @seller_appointment.killometer_driven_id), class:"custom-select custom-select-lg mb-3", id:'killometer-driven') %>
-    </div> 
-  
-    <div class="form-group">
-    <%=f.label 'choose the registered state code'%>
-    <%=select_tag(:car_registration_id, options_for_select(@car_registrations, selected: @seller_appointment.car_registration_id), class:"custom-select custom-select-lg mb-3", id:"car-registration") %>
-    </div>
-  
-    <div class="form-group">
-    <%=f.label 'choose the type'%>
-    <%=select_tag(:car_variant_id, options_for_select(@car_variants, selected: @seller_appointment.car_variant_id), class:"custom-select custom-select-lg mb-3", id: "car-variant") %>
-    </div>
-  
-    <div class="form-group">
-     <%=f.label "description"%>
-     <%=f.text_area :description, class:"form-control", id: "description", value: @seller_appointment.description %>
-    </div>
-  
-    <div class="form-group field">
-     <%=f.label "expected price"%>
-     <%=f.number_field :price ,required: true, class: "form-control", id: "expected-price", value: @seller_appointment.price %>
-    </div>
+	<%=f.text_field :user_id, value: current_user.id, hidden: "true"%>
 
-    <div class="form-group field">
-      <%=f.label "year of buy"%>
-      <%=select_tag(:year_of_buy, options_for_select(@years, selected: @seller_appointment.year_of_buy), class:"custom-select custom-select-lg mb-3", id: "year", required: true) %>
-    </div>
-  
-    <div class="form-group">
-      <%=f.label "seller's country" %>
-      <%=select_tag(:country_id, options_for_select(@countries, selected: @seller_appointment.country_id), class:"custom-select custom-select-lg mb-3", id:"country", include_blank: '--selecr your country--') %>
-    </div>
-    
-    <div class="form-group">
-      <%=f.label 'choose your state'%>
-      <%=select_tag(:state_id, options_for_select(@states), class:"custom-select custom-select-lg mb-3", id:"state", selected: @seller_appointment.state_id) %>
-    </div>
-  
-    <div class="form-group">
-      <%=f.label 'choose your city'%>
-      <%=select_tag(:city_id, options_for_select(@cities, selected: @seller_appointment.city_id), class:"custom-select custom-select-lg mb-3", id:"city") %>
-    </div>
+	<div class="form-group">
+	<%=f.label 'choose the brand'%>
+	<%= select_tag(:brand_id, options_for_select(@brands, selected: @seller_appointment.brand_id), class:"custom-select custom-select-lg mb-3", id: "brand", include_blank: '--selecr your brand--') %>
+	</div>
 
-    <div class="form-group">
-      <%=f.label 'status'%>
-      <%=select_tag(:status, options_for_select(@statuses, selected: @seller_appointment.get_status_code), class:"custom-select custom-select-lg mb-3", id:"status") %>
-    </div>
+	<div class="form-group">
+	<%=f.label 'choose the model'%>
+	<%=select_tag(:car_model_id, options_for_select(@car_models,  selected: @seller_appointment.car_model_id), class:"custom-select custom-select-lg mb-3", id:"car-model" ) %>
+	</div>
 
-    <div class="form-group">
-      <%=f.label 'cost range'%>
-      <%=select_tag(:cost_range_id, options_for_select(@cost_ranges, selected: @seller_appointment.cost_range_id), class:"custom-select custom-select-lg mb-3", id:"status", include_blank: '--selecr a cost range--') %>
+	<div class="form-group">
+	<%=f.label 'choose the range'%>
+	<%=select_tag(:killometer_driven_id, options_for_select(@killometer_drivens, selected: @seller_appointment.killometer_driven_id), class:"custom-select custom-select-lg mb-3", id:'killometer-driven') %>
+	</div>
     </div>
+	</div>
+    </div>
+	</div>
+    </div>
+	</div>
+    </div>
+	</div>
 
-    <div class="form-group">
-      <%=f.label 'sheduled appointment date'%>
-      <%=f.date_field :scheduled_date, class: "form-control", value: @seller_appointment.scheduled_date %>
-    </div>
+	<div class="form-group">
+	<%=f.label 'choose the registered state code'%>
+	<%=select_tag(:car_registration_id, options_for_select(@car_registrations, selected: @seller_appointment.car_registration_id), class:"custom-select custom-select-lg mb-3", id:"car-registration") %>
+	</div>
 
-    <div class="form-group">
-      <%=f.label 'sheduled appointment time'%>
-      <%=f.time_field :scheduled_time, class: "form-control", value: (@seller_appointment.scheduled_time)?@seller_appointment.scheduled_time.strftime("%H:%M"):"" %>
-    </div>
-    
-  
-    <div class="form-group">
-      <%=f.label 'zip code' %>
-      <%=f.text_field :zip_code, id: "zip-code", class: "form-control", value: @seller_appointment.zip_code%>
-    </div>
-  
-    <div class="form-group field" id="uio">
-      <% if @seller_appointment.car_images.attached? %>
-      <% @seller_appointment.car_images.each do |p| %>
-      <%= image_tag p %>
-      <% end %>
-      <% end %>
-    </div>
-  
-    <%= f.text_field :longitude, id: 'longitude', type: "hidden" %>
-    <%= f.text_field :latitude, id: 'latitude', type: "hidden" %>
-    <div class="form-group">
-    <%=f.submit :update , class:"btn btn-primary" %>
-    </div>
+	<div class="form-group">
+	<%=f.label 'choose the type'%>
+	<%=select_tag(:car_variant_id, options_for_select(@car_variants, selected: @seller_appointment.car_variant_id), class:"custom-select custom-select-lg mb-3", id: "car-variant") %>
+	</div>
+
+	<div class="form-group">
+	 <%=f.label "description"%>
+	 <%=f.text_area :description, class:"form-control", id: "description", value: @seller_appointment.description %>
+	</div>
+
+	<div class="form-group field">
+	 <%=f.label "expected price"%>
+	 <%=f.number_field :price ,required: true, class: "form-control", id: "expected-price", value: @seller_appointment.price %>
+	</div>
+
+	<div class="form-group field">
+	  <%=f.label "year of buy"%>
+	  <%=select_tag(:year_of_buy, options_for_select(@years, selected: @seller_appointment.year_of_buy), class:"custom-select custom-select-lg mb-3", id: "year", required: true) %>
+	</div>
+
+	<div class="form-group">
+	  <%=f.label "seller's country" %>
+	  <%=select_tag(:country_id, options_for_select(@countries, selected: @seller_appointment.country_id), class:"custom-select custom-select-lg mb-3", id:"country", include_blank: '--selecr your country--') %>
+	</div>
+
+	<div class="form-group">
+	  <%=f.label 'choose your state'%>
+	  <%=select_tag(:state_id, options_for_select(@states), class:"custom-select custom-select-lg mb-3", id:"state", selected: @seller_appointment.state_id) %>
+	</div>
+
+	<div class="form-group">
+	  <%=f.label 'choose your city'%>
+	  <%=select_tag(:city_id, options_for_select(@cities, selected: @seller_appointment.city_id), class:"custom-select custom-select-lg mb-3", id:"city") %>
+	</div>
+
+	<div class="form-group">
+	  <%=f.label 'status'%>
+	  <%=select_tag(:status, options_for_select(@statuses, selected: @seller_appointment.get_status_code), class:"custom-select custom-select-lg mb-3", id:"status") %>
+	</div>
+
+	<div class="form-group">
+	  <%=f.label 'cost range'%>
+	  <%=select_tag(:cost_range_id, options_for_select(@cost_ranges, selected: @seller_appointment.cost_range_id), class:"custom-select custom-select-lg mb-3", id:"status", include_blank: '--selecr a cost range--') %>
+	</div>
+
+	<div class="form-group">
+	  <%=f.label 'sheduled appointment date'%>
+	  <%=f.date_field :scheduled_date, class: "form-control", value: @seller_appointment.scheduled_date %>
+	</div>
+
+	<div class="form-group">
+	  <%=f.label 'sheduled appointment time'%>
+	  <%=f.time_field :scheduled_time, class: "form-control", value: (@seller_appointment.scheduled_time)?@seller_appointment.scheduled_time.strftime("%H:%M"):"" %>
+	</div>
+
+
+	<div class="form-group">
+	  <%=f.label 'zip code' %>
+	  <%=f.text_field :zip_code, id: "zip-code", class: "form-control", value: @seller_appointment.zip_code%>
+	</div>
+
+	<label>Images</label>
+	<div class="form-group d-flex flex-wrap">
+	  <% if @seller_appointment.car_images.attached? %>
+	  <% @seller_appointment.car_images.each do |p| %>
+	  <%= image_tag p, class: "car-image-album"%>
+	  <% end %>
+	  <% end %>
+	</div>
+
+	<%= f.text_field :longitude, id: 'longitude', type: "hidden" %>
+	<%= f.text_field :latitude, id: 'latitude', type: "hidden" %>
+	<div class="form-group">
+	<%=f.submit :update , class:"btn btn-primary" %>
+	</div>
    <% end%>
   <div>
-    </div>
-      </div>
+	</div>
+	  </div>
   </div>
   </div>
   <%= render 'layouts/helper_address' %>
-  
+
   <script>
-  
-    $("#car-details").submit(
-      function(e){
-        var b = $('#brand').val()
-        var cm = $('#car-model').val()
-        var kd = $("#killometer-driven").val()
-        var cr = $("#car-registration").val()
-        var cv = $("#car-variant").val()
-        var d = $("#description").val()
-        var ep = $("#expected-price").val()
-        var c = $("#country").val()
-        var st = $("#state").val()
-        var ci = $("#city").val()
-        var f = $('#upload_imgs').prop('files').length
-        console.log(b)
-        console.log(cm)
-        console.log(kd)
-        console.log(cr)
-        console.log(cv)
-        console.log(d)
-        console.log(ep)
-        console.log(c)
-        console.log(st)
-        console.log(ci)
-        console.log(f)
-        if(b && cm && kd && cr && cv && d && ep && c && st && ci && f ){
-          console.log("pop0")
-          return true
-        }else{
-          console.log("pop")
-          e.preventDefault();
-          return false
-        }
-  
-      }
-    )
-     $("#brand").change(
-        function(){
-          var p = $("#brand").val();
-          if(!p){
-            $("#car-model").html("");
-            return;
-          }
-          console.log(p);
-          $.ajax(
-            {
-              type: 'get',
-              url: '<%= ws_get_car_models_path %>',
-              dataType: 'json',
-              contentType: 'application/json',
-              data: {
-                brand_id : $("#brand").val()  
-              },
-              success: function(res){
-                console.log(res)
-                $('#car-model').html(res.html)
-              },
-              error: function(err){
-  
-              }
-            }
-          )
-  
-        }
-  
-      )
-    
+
+	$("#car-details").submit(
+	  function(e){
+		var b = $('#brand').val()
+		var cm = $('#car-model').val()
+		var kd = $("#killometer-driven").val()
+		var cr = $("#car-registration").val()
+		var cv = $("#car-variant").val()
+		var d = $("#description").val()
+		var ep = $("#expected-price").val()
+		var c = $("#country").val()
+		var st = $("#state").val()
+		var ci = $("#city").val()
+		var f = $('#upload_imgs').prop('files').length
+		console.log(b)
+		console.log(cm)
+		console.log(kd)
+		console.log(cr)
+		console.log(cv)
+		console.log(d)
+		console.log(ep)
+		console.log(c)
+		console.log(st)
+		console.log(ci)
+		console.log(f)
+		if(b && cm && kd && cr && cv && d && ep && c && st && ci && f ){
+		  console.log("pop0")
+		  return true
+		}else{
+		  console.log("pop")
+		  e.preventDefault();
+		  return false
+		}
+
+	  }
+	)
+	 $("#brand").change(
+		function(){
+		  var p = $("#brand").val();
+		  if(!p){
+			$("#car-model").html("");
+			return;
+		  }
+		  console.log(p);
+		  $.ajax(
+			{
+			  type: 'get',
+			  url: '<%= ws_get_car_models_path %>',
+			  dataType: 'json',
+			  contentType: 'application/json',
+			  data: {
+				brand_id : $("#brand").val()
+                brand_id : $("#brand").val()
+				brand_id : $("#brand").val()
+                brand_id : $("#brand").val()
+				brand_id : $("#brand").val()
+                brand_id : $("#brand").val()
+				brand_id : $("#brand").val()
+                brand_id : $("#brand").val()
+				brand_id : $("#brand").val()
+			  },
+			  success: function(res){
+				console.log(res)
+				$('#car-model').html(res.html)
+			  },
+			  error: function(err){
+
+			  }
+			}
+		  )
+
+		}
+
+	  )

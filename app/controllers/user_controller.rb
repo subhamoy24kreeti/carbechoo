@@ -56,8 +56,15 @@ class UserController < ApplicationController
     end
 
     def save_user_phone
-        params[:user_id]
-        params[:phone]
+
+        if params[:user_id].blank?
+            render json: {status: 0, error: 1, msg:"error occured"}
+        end
+
+        if params[:phone].blank?
+            render json: {status: 0, error: 1, msg:"error occured"}
+        end
+
         @user = User.find(params[:user_id])
         @user.phone = params[:phone]
         if @user.save
@@ -72,6 +79,11 @@ class UserController < ApplicationController
     def forget_password_reset
         @user = User.find_by_password_reset_token(params[:password_token])
         time_now = Time.now
+        if @user.blank? || @user.password_reset_token_sent_at.blank?
+            @response = "Invalid Authentication"
+            render 'forget_password_response'
+            return 
+        end
         time_diff = (@user.password_reset_token_sent_at - time_now)/60
         if @user.blank?
             @response = "Invalid Authentication"
@@ -88,24 +100,45 @@ class UserController < ApplicationController
     end
 
     def forget_password_update
-        params[:id]
-        params[:password_token]
-        params[:password_confirmation]
-        params[:password]
         @user = User.find(params[:id])
+        if @user.blank?
+            render user_login_get
+            return
+        end
         if !@user.password_reset_token.blank? && @user.password_reset_token == params[:password_token]
             @user.updating_password = true
             check = @user.update(password: params[:password], password_confirmation: params[:password_confirmation], password_reset_token: nil, password_reset_token_sent_at: nil)           
             if check 
                 @response = "Successfully updated your password please login now"
+                @success = 1
                 render 'forget_password_response'
             else
                 @response = "There is a problem while updating your password"
                 render 'forget_password_response'
             end
         else
-            @response = "Invalid authentication|404"
-            render 'forget_password_response'
+            render user_login_get
+        end
+    rescue
+        render user_login_get
+    end
+
+    def get_password_update
+        render 'user_password_change'
+    end
+
+    def password_update
+        @user = User.find_by_id(current_user.id)
+        if @user.authenticate(params[:old_password])
+            @user.updating_password = true
+            check = @user.update(password: params[:password], password_confirmation: params[:password_confirmation])
+            if check 
+                redirect_to user_settings_path, flash: {notice: "Successfully updated password"}
+            else 
+                redirect_to get_password_update_path, flash: {error: @user.errors.full_messages}
+            end
+        else
+            redirect_to get_password_update_path, flash: {error: ['password does not match']}
         end
     end
 
@@ -122,6 +155,8 @@ class UserController < ApplicationController
         else
             render json: {status: 0, error: 1, msg: 'sorry there is sa problem'}
         end
+    rescue
+        render json: {status: 0, error: 1, msg: 'sorry there is sa problem'}
     end
 
     def confirm_email
@@ -158,18 +193,38 @@ class UserController < ApplicationController
     skip_before_action :verify_authenticity_token
     def ws_user_cover_pic_upload
         image = params[:cover_pic]
-        @user = User.find(params[:id])
-        @user.cover_pic.attach(params[:cover_pic])
-        Rails.logger.info(@user.errors.full_messages)
-        render json: {image: url_for(@user.cover_pic)}
+        @user = User.find_by_id(params[:id])
+        if(@user.blank?)
+            render json: {status: 0, error: 1}
+            return
+        end
+        ch = @user.cover_pic.attach(params[:cover_pic])
+        if ch
+            render json: {image: url_for(@user.cover_pic), error: 0, status:1}
+        else
+            render json: {status: 0, error: 1}
+        end
+    rescue
+        render json: {status: 0, error: 1}
     end
     
     skip_before_action :verify_authenticity_token, raise: false
     def ws_user_profile_pic_upload
         image = params[:profile_pic]
-        @user = User.find(params[:id])
-        @user.profile_pic.attach image
-        render json: {image: url_for(@user.profile_pic)}
+        @user = User.find_by_id(params[:id])
+        if @user.blank?
+            render json: {status: 0, error: 1}
+        end
+
+        ch = @user.profile_pic.attach image
+
+        if ch 
+            render json: {image: url_for(@user.profile_pic), status: 1, error: 0, ch: ch}
+        else
+            render json: {status: 0, error: 1, ch: ch}
+        end
+    rescue
+        render json: {status: 0, error: 1, ch: ch}
     end
 
     def user_profile
@@ -196,26 +251,11 @@ class UserController < ApplicationController
     end
 
     def user_settings
-        @user = User.find(params[:id])
 
-        if @user.country
-            @user_country_id = Country.find_by_name(@user.country).id
-            @countries = Country.all
-        end
+        @countries = Country.all.map{|country| [country.name, country.id]}
+        @states = State.where(country_id: current_user.state_id).map{|state| [state.name, state.id]}
+        @cities = City.where(state_id: current_user.city_id).map{|city| [city.name, city.id]}    
 
-        if @user.state
-            @user_state_id = State.find_by_name(@user.state).id
-            @states = State.where(country_id: @user_country_id)
-        end
-
-        if @user.city
-            @user_city_id = City.find_by_name(@user.city).id  
-            @cities = City.where(state_id: @user_state_id)     
-        end
-
-        @countries =  Country.all.map{|country| [country.name, country.id]}
-        @states =  State.all.map{|state| [state.name, state.id]}
-        @cities =  City.all.map{|city| [city.name, city.id]}
 
         render 'user/user_settings'
     end
@@ -224,9 +264,9 @@ class UserController < ApplicationController
         update_user = {}
         update_user[:first_name] = params[:first_name]
         update_user[:last_name] = params[:last_name]
-        update_user[:country] = Country.find(params[:country_id]).name
-        update_user[:state] = State.find(params[:state_id]).name
-        update_user[:city] = City.find(params[:city_id]).name
+        update_user[:country_id] = params[:country_id]
+        update_user[:state_id] = params[:state_id]
+        update_user[:city_id] = params[:city_id]
         update_user[:phone] = params[:phone]
         update_user[:zip_code] = params[:zip_code]
         user =  User.find(params[:id])
@@ -247,21 +287,18 @@ class UserController < ApplicationController
             end
         end
         
-        p = user.update(update_user)
+        check = user.update(update_user)
         
-        if p
+        if check
             if(email_changed)
                 Rails.logger.info(user.email)
                 UserMailer.email_verification_mail(user).deliver
             end
-            if user.role == 'seller'
-                redirect_to seller_dashboard_path, flash: { notice: "Successfully Created! account"}
-            else
-                redirect_to buyer_dashboard_path, flash: { notice: "Successfully Created! account"}
-            end
+            
+            redirect_to user_settings_path, flash: { notice: "Successfully updated! account"}
         else
             session[:user_id] = user.id
-            redirect_to user_settings_path(params[:id]), flash: { alert: "there is something wrong while creating account"}
+            redirect_to user_settings_path, flash: { error: user.errors.full_messages }
         end
     end
 

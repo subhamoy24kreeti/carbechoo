@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     get "add-car-details", to:"seller#add_car_details", as:"seller_add_car_details"
     post "create-seller-appointment", to:'seller#create_seller_appointment', as:'create_seller_appointment'
     get "all-appointments/:id", to:"seller#all_appointments", as: "all_seller_appointments"
+    get "seller-appointment-single/:id", to: "seller#seller_appointment_single", as: "seller_appointment_single"
   end
  
   #buyer specific
@@ -50,13 +51,14 @@ Rails.application.routes.draw do
   get 'verify-user-email', to: "user#verify_email", as:"email_verification"
   
   
+   
   #default paths
   get "car-single/:id", to:"user#car_single", as:"car_single"  
   get 'check-status', to: 'user#check_status_appointment', as: 'check_status_appointment'
   get 'user-profile/:id', to:"user#user_profile", as:"user_profile"
   put 'user-profile-upadte', to:"user#user_profile_update", as:"user_update_profile"
   get 'sellers', to:"user#sellers", as:'sellers'
-  get 'user-settings/:id', to:'user#user_settings', as:'user_settings'
+  get 'user-settings', to:'user#user_settings', as:'user_settings'
 
   root "user#landing"
 

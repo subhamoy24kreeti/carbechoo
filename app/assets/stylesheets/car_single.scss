@@ -1,102 +1,102 @@
 .slider-img{
-	width:100px;
-	border: 1px solid black;
+  width:100px;
+  border: 1px solid black;
 }
 .slider {
-	max-width: 450px;
-	overflow: hidden;
+  max-width: 450px;
+  overflow: hidden;
 }
 .splide__slide{
-   padding: 0px 5px 0px 5px;
+  padding: 0px 5px 0px 5px;
 }
 
 .back-for{
-	outline: none;
-	border-radius: 50%;
-	border: none;
-	background-color: white;
-	height: 30px;
-	width: 30px;
-	display: flex;
-	align-items: center;
+  outline: none;
+  border-radius: 50%;
+  border: none;
+  background-color: white;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
 
 }
 .slider-image {
-    width: 100px;
-    border: 1px solid black;
+  width: 100px;
+  border: 1px solid black;
 }
 .img-item{
-    padding: 0 5px 0px 5px;
+  padding: 0 5px 0px 5px;
 }
 .slider{
-    max-width: 400px;
-    overflow: hidden;
+  max-width: 400px;
+  overflow: hidden;
 }
 .for-back{
-    width: 30px;
-    height: 30px;
-    background-color: gray;
-    border-radius: 50%;
-    border: none;
-    outline: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 25px;
+  width: 30px;
+  height: 30px;
+  background-color: gray;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
 }
 .for-back:hover{
-    background-color: black;
-    color: white;
-    border: none;
+  background-color: black;
+  color: white;
+  border: none;
 }
 .for-back:focus{
-    border: none;
-    outline: none;
+  border: none;
+  outline: none;
 }
 #lop{
-    margin-left: -4px;
+  margin-left: -4px;
 }
-      .slider-image{
-          cursor: pointer;
-          opacity: 0.5;
-      }
-      .active {
-          opacity: 1;
-      }
-      .main-content {
-          width: 500px;
-      }
+    .slider-image{
+      cursor: pointer;
+      opacity: 0.5;
+    }
+    .active {
+      opacity: 1;
+    }
+    .main-content {
+      width: 500px;
+    }
 
-      .img-fix{
-          height: 400px;
-          width: 400px;
-      }
-      .car-gallery{
-        display: flex;
-        align-items: center;
-        flex-direction: column;
+    .img-fix{
+      height: 400px;
+      width: 400px;
+    }
+    .car-gallery{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 
-      }
-      .notify-success {
-        text-align: center;
-        color: green;
-      }
-      .notify-error {
-        text-align: center;
-        color: red
-      }
-      .profile-pic-user {
-        height: 70px;
-        width: 70px;
-        border-radius: 50%;
-      }
+    }
+    .notify-success {
+    text-align: center;
+    color: green;
+    }
+    .notify-error {
+    text-align: center;
+    color: red
+    }
+    .profile-pic-user {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    }
 
-      .seller-details {
-        display: flex;
-      }
-      .description-header {
-        background-color: greenyellow;
-      }
-      .car-details-list li {
-        padding: 10px;
-      }
+    .seller-details {
+    display: flex;
+    }
+    .description-header {
+    background-color: greenyellow;
+    }
+    .car-details-list li {
+    padding: 10px;
+    }

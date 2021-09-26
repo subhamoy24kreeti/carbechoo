@@ -13,7 +13,7 @@ class Admin::CostRangeController < ApplicationController
         currency = params[:currency]
         @cost_range = CostRange.new(quality: quality, range1: cost_range1, range2: cost_range2, currency: currency)
         if(@cost_range.save)
-            redirect_to new_admin_cost_range_path, flash: {notice: "Successfully updated"}
+            redirect_to new_admin_cost_range_path, flash: {notice: "Successfully created"}
         else
             redirect_to new_admin_cost_range_path, flash: {error: 'an error occured' }
         end
@@ -30,7 +30,7 @@ class Admin::CostRangeController < ApplicationController
         currency = params[:currency]
         check = CostRange.where(id: params[:id]).update(quality: quality, range1: cost_range1, range2: cost_range2, currency: currency)
         if check
-            redirect_to admin_cost_range_index_path, 
+            redirect_to admin_cost_range_index_path, flash: {notice: 'Successfully updated' }
         else
             redirect_to admin_cost_range_index_path, flash: {error: 'an error occured' }
         end
@@ -41,7 +41,11 @@ class Admin::CostRangeController < ApplicationController
     end
 
     def delete
-        CostRange.destroy(params[:id])
-        redirect_to admin_cost_range_index_path
+        p = CostRange.destroy(params[:id])
+        if !p.blank?
+            redirect_to admin_cost_range_index_path, flash: {notice: 'Successfully Deleted' }
+        else
+            redirect_to admin_cost_range_index_path, flash: {error: 'an error occured' }
+        end
     end
 end

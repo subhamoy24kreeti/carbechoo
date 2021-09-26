@@ -14,26 +14,26 @@
 <div class="col-md-6 col-lg-6 col-xl-6">
 <div class="car-gallery">
 <div class="main-thumb">
-    <% if @car.car_images.attached? %>
-    <%= image_tag @car.car_images[0], alt:"car image", class:"img-fix", id:"main-img" %>
-    <% end %>
+  <% if @car.car_images.attached? %>
+  <%= image_tag @car.car_images[0], alt:"car image", class:"img-fix", id:"main-img" %>
+  <% end %>
 </div>
 <div class="d-flex align-items-center">
 <button class="for-back" onclick="slide('1')">
-    <i class="fa fa-angle-left"></i>
+  <i class="fa fa-angle-left m-0"></i>
 </button>
-    <% if @car.car_images.attached? %>
-    <ul class="list-unstyled slider d-flex mb-0">
-          <% @car.car_images.each do |image| %>
-            <li class="img-item">
-              <%= image_tag image, alt:"car image", class:"slider-image"%>
-            </li>
-         <% end %>
-    </ul>
-    <% end %>
-    <button class="for-back" onclick="slide('0')" >
-        <i class="fa fa-angle-right"></i>
-    </button>              
+  <% if @car.car_images.attached? %>
+  <ul class="list-unstyled slider d-flex mb-0">
+      <% @car.car_images.each do |image| %>
+      <li class="img-item">
+        <%= image_tag image, alt:"car image", class:"slider-image"%>
+      </li>
+     <% end %>
+  </ul>
+  <% end %>
+  <button class="for-back" onclick="slide('0')" >
+    <i class="fa fa-angle-right m-0"></i>
+  </button>
 </div>
 </div>
 </div>
@@ -46,13 +46,13 @@
 </div>
 <div class="seller-details d-flex">
   <div class="seller-profile">
-    <b>
-      <% if @car.user.profile_pic.attached? %>
-      <%= image_tag @car.user.profile_pic, class: 'profile-pic-user' %>
-      <% else %>
-      <%= image_tag "default_user.png", class: 'profile-pic-user'%>
-      <% end %>
-    </b>
+  <b>
+    <% if @car.user.profile_pic.attached? %>
+    <%= image_tag @car.user.profile_pic, class: 'profile-pic-user' %>
+    <% else %>
+    <%= image_tag "default_user.png", class: 'profile-pic-user'%>
+    <% end %>
+  </b>
   </div>
   <div class="seller-name d-flex align-items-center">
    <b> <%= link_to @car.user.full_name, user_profile_path(@car.id) %> </b>
@@ -67,41 +67,47 @@
 </div>
 <%= f.text_field 'seller_user_id', type:"hidden", value:@car.user_id %>
 <div class="appoint">
+<% if !current_user.buyer_appointment_exists(@car.id) %>
 <%= f.submit "appoint",class:"btn btn-primary"%>
+<% else %>
+<div class="bg-primary p-2 rounded">
+  <p class="m-0"><b>you have been made an appointment</b></p>
+</div>
+<% end %>
 </div>
 </div>
 </div>
 </div>
 <div class="car-details row mt-3">
   <div class="col-md-12 col-xl-12 col-xg-12">
-  <div class="form-group bg-light">
-    <div class="description-header p-2 border" >
-      description
-    </div>
-    <div class="container p-2">
-      <%= @car.description %>
-    </div>
+  <div class="form-group bg-light rounded">
+  <div class="description-header p-2 rounded" >
+    description
+  </div>
+  <div class="container p-2">
+    <%= @car.description %>
+  </div>
   </div>
   </div>
   <div class="col-md-12 col-xl-12 col-xg-12">
-    <div class="form-group bg-light">
-      <div class="description-header p-2 border">
-        specifications
-      </div>
-      <div class="container">
-        <ul class="list-unstyled car-details-list">
-          <li>
-            <i>car vaiant:</i> <span><%= @car.car_variant.variant %></span>
-          </li>
-          <li>
-            <i>killometer driven:</i> <span><%= @car.killometer_driven.killometer_range %></span>
-          </li>
-          <li>
-            <i>car registration:</i> <span><%= @car.car_registration.state_code %></span>
-          </li>
-        </ul>
-      </div>
+  <div class="form-group bg-light rounded">
+    <div class="description-header p-2 rounded">
+    specifications
     </div>
+    <div class="container">
+    <ul class="list-unstyled car-details-list">
+      <li>
+      <i>car vaiant:</i> <span><%= @car.car_variant.variant %></span>
+      </li>
+      <li>
+      <i>killometer driven:</i> <span><%= @car.killometer_driven.killometer_range %></span>
+      </li>
+      <li>
+      <i>car registration:</i> <span><%= @car.car_registration.state_code %></span>
+      </li>
+    </ul>
+    </div>
+  </div>
   </div>
 </div>
 </div>
@@ -110,197 +116,202 @@
 </main>
 <div class="modal fade" id="phone-modal" tabindex="-1" role="dialog" aria-labelledby="phonelLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="phoneLabel">please enter your mobile number</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form id="phone-put">
-          <div class="form-group">
-            <input type="text" class="form-control" id="user-phone"  pattern="[1-9]{1}[0-9]{9}">
-          </div>
-          <button type="submit" class="btn btn-primary">save number</button>
-          <div class="notify-success notify-phone-success"></div>
-          <div class="notify-error notify-phone-error"></div>
-        </form>
-      </div>
+  <div class="modal-content">
+    <div class="modal-header">
+    <h5 class="modal-title" id="phoneLabel">please enter your mobile number</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
     </div>
+    <div class="modal-body">
+    <form id="phone-put">
+      <div class="form-group">
+      <input type="text" class="form-control" id="user-phone"  pattern="[1-9]{1}[0-9]{9}">
+      </div>
+      <button type="submit" class="btn btn-primary">save number</button>
+      <div class="notify-success notify-phone-success"></div>
+      <div class="notify-error notify-phone-error"></div>
+    </form>
+    </div>
+  </div>
   </div>
 </div>
 <div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="register-user" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="rgister-user">for appointment register first</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <%= link_to 'register', buyer_registration_url, class: "btn btn-primary" %>
-          <%= link_to 'login', user_login_get_url, class: "btn btn-primary" %>
-      </div>
+  <div class="modal-content">
+    <div class="modal-header">
+    <h5 class="modal-title" id="rgister-user">for appointment register first</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
     </div>
+    <div class="modal-body">
+      <%= link_to 'register', buyer_registration_url, class: "btn btn-primary" %>
+      <%= link_to 'login', user_login_get_url, class: "btn btn-primary" %>
+    </div>
+  </div>
   </div>
 </div>
   <!-- Modal -->
   <div class="modal fade" id="verify-email" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <div class="text-center">
-              Your email is not verified yet
-            </div>
-            <div class="text-center">
-              <button type="button" class="btn btn-primary" onclick="generate_verification_email()" >send email</button>
-              <button type="button" class="btn btn-primary" onclick="verify_email()" >verify email</button>
-            </div>
-            <div class="notify-success notify-email-success"></div>
-            <div class="notify-error notify-email-error"></div>
-        </div>
-        
-      </div>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      </button>
     </div>
+    <div class="modal-body">
+      <div class="text-center">
+        Your email is not verified yet
+      </div>
+      <div class="text-center">
+        <button type="button" class="btn btn-primary" onclick="generate_verification_email()" >send email</button>
+        <button type="button" class="btn btn-primary" onclick="verify_email()" >verify email</button>
+      </div>
+      <div class="notify-success notify-email-success"></div>
+      <div class="notify-error notify-email-error"></div>
+    </div>
+
+    </div>
+  </div>
   </div>
 <script>
 var user = <%= current_user.to_json.html_safe %>
 
-        function slide(f){
-            if(f == "1"){
-              $(".slider").animate({scrollLeft: "-=100"},"fast")
-            }else{
-              $(".slider").animate({scrollLeft: "+=100"},"fast")
-            }
-        }
-        $(".slider-image").on('click', function(){
-            if($(this).hasClass("active")){
-                return false
-            }else{
-                $(".slider-image").removeClass("active")
-                $(this).addClass("active")
-                console.log($(this).attr('src'))
-                console.log($("#main-img").attr('src'))
-                var image =  $("#main-img")
-                var selectedurl = $(this).attr('src')
-                image.fadeOut('fast', function(){
-                    image.attr('src', selectedurl)
-                    image.fadeIn('fast')
-                })
-            }
+    function slide(f){
+      if(f == "1"){
+        $(".slider").animate({scrollLeft: "-=100"},"fast")
+      }else{
+        $(".slider").animate({scrollLeft: "+=100"},"fast")
+      }
+    }
+    $(".slider-image").on('click', function(){
+      if($(this).hasClass("active")){
+        return false
+      }else{
+        $(".slider-image").removeClass("active")
+        $(this).addClass("active")
+        console.log($(this).attr('src'))
+        console.log($("#main-img").attr('src'))
+        var image =  $("#main-img")
+        var selectedurl = $(this).attr('src')
+        image.fadeOut('fast', function(){
+          image.attr('src', selectedurl)
+          image.fadeIn('fast')
         })
+      }
+    })
 let user_email_verified = false;
+let user_phone_verified = false;
+let user_phone = user.phone;
 $('#phone-put').submit(function(e){
   e.preventDefault()
   var re = /^[1-9]{1}[0-9]{9}$/im
-  
+
   p = $('#user-phone').val()
   console.log(p)
   if(re.test(p)){
-    $.ajax({
-      method: 'put',
-      data: {
-        phone: p,
-        user_id: '<%= (!current_user.blank?)?(current_user.id):"" %>'
-      },
-      url: "<%= save_user_phone_path %>",
-      success: function(data){
-        console.log(data)
-        if(data.status == 1){
-          phone = true
-          $('.notify-phone-success').text('')
-          $('.notify-phone-error').text(data.msg)
-          $('#phone-modal').modal('hide')
-          $("#car-details").submit()
-        }
-      },
-      error: function(error){
-        console.log(error)
-        $('.notify-phone-success').text('')
-        $('.notify-phone-error').text('there is some error occured')
-      }
-    })
+  $.ajax({
+    method: 'put',
+    data: {
+    phone: p,
+    user_id: '<%= (!current_user.blank?)?(current_user.id):"" %>'
+    },
+    url: "<%= save_user_phone_path %>",
+    success: function(data){
+    console.log(data)
+    if(data.status == 1){
+      user_phone_verified = true
+      $('.notify-phone-success').text('')
+      $('.notify-phone-error').text(data.msg)
+      $('#phone-modal').modal('hide')
+      $("#car-details").submit()
+    }
+    },
+    error: function(error){
+    console.log(error)
+    $('.notify-phone-success').text('')
+    $('.notify-phone-error').text('there is some error occured')
+    }
+  })
   }
 })
 function generate_verification_email(){
   data = {
-    user_id: '<%= (!current_user.blank?)?(current_user.id):"" %>',
+  user_id: '<%= (!current_user.blank?)?(current_user.id):"" %>',
   }
   $.ajax({
-    type: 'get',
-    data: data,
-    url: "<%= email_verification_request_generate_url %>",
-    success: function(data){
-      console.log(data)
-      if(data.status == 1){
-        $('.notify-email-success').text(data.msg)
-        $('.notify-email-error').text('')
-      }else{
-        $('.notify-email-success').text('')
-        $('.notify-email-error').text(data.msg)
-      }
-    },
-    error: function(err){
-      console.log(err)
-      $('.notify-email-success').text('')
-      $('.notify-email-error').text('there is some error occured')
+  type: 'get',
+  data: data,
+  url: "<%= email_verification_request_generate_url %>",
+  success: function(data){
+    console.log(data)
+    if(data.status == 1){
+    $('.notify-email-success').text(data.msg)
+    $('.notify-email-error').text('')
+    }else{
+    $('.notify-email-success').text('')
+    $('.notify-email-error').text(data.msg)
     }
+  },
+  error: function(err){
+    console.log(err)
+    $('.notify-email-success').text('')
+    $('.notify-email-error').text('there is some error occured')
+  }
   }
   )
 }
 
 function verify_email(){
   data ={
-    user_id: '<%= (!current_user.blank?)?(current_user.id):"" %>'
+  user_id: '<%= (!current_user.blank?)?(current_user.id):"" %>'
   }
   $.ajax({
-    type: 'get',
-    data: data,
-    url: '<%= email_verification_url %>',
-    success: function(data){
-      console.log(data)
-      if(data.status == 1){
-        user_email_verified = true
-        $('.notify-email-success').text(data.msg)
-        $('.notify-email-error').text('')
-        $("#verify-email").hide()
-      }
-    },
-    error: function(error){
-      console.log(error)
-      $('.notify-email-success').text('')
-      $('.notify-email-error').text('there is some error occured')
+  type: 'get',
+  data: data,
+  url: '<%= email_verification_url %>',
+  success: function(data){
+    console.log(data)
+    if(data.status == 1){
+    user_email_verified = true
+    $('.notify-email-success').text(data.msg)
+    $('.notify-email-error').text('')
+    $("#verify-email").hide()
     }
+  },
+  error: function(error){
+    console.log(error)
+    $('.notify-email-success').text('')
+    $('.notify-email-error').text('there is some error occured')
+  }
   })
 }
 
 $('#appoint-form').submit(function(e){
-  console.log(user)
-
+  console.log(user_phone)
   if(!user){
-    $('#register-modal').modal('show')
-    return false
+  $('#register-modal').modal('show')
+  return false
   }
+
   var email_verified = user.email_confirmed
   console.log(email_verified)
-  if(email_verified || user_email_verified){
-    p = confirm("are you sure of this appointment");
-    return p
-  }
-
+  if(!email_verified && !user_email_verified){
   $("#verify-email").modal('show')
-  return false 
+  return false
+  }
+  if(!user_phone && !user_phone_verified) {
+  $("#phone-modal").modal('show')
+  return false
+  }
+  p = confirm("are you sure of this appointment");
+  return p
 })
 $('.for-back').click(function(e){
   e.preventDefault()
 })
 
-</script>	
+</script>
 <%= render "user/layouts/footer" %>

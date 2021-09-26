@@ -3,22 +3,23 @@
 <% end %>
 <section class="admin-login">
 <div class="container">
-<% if flash.key? :error %>
-  <p><%= flash[:error] %></p>
-<% end %>
-<%= form_with url: admin_login_auth_path, method: :post do |f| %>
+  <% if flash.key? :error %>
+  <%= render 'layouts/alert_error', error: flash[:error]%>
+  <% end %>
+  <h3 class="text-center text-white">admin login</h3>
+ <%= form_with url: admin_login_auth_path, method: :post do |f| %>
   <div class="form-group">
-    <%= f.label :email ,class:"form-lebel"%>
-    <%= email_field_tag :email, "", required: true ,class: "form-control"%>
+  <%= f.label :email ,class:"form-lebel"%>
+  <%= email_field_tag :email, "", required: true ,class: "form-control"%>
   </div>
 
   <div class="form-group">
-    <%= f.label :password  ,class:"form-lebel"%>
-    <%= password_field_tag :password, "", required: true, class: "form-control" %>
+  <%= f.label :password  ,class:"form-lebel"%>
+  <%= password_field_tag :password, "", required: true, class: "form-control" %>
   </div>
 
   <div class="actions">
-    <%= f.submit "Login" ,class: "btn btn-primary w-100"%>
+  <%= f.submit "Login" ,class: "btn btn-primary w-100"%>
   </div>
 <% end %>
 <div>

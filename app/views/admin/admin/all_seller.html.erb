@@ -1,0 +1,59 @@
+<style>
+    table{
+        border-collapse: collapse;
+        width: 100%;
+    }
+    td,th{
+        border: 1px solid #dddddd;
+        text-align:left;
+        padding: 8px;
+    }
+</style>
+<div class="wrapper">
+<%= render "admin/layouts/sidebar" %>
+<div class='container-fluid p-0'>
+  <%= render "admin/layouts/header" %>
+    
+    <section>
+      <% if flash.key? :notice %>
+        <%= render 'layouts/alert_success', notice: flash[:notice] %>
+      <% end %>
+    
+      <% if flash.key? :error %>
+        <%= render 'layouts/alert_error', error: flash[:error]%>
+      <% end %>
+      <div class="container-fluid mt-3">
+        <h3><b>sellers</b></h3>
+      <table>
+        <thead>
+        <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>email</th>
+        <th>user name</th>
+        <th>phone</th>
+        <th>email verified</th>
+        <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @users.each do |u| %>
+        <tr>
+        <td><%= u.id %></td>
+        <td><%= u.full_name %></td>
+        <td><%= u.email %></td>
+        <td><%= u.username %></td>
+        <td><%= u.phone %></td>
+        <td><%=(u.email_confirmed)?'yes':'no' %></td>
+        <td>
+        <%= link_to 'delete', admin_user_delete_path(u.id), class:"btn btn-danger", onclick: 'return confirm("are you sure you want to delete this user")' %>
+        <%= link_to 'view', admin_user_view_path(u.id), class:"btn btn-info" %>
+        </td>
+        </tr>
+        <% end %>
+        </tbody>
+        </table>
+        </div>
+        </section>
+    </div>
+    </div>

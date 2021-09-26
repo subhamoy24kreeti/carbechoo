@@ -1,143 +1,157 @@
-
+<style>
+  .form-group.required .control-label:after {
+  content: "*";
+  color: red;
+  }
+</style>
 <% content_for :stylesheets do %>
 <%= stylesheet_link_tag 'seller/add_car_details' , media: 'all', 'data-turbolinks-track': 'reload'%>
 <% end %>
-
+<header>
 <%= render 'user/layouts/header' %>
-<div class="container">
-<nav class="car-details p-4">
-<div><a class="p-3"></a></div>
-</nav>
-<div>
+</header>
+<main>
+<div class="container mt-3">
+<% if flash[:notice] %>
+<%= render 'layouts/alert_success', :notice => flash[:notice]  %>
+<% end %>
+<% if flash[:error] %>
+<% flash[:error].each do |e| %>
+<%= render 'layouts/alert_error', :error => e %>
+<% end %>
+<% end %>
+
+<div class="container-fluid">
  <%=form_with url: create_seller_appointment_path, id: "car-details", method: :post  do |f|%>
   <%=f.text_field :user_id, value: current_user.id, hidden: "true"%>
-  
-  <div class="form-group">
-  <%=f.label 'choose the brand'%>
+
+  <div class="form-group required">
+  <%=f.label 'choose the brand', class: "control-label"%>
   <%= select_tag(:brand_id, options_for_select(@brands), class:"custom-select custom-select-lg mb-3", id: "brand", include_blank: '--selecr your brand--') %>
   </div>
 
-  <div class="form-group">
-  <%=f.label 'choose the model'%>
+  <div class="form-group required">
+  <%=f.label 'choose the model', class: "control-label"%>
   <%=select_tag(:car_model_id, options_for_select('<option></option>'), class:"custom-select custom-select-lg mb-3", id:"car-model") %>
   </div>
 
-  <div class="form-group">
-  <%=f.label 'choose the range'%>
+  <div class="form-group required">
+  <%=f.label 'choose the range', class: "control-label"%>
   <%=select_tag(:killometer_driven_id, options_for_select(@killometer_drivens), class:"custom-select custom-select-lg mb-3", id:'killometer-driven') %>
-  </div> 
+  </div>
 
-  <div class="form-group">
-  <%=f.label 'choose the registered state code'%>
+  <div class="form-group required">
+  <%=f.label 'choose the registered state code', class: "control-label"%>
   <%=select_tag(:car_registration_id, options_for_select(@car_registrations), class:"custom-select custom-select-lg mb-3", id:"car-registration", required: true) %>
   </div>
 
-  <div class="form-group">
-  <%=f.label 'choose the type'%>
+  <div class="form-group required">
+  <%=f.label 'choose the type', class: "control-label"%>
   <%=select_tag(:car_variant_id, options_for_select(@car_variants), class:"custom-select custom-select-lg mb-3", id: "car-variant", required: true) %>
   </div>
 
-  <div class="form-group">
-   <%=f.label "description"%>
+  <div class="form-group required">
+   <%=f.label "description", class: "control-label"%>
    <%=f.text_area :description, class:"form-control", id: "description"%>
   </div>
 
-  <div class="form-group field">
-   <%=f.label "expected price"%>
+  <div class="form-group required">
+   <%=f.label "expected price", class: "control-label"%>
    <%=f.number_field :price ,required: true, class: "form-control", id: "expected-price", required: true %>
   </div>
 
-  <div class="form-group">
-    <%= f.label 'currency' %>
-    <%=select_tag(:currency, options_for_select([['INR','₹'],['USD','$']]), class:"custom-select custom-select-lg mb-3") %>        
+  <div class="form-group required">
+  <%= f.label 'currency', class: "control-label"%>
+  <%=select_tag(:currency, options_for_select([['INR','₹'],['USD','$']]), class:"custom-select custom-select-lg mb-3") %>
   </div>
 
-  <div class="form-group field">
-    <%=f.label "year of buy"%>
-    <%=select_tag(:year_of_buy, options_for_select(@years), class:"custom-select custom-select-lg mb-3", id:"year", required: true) %>
+  <div class="form-group required">
+  <%=f.label "year of buy", class: "control-label"%>
+  <%=select_tag(:year_of_buy, options_for_select(@years), class:"custom-select custom-select-lg mb-3", id:"year", required: true) %>
    </div>
 
-  <div class="form-group">
-    <%=f.label "seller's country" %>
-    <%=select_tag(:country_id, options_for_select(@countries), class:"custom-select custom-select-lg mb-3", id:"country", include_blank: '--selecr your country--') %>
-  </div>
-  
-  <div class="form-group">
-    <%=f.label 'choose your state'%>
-    <%=select_tag(:state_id, options_for_select('<option></option>'), class:"custom-select custom-select-lg mb-3", id:"state") %>
+  <div class="form-group required">
+  <%=f.label "seller's country", class: "control-label" %>
+  <%=select_tag(:country_id, options_for_select(@countries, selected: current_user.country_id), class:"custom-select custom-select-lg mb-3", id:"country", include_blank: '--selecr your country--') %>
   </div>
 
-  <div class="form-group">
-    <%=f.label 'choose your city'%>
-    <%=select_tag(:city_id, options_for_select('<option></option>'), class:"custom-select custom-select-lg mb-3", id:"city") %>
+  <div class="form-group required">
+  <%=f.label "seller's state", class: "control-label"%>
+  <%=select_tag(:state_id, options_for_select(@states, selected: current_user.state_id), class:"custom-select custom-select-lg mb-3", id:"state") %>
   </div>
 
-  <div class="form-group">
-    <%=f.label 'zip code' %>
-    <%=f.text_field :zip_code, id: "zip-code", class: "form-control"%>
+  <div class="form-group required">
+  <%=f.label "seller's city", class: "control-label"%>
+  <%=select_tag(:city_id, options_for_select(@cities, selected: current_user.city_id), class:"custom-select custom-select-lg mb-3", id:"city") %>
   </div>
 
-  <div class="form-group field" id="uio">
+  <div class="form-group required">
+  <%=f.label "seller's zip code", class: "control-label" %>
+  <%=f.text_field :zip_code, id: "zip-code", class: "form-control"%>
+  </div>
+
+  <div class="form-group" id="uio">
   <%=f.file_field :upload_imgs, id: "upload_imgs", multiple: true, name: 'images[]', class:"show-for-sr", hidden: true%>
   <button class="btn btn-primary" id="upload-btn">add images<i class="fa fa-plus"></i></button>
   </div>
+
   <div class="quote-imgs-thumbs quote-imgs-thumbs--hidden" id="img_preview" aria-live="polite"></div>
-  </div>
-  <%= f.text_field :longitude, id: 'longitude', type: "hidden" %>
-  <%= f.text_field :latitude, id: 'latitude', type: "hidden" %>
   <div class="form-group">
   <%=f.submit :submit , class:"btn btn-primary" %>
   </div>
- <% end%>
+  <% end%>
+</div>
+
 <div class="modal fade" id="phone-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">please enter your mobile number</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form id="phone-put">
-          <div class="form-group">
-            <input type="text" class="form-control" id="user-phone"  pattern="[1-9]{1}[0-9]{9}">
-          </div>
-          <button type="submit" class="btn btn-primary">save number</button>
-          <div class="notify-success notify-phone-success"></div>
-          <div class="notify-error notify-phone-error"></div>
-        </form>
-      </div>
+  <div class="modal-content">
+    <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">please enter your mobile number</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
     </div>
+    <div class="modal-body">
+    <form id="phone-put">
+      <div class="form-group">
+      <input type="text" class="form-control" id="user-phone"  pattern="[1-9]{1}[0-9]{9}">
+      </div>
+      <button type="submit" class="btn btn-primary">save number</button>
+      <div class="notify-success notify-phone-success"></div>
+      <div class="notify-error notify-phone-error"></div>
+    </form>
+    </div>
+  </div>
   </div>
 </div>
 
  <!-- Modal -->
  <div class="modal fade" id="verify-email" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <div class="text-center">
-            Your email is not verified yet
-          </div>
-          <div class="text-center">
-            <button type="button" class="btn btn-primary" onclick="generate_verification_email()" >send email</button>
-            <button type="button" class="btn btn-primary" onclick="verify_email()" >verify email</button>
-          </div>
-          <div class="notify-success notify-email-success"></div>
-          <div class="notify-error notify-email-error"></div>
-      </div>
-      
+  <div class="modal-content">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
     </div>
+    <div class="modal-body">
+      <div class="text-center">
+      Your email is not verified yet
+      </div>
+      <div class="text-center">
+      <button type="button" class="btn btn-primary" onclick="generate_verification_email()" >send email</button>
+      <button type="button" class="btn btn-primary" onclick="verify_email()" >verify email</button>
+      </div>
+      <div class="notify-success notify-email-success"></div>
+      <div class="notify-error notify-email-error"></div>
+    </div>
+
+  </div>
   </div>
 </div>
 <div>
 </div>
+</main>
 <%= render 'layouts/helper_address' %>
 
 <script>
@@ -145,89 +159,89 @@ let user_email_verified = false;
 let email_verified = '<%= current_user.email_confirmed %>'
 let phone = '<%= current_user.phone %>'
   $("#car-details").submit(
-    function(e){
-      var b = $('#brand').val()
-      var cm = $('#car-model').val()
-      var kd = $("#killometer-driven").val()
-      var cr = $("#car-registration").val()
-      var cv = $("#car-variant").val()
-      var d = $("#description").val()
-      var ep = $("#expected-price").val()
-      var c = $("#country").val()
-      var st = $("#state").val()
-      var ci = $("#city").val()
-      console.log($('#year').val())
-      var y = $('#year').val()
-      var f = $('.car_image_uploads').length
-      var zip_code = $('#zip-code').val()
-      console.log(b)
-      console.log(cm)
-      console.log(kd)
-      console.log(cr)
-      console.log(cv)
-      console.log(d)
-      console.log(ep)
-      console.log(c)
-      console.log(st)
-      console.log(ci)
-      console.log(f)
-      console.log(y)
-      console.log(zip_code)
-      if(b && cm && kd && cr && cv && d && ep && c && st && ci && f && y && zip_code){
-        if(!phone){
-          $('#phone-modal').modal('show')
-          e.preventDefault();
-          return false
-        }
-        if(!(user_email_verified || email_verified)){
-          $("#verify-email").modal('show')
-          e.preventDefault();
-          return false
-        }
-      
-        console.log("pop0")
-        return true
-      }else{
-        console.log("pop")
-        e.preventDefault();
-        return false
-      }
-
+  function(e){
+    var b = $('#brand').val()
+    var cm = $('#car-model').val()
+    var kd = $("#killometer-driven").val()
+    var cr = $("#car-registration").val()
+    var cv = $("#car-variant").val()
+    var d = $("#description").val()
+    var ep = $("#expected-price").val()
+    var c = $("#country").val()
+    var st = $("#state").val()
+    var ci = $("#city").val()
+    console.log($('#year').val())
+    var y = $('#year').val()
+    var f = $('.car_image_uploads').length
+    var zip_code = $('#zip-code').val()
+    console.log(b)
+    console.log(cm)
+    console.log(kd)
+    console.log(cr)
+    console.log(cv)
+    console.log(d)
+    console.log(ep)
+    console.log(c)
+    console.log(st)
+    console.log(ci)
+    console.log(f)
+    console.log(y)
+    console.log(zip_code)
+    if(b && cm && kd && cr && cv && d && ep && c && st && ci && f && y && zip_code){
+    if(!phone){
+      $('#phone-modal').modal('show')
+      e.preventDefault();
+      return false
     }
+    if(!(user_email_verified || email_verified)){
+      $("#verify-email").modal('show')
+      e.preventDefault();
+      return false
+    }
+
+    console.log("pop0")
+    return true
+    }else{
+    console.log("pop")
+    e.preventDefault();
+    return false
+    }
+
+  }
   )
    $("#brand").change(
-      function(){
-        var p = $("#brand").val();
-        if(!p){
-          $("#car-model").html("");
-          return;
-        }
-        console.log(p);
-        $.ajax(
-          {
-            type: 'get',
-            url: '<%= ws_get_car_models_path %>',
-            dataType: 'json',
-            contentType: 'application/json',
-            data: {
-              brand_id : $("#brand").val()  
-            },
-            success: function(res){
-              console.log(res)
-              $('#car-model').html(res.html)
-            },
-            error: function(err){
-
-            }
-          }
-        )
+    function(){
+    var p = $("#brand").val();
+    if(!p){
+      $("#car-model").html("");
+      return;
+    }
+    console.log(p);
+    $.ajax(
+      {
+      type: 'get',
+      url: '<%= ws_get_car_models_path %>',
+      dataType: 'json',
+      contentType: 'application/json',
+      data: {
+        brand_id : $("#brand").val()
+      },
+      success: function(res){
+        console.log(res)
+        $('#car-model').html(res.html)
+      },
+      error: function(err){
 
       }
-
+      }
     )
+
+    }
+
+  )
   $('#upload-btn').click(function(e){
-    e.preventDefault();
-    document.getElementById('upload_imgs').click()
+  e.preventDefault();
+  document.getElementById('upload_imgs').click()
   })
   var imgUpload = document.getElementById('upload_imgs')
   , imgPreview = document.getElementById('img_preview')
@@ -243,59 +257,59 @@ function previewImgs(event) {
   totalFiles = imgUpload.files.length;
   var validExtensions = ['jpg','png','jpeg', 'gif']; //array of valid extensions
   for(var i = 0; i < totalFiles; i++) {
-    var fileName = imgUpload.files[i].name;
-    var fileNameExt = fileName.substr(fileName.lastIndexOf('.') + 1);
-    if ($.inArray(fileNameExt, validExtensions) == -1) {
-      alert("Only these file types are accepted : "+validExtensions.join(', '));
-      return false
-    }
-    const img = document.createElement('img');
-    img.onload = function(){
-    var width = this.width;
-    var height = this.height;
-    if(width<200 || height<200){
-      alert("image not permittable")
-      return false
-    }
-    imgPreview.classList.remove('quote-imgs-thumbs--hidden');
-    var input=document.createElement('input');
-    input.type="file";
-    input.className += "car_image_uploads"
-    input.multiple = true;
-    input.hidden = true;
-    input.name = 'car_images[]';
-    input.files = imgUpload.files
-    var img_wrap = document.createElement('div')
-    img_wrap.className += "upload_img"
-    img_wrap.id = "upload"+img_id;
+  var fileName = imgUpload.files[i].name;
+  var fileNameExt = fileName.substr(fileName.lastIndexOf('.') + 1);
+  if ($.inArray(fileNameExt, validExtensions) == -1) {
+    alert("Only these file types are accepted : "+validExtensions.join(', '));
+    return false
+  }
+  const img = document.createElement('img');
+  img.onload = function(){
+  var width = this.width;
+  var height = this.height;
+  if(width<200 || height<200){
+    alert("image not permittable")
+    return false
+  }
+  imgPreview.classList.remove('quote-imgs-thumbs--hidden');
+  var input=document.createElement('input');
+  input.type="file";
+  input.className += "car_image_uploads"
+  input.multiple = true;
+  input.hidden = true;
+  input.name = 'car_images[]';
+  input.files = imgUpload.files
+  var img_wrap = document.createElement('div')
+  img_wrap.className += "upload_img"
+  img_wrap.id = "upload"+img_id;
 
-    img_wrap.style.cssText = "position:relative;width:200px;height:200px;padding:5px;"
-    var img_content = document.createElement('div')
-    img_content.style.cssText ="padding:5px;background-color:white;"
-    var remove_icon_wrap = document.createElement('div')
-    remove_icon_wrap.className += "remove-warp"
-    var remove_icon = document.createElement('i')
-    remove_icon.className += "fa fa-trash"
-    remove_icon.onclick = function(){
-    if(document.getElementsByClassName('upload_img').length == 1){
-      imgPreview.classList.add('quote-imgs-thumbs--hidden');
-      img_wrap.remove();
-    }else{
-      img_wrap.remove();
-    }
+  img_wrap.style.cssText = "position:relative;width:200px;height:200px;padding:5px;"
+  var img_content = document.createElement('div')
+  img_content.style.cssText ="padding:5px;background-color:white;"
+  var remove_icon_wrap = document.createElement('div')
+  remove_icon_wrap.className += "remove-warp"
+  var remove_icon = document.createElement('i')
+  remove_icon.className += "fa fa-trash"
+  remove_icon.onclick = function(){
+  if(document.getElementsByClassName('upload_img').length == 1){
+    imgPreview.classList.add('quote-imgs-thumbs--hidden');
+    img_wrap.remove();
+  }else{
+    img_wrap.remove();
+  }
   }
   remove_icon_wrap.style.cssText =  "position:absolute;bottom:0; padding:8px; background-color:white"
   img.style.cssText = "width:100%;height:185px;"
   remove_icon_wrap.appendChild(remove_icon)
   img_content.appendChild(img)
-      img_content.appendChild(remove_icon_wrap)
-      img_wrap.appendChild(img_content)
-      img_wrap.appendChild(input);
-      document.getElementById("img_preview").appendChild(img_wrap)
-      img_id += 1
-      return true
-    }
-    img.src = URL.createObjectURL(event.target.files[i]);
+    img_content.appendChild(remove_icon_wrap)
+    img_wrap.appendChild(img_content)
+    img_wrap.appendChild(input);
+    document.getElementById("img_preview").appendChild(img_wrap)
+    img_id += 1
+    return true
+  }
+  img.src = URL.createObjectURL(event.target.files[i]);
   }
 
 }
@@ -305,90 +319,90 @@ $("#year").change(function(){
 $('#phone-put').submit(function(e){
   e.preventDefault()
   var re = /^[1-9]{1}[0-9]{9}$/im
-  
+
   p = $('#user-phone').val()
   console.log(p)
   if(re.test(p)){
-    $.ajax({
-      method: 'put',
-      data: {
-        phone: p,
-        user_id: '<%= current_user.id %>'
-      },
-      url: "<%= save_user_phone_path %>",
-      success: function(data){
-        console.log(data)
-        if(data.status == 1){
-          phone = true
-          $('.notify-phone-success').text(data.msg)
-          $('.notify-phone-error').text('')
-          $('#phone-modal').modal('hide')
-          $("#car-details").submit()
-        }else{
-          $('.notify-phone-error').text(data.msg)
-          $('.notify-phone-success').text('')
-        }
-      },
-      error: function(error){
-        console.log(error)
-        $('.notify-phone-error').text(data.msg)
-        $('.notify-phone-success').text('')
-      }
-    })
+  $.ajax({
+    method: 'put',
+    data: {
+    phone: p,
+    user_id: '<%= current_user.id %>'
+    },
+    url: "<%= save_user_phone_path %>",
+    success: function(data){
+    console.log(data)
+    if(data.status == 1){
+      phone = true
+      $('.notify-phone-success').text(data.msg)
+      $('.notify-phone-error').text('')
+      $('#phone-modal').modal('hide')
+      $("#car-details").submit()
+    }else{
+      $('.notify-phone-error').text(data.msg)
+      $('.notify-phone-success').text('')
+    }
+    },
+    error: function(error){
+    console.log(error)
+    $('.notify-phone-error').text(data.msg)
+    $('.notify-phone-success').text('')
+    }
+  })
   }
 })
 function generate_verification_email(){
   data = {
-    user_id: '<%=current_user.id %>',
+  user_id: '<%=current_user.id %>',
   }
   $.ajax({
-    type: 'get',
-    data: data,
-    url: "<%= email_verification_request_generate_url %>",
-    success: function(data){
-      console.log(data)
-      if(data.status == 1){
-        $('.notify-email-success').text(data.msg)
-        $('.notify-email-error').text('')
-      }else{
-        $('.notify-email-success').text('')
-        $('.notify-email-error').text(data.msg)
-      }
-    },
-    error: function(err){
-      console.log(err)
-      $('.notif-email-success').text('')
-      $('.notify-email-error').text('there is some error occured')
+  type: 'get',
+  data: data,
+  url: "<%= email_verification_request_generate_url %>",
+  success: function(data){
+    console.log(data)
+    if(data.status == 1){
+    $('.notify-email-success').text(data.msg)
+    $('.notify-email-error').text('')
+    }else{
+    $('.notify-email-success').text('')
+    $('.notify-email-error').text(data.msg)
     }
+  },
+  error: function(err){
+    console.log(err)
+    $('.notif-email-success').text('')
+    $('.notify-email-error').text('there is some error occured')
+  }
   }
   )
 }
 
 function verify_email(){
   data ={
-    user_id: '<%= current_user.id %>'
+  user_id: '<%= current_user.id %>'
   }
   $.ajax({
-    type: 'get',
-    data: data,
-    url: '<%= email_verification_url %>',
-    success: function(data){
-      console.log(data)
-      if(data.status == 1){
-        user_email_verified = true
-        $('.notify-email-error').text('')
-        $('.notify-email-success').text(data.msg)
-        $("#verify-email").modal('hide')
-      }else{
-        $('.notify-email-success').text('')
-        $('.notify-email-error').text(data.msg)
-      }
-    },
-    error: function(error){
-      $('.notify-email-success').text('')
-      $('.notify-email-error').text('there is some error occured')
-      console.log(error)
+  type: 'get',
+  data: data,
+  url: '<%= email_verification_url %>',
+  success: function(data){
+    console.log(data)
+    if(data.status == 1){
+    user_email_verified = true
+    $('.notify-email-error').text('')
+    $('.notify-email-success').text(data.msg)
+    $("#verify-email").modal('hide')
+    }else{
+    $('.notify-email-success').text('')
+    $('.notify-email-error').text(data.msg)
     }
+  },
+  error: function(error){
+    $('.notify-email-success').text('')
+    $('.notify-email-error').text('there is some error occured')
+    console.log(error)
+  }
   })
 }
 

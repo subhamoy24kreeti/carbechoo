@@ -1,21 +1,21 @@
 
 <div class="wrapper">
-    <%= render "admin/layouts/sidebar" %>
-    <div class='container-fluid p-0'>
-       <%= render "admin/layouts/header" %>
-        <section>
-        <% if flash.key? :alert %>
-        <p><%= flash[:alert] %></p>
-        <% end %>
-        <div class="container">
-          <%= form_with url: admin_car_variant_update_path,  method: :put do |f|%>
-            <div class="form-group">
-               <%f.label 'car variant' %>
-               <%=f.text_field :variant, class:"form-control", value: @car_variant.variant %>
-            </div>
-            <%=f.submit :update ,class:"btn btn-info" %>
-          <% end%>
-          </div>
-        </section>
-    </div>
-    </div>
+  <%= render "admin/layouts/sidebar" %>
+  <div class='container-fluid p-0'>
+     <%= render "admin/layouts/header" %>
+    <section>
+    <% if flash.key? :alert %>
+    <p><%= flash[:alert] %></p>
+    <% end %>
+    <div class="container">
+      <%= form_with url: admin_car_variant_update_path,  method: :put do |f|%>
+      <div class="form-group">
+         <%f.label 'car variant' %>
+         <%=f.text_field :variant, class:"form-control", value: @car_variant.variant %>
+      </div>
+      <%=f.submit :update ,class:"btn btn-info" %>
+      <% end%>
+      </div>
+    </section>
+  </div>
+  </div>

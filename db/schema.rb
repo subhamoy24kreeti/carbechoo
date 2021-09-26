@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_19_154351) do
+ActiveRecord::Schema.define(version: 2021_09_25_171831) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -181,16 +181,19 @@ ActiveRecord::Schema.define(version: 2021_09_19_154351) do
     t.datetime "expired_token_email_at"
     t.datetime "expired_token_phone_at"
     t.text "street"
-    t.text "city"
-    t.text "state"
-    t.string "country"
     t.float "longitude"
     t.float "latitude"
     t.text "zip_code"
     t.string "password_reset_token"
     t.datetime "password_reset_token_sent_at"
     t.text "about"
+    t.bigint "city_id"
+    t.bigint "state_id"
+    t.bigint "country_id"
+    t.index ["city_id"], name: "index_users_on_city_id"
+    t.index ["country_id"], name: "index_users_on_country_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["state_id"], name: "index_users_on_state_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -210,4 +213,7 @@ ActiveRecord::Schema.define(version: 2021_09_19_154351) do
   add_foreign_key "seller_appointments", "states"
   add_foreign_key "seller_appointments", "users"
   add_foreign_key "states", "countries"
+  add_foreign_key "users", "cities"
+  add_foreign_key "users", "countries"
+  add_foreign_key "users", "states"
 end

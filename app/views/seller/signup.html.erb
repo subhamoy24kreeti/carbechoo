@@ -1,56 +1,155 @@
-
-<div class="container">
-<% if flash.key? :error %>
+<style>
+  .signup-box {
+  height: 400px;
+  overflow-y: scroll;
+  padding: 20px 300px 20px 300px;
+  }
+  .signup-window {
+  height: 100vh;
+  }
+  .form-group.required .control-label:after {
+  content: "*";
+  color: red;
+  }
+  .error {
+  color: red;
+  font-size: 10px;
+  }
+</style>
+<header id="fixed-head">
+  <%= render "user/layouts/header" %>
+</header>
+<main>
+<div class="container mt-3 signup-window">
+  <div class="text-center">
+  <h3><b>Seller Signup</b></h3>
+  </div>
+  <% if flash.key? :error %>
   <% flash[:error].each do |e| %>
-    <%= render 'layouts/alert_error', :error => e %>
+  <%= render 'layouts/alert_error', :error => e %>
    <% end %>
   <% end %>
-<%= form_with url: seller_create_path, method: :post do |f| %>
-    <div class="form-group">
-      <%= f.label 'first name' ,class:"form-lebel"%>
-      <%= f.text_field :first_name, required: true ,class: "form-control"%>
+  <div class="rounded border signup-box">
+  <%= form_with url: seller_create_path, id: 'signup-form', method: :post do |f| %>
+    <div class="form-group required">
+    <%= f.label 'first name' ,class:"control-label"%>
+    <%= f.text_field :first_name, required: true, class: "form-control", id: 'first-name'%>
+    <div class="error" id="error-fn"></div>
     </div>
-    <div class="form-group">
-      <%= f.label 'last name' ,class:"form-lebel"%>
-      <%= f.text_field :last_name, required: true ,class: "form-control"%>
+    <div class="form-group required">
+    <%= f.label 'last name' ,class:"control-label"%>
+    <%= f.text_field :last_name, class: "form-control", id: 'last-name'%>
+    <div class="error" id="error-ln"></div>
     </div>
-    <div class="form-group">
-      <%= f.label :email ,class:"form-lebel"%>
-      <%= email_field_tag :email, "", required: true ,class: "form-control"%>
+    <div class="form-group required">
+    <%= f.label :email ,class:"control-label"%>
+    <%= f.email_field :email, class: "form-control", id: 'email'%>
+    <div class="error" id="error-email"></div>
+    </div>
+
+    <div class="form-group required">
+    <%=f.label 'choose your country', class:"control-label"%>
+    <%=select_tag(:country_id, options_for_select(@countries), class:"custom-select custom-select-lg mb-3", id: 'country',  include_blank: '--selecr your country--', required: true) %>
+
+    </div>
+    <div class="form-group required">
+    <%=f.label 'choose your state', class:"control-label"%>
+    <%=select_tag(:state_id, options_for_select('<option></option>'), class:"custom-select custom-select-lg mb-3", id: 'state', required: true) %>
+    </div>
+
+    <div class="form-group required">
+    <%=f.label 'choose your city', class:"control-label"%>
+    <%=select_tag(:city_id, options_for_select('<option></option>'), class:"custom-select custom-select-lg mb-3", id: 'city', required: true) %>
+    </div>
+
+    <div class="form-group required">
+    <%=f.label 'zip code', class:"control-label"%>
+    <%=f.text_field 'zip_code', class: "form-control", id: 'zip-code', required: true %>
+    </div>
+
+    <div class="form-group required">
+    <%= f.label :password  ,class:"control-label"%>
+    <%= f.password_field :password, class: "form-control", id: "password" %>
+    <div class="error" id="error-password"></div>
+    </div>
+
+    <div class="form-group required">
+    <%= f.label 'confirm password', class:"control-label"%>
+    <%= f.password_field :password_confirmation, class: "form-control", id:"password-confirmation" %>
+    <div class="error" id="error-password-c"></div>
     </div>
 
     <div class="form-group">
-      <%=f.label 'choose your country'%>
-      <%=select_tag(:country_id, options_for_select(@countries, :include_blank => "--select your country--"), class:"custom-select custom-select-lg mb-3", id:"country", required: true) %>
-    </div>
-    <div class="form-group">
-      <%=f.label 'choose your state'%>
-      <%=select_tag(:state_id, options_for_select('<option></option>'), class:"custom-select custom-select-lg mb-3", id:"state", required: true) %>
-    </div>
-
-    <div class="form-group">
-      <%=f.label 'choose your city'%>
-      <%=select_tag(:city_id, options_for_select('<option></option>'), class:"custom-select custom-select-lg mb-3", id:"city", required: true) %>
-    </div>
-
-    <div class="form-group">
-      <%=f.label 'zip code'%>
-      <%=f.text_field 'zip_code', class: 'form-control', required: true %>
-    </div>
-  
-    <div class="form-group">
-      <%= f.label :password  ,class:"form-lebel"%>
-      <%= password_field_tag :password, "", required: true, class: "form-control" %>
-    </div>
-
-    <div class="form-group">
-      <%= f.label 'confirm password'  ,class:"form-lebel"%>
-      <%= password_field_tag :password_confirmation, "", required: true, class: "form-control" %>
-    </div>
-  
-    <div class="actions">
-      <%= f.submit "Sign up" ,class: "btn btn-primary w-100"%>
+    <%= f.submit "Sign up" ,class: "btn btn-primary w-100"%>
     </div>
   <% end %>
   </div>
   <%= render 'layouts/helper_address' %>
+  </div>
+  </main>
+  <script>
+  var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+  console.log(email_regex)
+  $('#signup-form').submit(function(e){
+    var fn = $('#first-name').val()
+    var ln = $('#last-name').val()
+    var email = $('#email').val()
+    var password = $('#password').val()
+    var password_confirmation = $('#password-confirmation').val()
+    var city = $('#city').val()
+    var  state = $('#state').val()
+    var country = $("#country").val()
+    var zip_code = $("#zip_code")
+    var submittable = true
+
+    if(!fn) {
+    submittable = false
+    $('#first-name').css('border', '1px solid red')
+    $('#error-fn').text('first name should not be empty')
+    }
+    if(!ln) {
+    submittable = false
+    $('#last-name').css('border', '1px solid red')
+    $('#error-ln').text('last name should not be empty')
+    }
+
+    if(!email_regex.test(email)){
+    submittable = false
+    $('#email').css('border', '1px solid red')
+    $('#error-email').text('not a valid email')
+    }
+
+    if(!password || password.length<6){
+    submittable = false
+    $('#password').css('border', '1px solid red')
+    $('#error-password').text('password must not be less than 6')
+    }
+
+    if(password !== password_confirmation){
+    submittable = false
+    $('#password-confirmation').css('border', '1px solid red')
+    $('#error-password-c').text('password confirmation must be equal to password')
+    }
+
+    if(!country) {
+    submittable = false
+    $('#country').css('border', '1px solid red')
+    }
+
+    if(!state) {
+    submittable = false
+    $('#state').css('border', '1px solid red')
+    }
+
+    if(!city) {
+    submittable = false
+    $('#city').css('border', '1px solid red')
+    }
+
+    if(submittable == true) {
+    return true
+    }else {
+    return false
+    }
+  })
+  </script>

@@ -1,106 +1,126 @@
 <style>
-    .quote-imgs-thumbs {
-      background: #eee;
-      border: 1px solid #ccc;
-      border-radius: 0.25rem;
-      margin: 1.5rem 0;
-      padding: 0.75rem;
-      display: flex;
-    }
-    .fa-trash:hover{
-      color:red;
-      cursor:pointer;
-    }
-    .quote-imgs-thumbs--hidden {
-      display: none;
-    }
-    .img-preview-thumb {
-      background: #fff;
-      border: 1px solid #777;
-      border-radius: 0.25rem;
-      box-shadow: 0.125rem 0.125rem 0.0625rem rgba(0, 0, 0, 0.12);
-      margin-right: 1rem;
-      max-width: 140px;
-      padding: 0.25rem;
-    }
-    </style>
-    <div class="wrapper">
-    <%= render "admin/layouts/sidebar" %>
-    <div class="container-fluid p-0">
-      <%= render "admin/layouts/header" %>
-      <div class="container pt-3">
-      
-      <div class="form-group">
-      <%=label_tag 'brand'%>
-      <%= @seller_appointment.brand.brand_name %>
-      </div>
-    
-      <div class="form-group">
-      <%=label_tag 'model'%>
-      <%= @seller_appointment.car_model.name %>
-      </div>
-    
-      <div class="form-group">
-      <%=label_tag 'ranges'%>
-      <%= @seller_appointment.killometer_driven.killometer_range %>
-      </div> 
-    
-      <div class="form-group">
-      <%=label_tag 'registered state code'%>
-      <%= @seller_appointment.car_registration.state_code %>
-      </div>
-    
-      <div class="form-group">
-      <%=label_tag 'type'%>
-      <%= @seller_appointment.car_variant.variant %>
-      </div>
-    
-      <div class="form-group">
-       <%= label_tag "description"%>
-       <%= @seller_appointment.description %>
-      </div>
-    
-      <div class="form-group field">
-       <%= label_tag "price"%>
-       <%= @seller_appointment.price %>
-      </div>
+  .quote-imgs-thumbs {
+    background: #eee;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    margin: 1.5rem 0;
+    padding: 0.75rem;
+    display: flex;
+  }
+  .fa-trash:hover{
+    color:red;
+    cursor:pointer;
+  }
+  .quote-imgs-thumbs--hidden {
+    display: none;
+  }
+  .img-preview-thumb {
+    background: #fff;
+    border: 1px solid #777;
+    border-radius: 0.25rem;
+    box-shadow: 0.125rem 0.125rem 0.0625rem rgba(0, 0, 0, 0.12);
+    margin-right: 1rem;
+    max-width: 140px;
+    padding: 0.25rem;
+  }
+  .image-appointment {
+    width: 400px;
+    height: 400px;
+  }
+  </style>
+<div class="wrapper">
+  <%= render "admin/layouts/sidebar" %>
+  <div class="container-fluid p-0">
+    <%= render "admin/layouts/header" %>
+    <div class="container pt-3">
 
-      <div class="form-group">
-        <%=label_tag 'cost ranges'%>
-        <%=(@seller_appointment.cost_range)?@seller_appointment.cost_range.name: ""%>
-      </div>
-    
-      <div class="form-group">
-        <%=label_tag "car selling country" %>
-        <%=@seller_appointment.country.name %>
-      </div>
-      
-      <div class="form-group">
-        <%=label_tag 'car selling state'%>
-        <%=@seller_appointment.state.name %>
-      </div>
-    
-      <div class="form-group">
-        <%=label_tag 'car selling city'%>
-        <%=@seller_appointment.city.name%>
-      </div>
-    
-      <div class="form-group">
-        <%=label_tag 'zip code' %>
-        <%=@seller_appointment.zip_code%>
-      </div>
-    
-      <div class="form-group field" id="uio">
-        <% if @seller_appointment.car_images.attached? %>
-        <% @seller_appointment.car_images.each do |p| %>
-        <%= image_tag p %>
-        <% end %>
-        <% end %>
-      </div>
+    <div class="form-group">
+    <b><%=label_tag 'brand:'%></b>
+    <span><%= @seller_appointment.brand.brand_name %></span>
     </div>
-    <div>
+
+    <div class="form-group">
+    <b><%=label_tag 'model:'%></b>
+    <span><%= @seller_appointment.car_model.name %></span>
     </div>
+
+    <div class="form-group">
+    <b><%=label_tag 'ranges:'%></b>
+    <span><%= @seller_appointment.killometer_driven.killometer_range %></span>
     </div>
+
+    <div class="form-group">
+    <b><%=label_tag 'registered state code:'%></b>
+    <span><%= @seller_appointment.car_registration.state_code %></span>
     </div>
+
+    <div class="form-group">
+    <b><%=label_tag 'type:'%></b>
+    <span><%= @seller_appointment.car_variant.variant %></span>
     </div>
-    
+
+    <div class="form-group">
+     <b><%= label_tag "description:"%></b>
+     <span><%= @seller_appointment.description %></span>
+    </div>
+
+    <div class="form-group field">
+     <b><%= label_tag "price:"%></b>
+     <span><%= @seller_appointment.price %></span>
+    </div>
+
+    <div class="form-group">
+    <b><%=label_tag 'cost ranges:'%></b>
+    <span><%=(@seller_appointment.cost_range)?@seller_appointment.cost_range.name: ""%></span>
+    </div>
+
+    <div class="form-group">
+    <b><%=label_tag "car selling country:" %></b>
+    <span><%=@seller_appointment.country.name %></span>
+    </div>
+
+    <div class="form-group">
+    <b><%=label_tag 'car selling state:'%></b>
+    <span><%=@seller_appointment.state.name %></span>
+    </div>
+
+    <div class="form-group">
+    <b><%=label_tag 'car selling city:'%></b>
+    <span><%=@seller_appointment.city.name%></span>
+    </div>
+
+    <div class="form-group">
+    <b><%=label_tag 'zip code:' %></b>
+    <span><%=@seller_appointment.zip_code%></span>
+    </div>
+
+    <div class="form-group">
+    <b><%=label_tag 'status:'%></b>
+    <span><%= @seller_appointment.status %></span>
+    </div>
+
+    <div class="form-group">
+    <b><%=label_tag 'scheduled date:'%></b>
+    <span><%= @seller_appointment.scheduled_date %></span>
+    </div>
+
+    <div class="form-group">
+    <b><%=label_tag 'scheduled time:'%></b>
+    <% if !@seller_appointment.scheduled_time.blank? %>
+    <span><%= @seller_appointment.scheduled_time.strftime("%I:%M %p") %></span>
+    <% end %>
+    </div>
+
+    <div class="form-group field" id="uio">
+    <% if @seller_appointment.car_images.attached? %>
+    <% @seller_appointment.car_images.each do |p| %>
+    <%= image_tag p, class:"image-appointment"%>
+    <% end %>
+    <% end %>
+    </div>
+  </div>
+  <div>
+  </div>
+  </div>
+  </div>
+</div>

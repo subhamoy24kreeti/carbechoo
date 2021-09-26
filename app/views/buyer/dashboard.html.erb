@@ -1,6 +1,6 @@
 
 <% content_for :stylesheets do %>
-<%= stylesheet_link_tag 'dashboard' , media: 'all', 'data-turbolinks-track': 'reload'%>
+<%= stylesheet_link_tag 'buyer/dashboard' , media: 'all', 'data-turbolinks-track': 'reload'%>
 <% end %>
 <header id="fixed-head">
 <%= render "user/layouts/header" %>
@@ -12,160 +12,160 @@
 <div class="container-fluid p-0 resize">
   <!-- Example single danger button -->
   <div>
-    <form action="" id='elastic-search'>
-      <input type="text" id="search-field" class="rounded p-2">
-      <button type="submit" class="btn btn-outline-success my-2 my-sm-0">search</button>
-    </form>
+  <form action="" id='elastic-search'>
+    <input type="text" id="search-field" class="rounded p-2">
+    <button type="submit" class="btn btn-outline-success my-2 my-sm-0">search</button>
+  </form>
   </div>
   <div class="d-flex justify-content-around pt-2 pb-2 flex-wrap filter">
-    <div>
-      <p class="filter-head">Cities</p>
-    <div class="btn-group">
+  <div>
+    <p class="filter-head">Cities</p>
+  <div class="btn-group">
 
-      <button type="button" id="btn-city" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">cities
-      </button>
-      <div class="dropdown-menu">
-        <a class="dropdown-item cities" href="javascript:void(0)" data-id="">all</a>
-        <% @cities.each do |city|%>
-        <a class="dropdown-item cities" href="javascript:void(0)" data-id="<%=city[1]%>"><%=city[0]%></a>
-        <% end %>
-      </div>
+    <button type="button" id="btn-city" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">cities
+    </button>
+    <div class="dropdown-menu">
+    <a class="dropdown-item cities" href="javascript:void(0)" data-id="">all</a>
+    <% @cities.each do |city|%>
+    <a class="dropdown-item cities" href="javascript:void(0)" data-id="<%=city[1]%>"><%=city[0]%></a>
+    <% end %>
     </div>
-    </div>
-    <div>
-      <p class="filter-head">Brands</p>
-    <div class="btn-group">
-      <button type="button" id="btn-brand" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">brands
+  </div>
+  </div>
+  <div>
+    <p class="filter-head">Brands</p>
+  <div class="btn-group">
+    <button type="button" id="btn-brand" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">brands
 
-      </button>
-      <div class="dropdown-menu">
-        <a class="dropdown-item brands" href="javascript:void(0)" data-id="">all</a>
-        <% @brands.each do |brand| %>
-        <a class="dropdown-item brands" href="javascript:void(0)" data-id="<%=brand[1]%>"><%=brand[0]%></a>
-        <% end %>
-      </div>
+    </button>
+    <div class="dropdown-menu">
+    <a class="dropdown-item brands" href="javascript:void(0)" data-id="">all</a>
+    <% @brands.each do |brand| %>
+    <a class="dropdown-item brands" href="javascript:void(0)" data-id="<%=brand[1]%>"><%=brand[0]%></a>
+    <% end %>
     </div>
+  </div>
+  </div>
+  <div>
+    <p class="filter-head">Models</p>
+  <div class="btn-group">
+    <button type="button" id="btn-car-model" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">models</button>
+    <div class="dropdown-menu">
+    <a class="dropdown-item car-models" href="javascript:void(0)" data-id="">all</a>
+    <% @car_models.each do |car_model| %>
+    <a class="dropdown-item car-models" href="javascript:void(0)" data-id="<%=car_model[1]%>"><%=car_model[0] %></a>
+    <% end %>
     </div>
-    <div>
-      <p class="filter-head">Models</p>
-    <div class="btn-group">
-      <button type="button" id="btn-car-model" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">models</button>
-      <div class="dropdown-menu">
-        <a class="dropdown-item car-models" href="javascript:void(0)" data-id="">all</a>
-        <% @car_models.each do |car_model| %>
-        <a class="dropdown-item car-models" href="javascript:void(0)" data-id="<%=car_model[1]%>"><%=car_model[0] %></a>
-        <% end %>
-      </div>
+  </div>
+  </div>
+  <div>
+    <p class="filter-head">Registration year</p>
+  <div class="btn-group">
+    <button type="button" id="btn-year" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Registration year</button>
+    <div class="dropdown-menu">
+    <a class="dropdown-item years" href="javascript:void(0)" data-id="">all</a>
+    <% @years.each do |year| %>
+    <a class="dropdown-item years" href="javascript:void(0)" data-id="<%=year[1]%>"><%= year[0] %></a>
+    <% end %>
     </div>
+  </div>
+  </div>
+  <div>
+    <p class="filter-head">Car variant</p>
+  <div class="btn-group">
+    <button type="button" id="btn-car-variant" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Car variant</button>
+    <div class="dropdown-menu">
+    <a class="dropdown-item car-variants" href="javascript:void(0)" data-id="">all</a>
+    <% @car_variants.each do |car_variant| %>
+    <a class="dropdown-item car-variants" href="javascript:void(0)" data-id="<%=car_variant[1]%>"><%=car_variant[0] %></a>
+    <% end %>
     </div>
-    <div>
-      <p class="filter-head">Registration year</p>
-    <div class="btn-group">
-      <button type="button" id="btn-year" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Registration year</button>
-      <div class="dropdown-menu">
-        <a class="dropdown-item years" href="javascript:void(0)" data-id="">all</a>
-        <% @years.each do |year| %>
-        <a class="dropdown-item years" href="javascript:void(0)" data-id="<%=year[1]%>"><%= year[0] %></a>
-        <% end %>
-      </div>
-    </div>
-    </div>
-    <div>
-      <p class="filter-head">Car variant</p>
-    <div class="btn-group">
-      <button type="button" id="btn-car-variant" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Car variant</button>
-      <div class="dropdown-menu">
-        <a class="dropdown-item car-variants" href="javascript:void(0)" data-id="">all</a>
-        <% @car_variants.each do |car_variant| %>
-        <a class="dropdown-item car-variants" href="javascript:void(0)" data-id="<%=car_variant[1]%>"><%=car_variant[0] %></a>
-        <% end %>
-      </div>
-    </div>
-    </div>
-    <div>
-      <p class="filter-head">Registration state</p>
+  </div>
+  </div>
+  <div>
+    <p class="filter-head">Registration state</p>
 <div class="btn-group">
   <button type="button" id="btn-car-registration" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Registration state
   </button>
   <div class="dropdown-menu">
-    <a class="dropdown-item car-registrations" href="javascript:void(0)" data-id="">all</a>
-    <% @car_registrations.each do |car_registration| %>
-      <a class="dropdown-item car-registrations" href="javascript:void(0)" data-id="<%=car_registration[1]%>"><%= car_registration[0] %></a>
-    <% end %>
+  <a class="dropdown-item car-registrations" href="javascript:void(0)" data-id="">all</a>
+  <% @car_registrations.each do |car_registration| %>
+    <a class="dropdown-item car-registrations" href="javascript:void(0)" data-id="<%=car_registration[1]%>"><%= car_registration[0] %></a>
+  <% end %>
   </div>
 </div>
 </div>
 <div>
-  <p class="filter-head">km driven</p>  
+  <p class="filter-head">km driven</p>
 <div class="btn-group">
   <button type="button" id="btn-km-driven" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">killometer driven
   </button>
   <div class="dropdown-menu">
-    <a class="dropdown-item killometer-drivens" href="javascript:void(0)" data-id="">all</a>
-    <% @killometer_drivens.each do |killometer_driven| %>
-      <a class="dropdown-item killometer-drivens" href="javascript:void(0)" data-id="<%=killometer_driven[1]%>"><%= killometer_driven[0] %></a>
-    <% end %>
+  <a class="dropdown-item killometer-drivens" href="javascript:void(0)" data-id="">all</a>
+  <% @killometer_drivens.each do |killometer_driven| %>
+    <a class="dropdown-item killometer-drivens" href="javascript:void(0)" data-id="<%=killometer_driven[1]%>"><%= killometer_driven[0] %></a>
+  <% end %>
   </div>
 </div>
 </div>
 <div>
   <p class="filter-head">
-    cost ranges
+  cost ranges
   </p>
   <div class="btn-group">
-    <button type="button" id="btn-cost-range" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">cost ranges
-    </button>
-    <div class="dropdown-menu">
-      <a class="dropdown-item cost-ranges" href="javascript:void(0)" data-id="">all</a>
-      <% @cost_ranges.each do |cost_range| %>
-        <a class="dropdown-item cost-ranges" href="javascript:void(0)" data-id="<%=cost_range[1]%>"><%= cost_range[0] %></a>
-      <% end %>
-    </div>
+  <button type="button" id="btn-cost-range" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">cost ranges
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item cost-ranges" href="javascript:void(0)" data-id="">all</a>
+    <% @cost_ranges.each do |cost_range| %>
+    <a class="dropdown-item cost-ranges" href="javascript:void(0)" data-id="<%=cost_range[1]%>"><%= cost_range[0] %></a>
+    <% end %>
+  </div>
   </div>
 </div>
 </div>
 
-    </section>
+  </section>
   </header>
-    <section>
-        <div class="container">
-            <div class="main-outer">
-                <div class="container-fluid pt-3" >
-                    <div class="d-flex full-width flex-wrap" id="car-content">
-                      <% @cars.each do |car| %>
-                       <div class="p-3 car-cards">
-                        <div class="rounded border">
-                            <div class="img-box">
-                            <% if car.car_images.attached? %>
-                            <%= image_tag car.car_images[0], class:"img-fixed resize-car", alt:"car images" %>
-                            <% end %>
-                            </div>
-                            <div class="p-2">
-                            <div class="car-description">
-                                <p><%= car.description %></p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                              <div class="icon">
-                                <%= car.get_price %>
-                              </div>
-                                <div class="appointment d-flex">
-                                  <%= link_to "view", car_single_path(car.id), class: "btn btn-outline-success" %>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                      </div>
-                      <% end %>
-                    </div>
+  <section>
+    <div class="container">
+      <div class="main-outer">
+        <div class="container-fluid pt-3" >
+          <div class="d-flex full-width flex-wrap" id="car-content">
+            <% @cars.each do |car| %>
+             <div class="p-3 car-cards">
+            <div class="rounded border">
+              <div class="img-box">
+              <% if car.car_images.attached? %>
+              <%= image_tag car.car_images[0], class:"img-fixed resize-car", alt:"car images" %>
+              <% end %>
+              </div>
+              <div class="p-2">
+              <div class="car-description">
+                <p><%= car.description %></p>
+              </div>
+              <div class="d-flex justify-content-between">
+                <div class="icon">
+                <%= car.get_price %>
                 </div>
+                <div class="appointment d-flex">
+                  <%= link_to "view", car_single_path(car.id), class: "btn btn-outline-success" %>
+                </div>
+              </div>
+              </div>
             </div>
             </div>
+            <% end %>
+          </div>
         </div>
-    </section>
+      </div>
+      </div>
+    </div>
+  </section>
 <style>
   .fixed{
-      position: fixed;
-      width: 100%;
+    position: fixed;
+    width: 100%;
   }
 </style>
 <script>
@@ -178,11 +178,11 @@ $('#elastic-search').submit(function(e){
   console.log(page)
   var search_key = $('#search-field').val()
   if(!search_key){
-    if('search' in search_cats){
-      delete search_cats['search']
-    }
-    get_all_cars()
-    return
+  if('search' in search_cats){
+    delete search_cats['search']
+  }
+  get_all_cars()
+  return
   }
   search_cats['search'] = search_key
   get_all_cars()
@@ -191,57 +191,57 @@ $('#elastic-search').submit(function(e){
 $(window).scroll(function(e){
   var ot = $(window).scrollTop();
   if(ot>50){
-    if(!$("#fixed-head").hasClass('fixed')){
-      $("#fixed-head").addClass('fixed')
-    }
+  if(!$("#fixed-head").hasClass('fixed')){
+    $("#fixed-head").addClass('fixed')
+  }
   }else{
-    $("#fixed-head").removeClass('fixed')
+  $("#fixed-head").removeClass('fixed')
   }
 
   if(ot>=($(document).height()-$(window).height()-10)){
-    fetchMore()
+  fetchMore()
   }
 })
 $("#filter-open").click(function(){
-  
+
   $("#filter-wrap").slideToggle()
 })
 function fetchMore(){
   if(lock == false){
-    lock = true
-    page++;
-    search_cats['page'] = page
-    get_all_cars()
+  lock = true
+  page++;
+  search_cats['page'] = page
+  get_all_cars()
   }
 }
 function generate_html(cars){
   html = ""
   cars.forEach((car)=>{
-    html += `<div class="car-cards p-3">
-              <div class="rounded border">
-              <div class="img-box">
-                <img src=${car.image_url} class="img-fixed resize-car" alt="car images" %>
-              </div>
-              <div class= "p-2">
-              <div class="car-description">
-                  <p>${ car.description }</p>
-              </div>
-              <div class="d-flex justify-content-between">
-                <div class="price">
-                  ${car.price}
-                </div>
-                    <div class="appointment d-flex">
-                      <button class="btn btn-outline-success"> view </button>   
-                    </div>
-                </div>
-                </div>
-                </div>
-              </div>`
+  html += `<div class="car-cards p-3">
+        <div class="rounded border">
+        <div class="img-box">
+        <img src=${car.image_url} class="img-fixed resize-car" alt="car images" %>
+        </div>
+        <div class= "p-2">
+        <div class="car-description">
+          <p>${ car.description }</p>
+        </div>
+        <div class="d-flex justify-content-between">
+        <div class="price">
+          ${car.price}
+        </div>
+          <div class="appointment d-flex">
+            <button class="btn btn-outline-success"> view </button>
+          </div>
+        </div>
+        </div>
+        </div>
+        </div>`
   })
   if(page == 0){
-    $('#car-content').html(html)
+  $('#car-content').html(html)
   }else{
-    $('#car-content').append(html)
+  $('#car-content').append(html)
   }
 }
 function get_all_cars(){
@@ -249,19 +249,19 @@ function get_all_cars(){
   var data = search_cats
   console.log(data)
   $.ajax(
-    {
-      data: data,
-      url: '<%=  get_filtered_cars_path %>',
-      success: function(data){
-        lock = false
-        console.log(data)
-        generate_html(data['cars'])
-      },
-      error: function(){
-
-      }
+  {
+    data: data,
+    url: '<%=  get_filtered_cars_path %>',
+    success: function(data){
+    lock = false
+    console.log(data)
+    generate_html(data['cars'])
+    },
+    error: function(){
 
     }
+
+  }
   )
 }
 $('.cities').click(function(){
@@ -269,10 +269,10 @@ $('.cities').click(function(){
   //console.log('city')
   //console.log(search_cats)
   if(!$(this).data('id')){
-    $("#btn-city").html('all')
-    delete search_cats['city_id']
-    get_all_cars()
-    return
+  $("#btn-city").html('all')
+  delete search_cats['city_id']
+  get_all_cars()
+  return
   }
   search_cats['city_id'] = $(this).data('id')
   console.log($(this).data('id'))
@@ -285,10 +285,10 @@ $(".brands").click(function(){
   //console.log('brands')
   //console.log(search_cats)
   if(!$(this).data('id')){
-    $("#btn-brand").html('all')
-    delete search_cats['brand_id']
-    get_all_cars()
-    return
+  $("#btn-brand").html('all')
+  delete search_cats['brand_id']
+  get_all_cars()
+  return
   }
   console.log($(this).data('id'))
   search_cats['brand_id'] = $(this).data('id')
@@ -301,10 +301,10 @@ $(".car-models").click(function(){
   //console.log('car_models')
   //console.log(search_cats)
   if(!$(this).data('id')){
-    $("#btn-car-model").html('all')
-    delete search_cats['car_model_id']
-    get_all_cars()
-    return
+  $("#btn-car-model").html('all')
+  delete search_cats['car_model_id']
+  get_all_cars()
+  return
   }
   search_cats['car_model_id'] = $(this).data('id')
   $("#btn-car-model").html($(this).html())
@@ -316,10 +316,10 @@ $(".car-registrations").click(function(){
   //console.log('car_registration')
   //console.log(search_cats)
   if(!$(this).data('id')){
-    $("#btn-car-registration").html('all')
-    delete search_cats['car_registration_id']
-    get_all_cars()
-    return
+  $("#btn-car-registration").html('all')
+  delete search_cats['car_registration_id']
+  get_all_cars()
+  return
   }
   search_cats['car_registration_id'] = $(this).data('id')
   $("#btn-car-registration").html($(this).html())
@@ -330,10 +330,10 @@ $(".car-variants").click(function(){
   page = 0;
   console.log(search_cats)
   if(!$(this).data('id')){
-    $("#btn-car-variant").html('all')
-    delete search_cats['car_variant_id']
-    get_all_cars()
-    return
+  $("#btn-car-variant").html('all')
+  delete search_cats['car_variant_id']
+  get_all_cars()
+  return
   }
   search_cats['car_variant_id'] = $(this).data('id')
   $("#btn-car-variant").html($(this).html())
@@ -345,10 +345,10 @@ $(".cost-ranges").click(function(){
   //console.log('cost_ranges')
   //console.log(search_cats)
   if(!$(this).data('id')){
-    $("#btn-cost-range").html('all')
-    delete search_cats['cost_range_id']
-    get_all_cars()
-    return
+  $("#btn-cost-range").html('all')
+  delete search_cats['cost_range_id']
+  get_all_cars()
+  return
   }
   search_cats['cost_range_id'] = $(this).data('id')
   $("#btn-cost-range").html($(this).html())
@@ -360,10 +360,10 @@ $(".killometer-drivens").click(function(){
   console.log('k')
   console.log(search_cats)
   if(!$(this).data('id')){
-    $("#btn-km-driven").html('all')
-    delete search_cats['killometer_driven_id']
-    get_all_cars()
-    return
+  $("#btn-km-driven").html('all')
+  delete search_cats['killometer_driven_id']
+  get_all_cars()
+  return
   }
   search_cats['killometer_driven_id'] =$(this).data('id')
   $("#btn-km-driven").html($(this).html())
@@ -372,10 +372,10 @@ $(".killometer-drivens").click(function(){
 
 $('.years').click(function(){
   if(!$(this).data('id')){
-    $('#btn-year').html('all')
-    delete search_cats['year_of_buy']
-    get_all_cars()
-    return
+  $('#btn-year').html('all')
+  delete search_cats['year_of_buy']
+  get_all_cars()
+  return
   }
   search_cats['year_of_buy'] = $(this).data('id')
   $('#btn-year').html($(this).html())

@@ -1,21 +1,21 @@
 .sidebar {
-    width:270px;
-    background-color: cornflowerblue;
+  width:270px;
+  background-color: cornflowerblue;
 }
 .main-outer {
-    width:100%;
+  width:100%;
 }
 .list-item {
-    padding:10px 20px 10px 20px;
+  padding:10px 20px 10px 20px;
 }
 .car-cards {
-    width: 25%;
+  width: 25%;
 }
 .resize-car{
-    height:230px;
+  height:230px;
 }
 .img-fixed {
-    width: 100%;
+  width: 100%;
 }
 .dropdown-menu{
   max-height: 400px;
@@ -30,26 +30,26 @@
 }
 @media screen and  (max-width: 998px) {
   .filter {
-    height: 100%;
-    flex-direction: column;
+  height: 100%;
+  flex-direction: column;
   }
   .resize {
-    overflow: scroll;
-    max-height: 300px;
+  overflow: scroll;
+  max-height: 300px;
   }
 
   #filter-wrap {
-    margin: 0 20px;
-    border-radius: 5px;
-    display: none;
+  margin: 0 20px;
+  border-radius: 5px;
+  display: none;
   }
 
   #filter-open {
-    display: block;
+  display: block;
   }
 
   .car-cards{
-    width: 50%;
+  width: 50%;
   }
 }
 #elastic-search {
@@ -57,15 +57,15 @@
   width: 100%;
 }
 #search-field{
-    text-align: center;
-    width: 500px;
+  text-align: center;
+  width: 500px;
   }
 @media screen and (max-width: 576px){
   .car-cards{
-    width: 100%;
+  width: 100%;
   }
   #search-field{
-    text-align: center;
-    width: 100%;
+  text-align: center;
+  width: 100%;
   }
 }

@@ -2,76 +2,76 @@
 
 <style>
   .seller-image{
-    width: 100%;
-    height: 210px;
-    border-radius: 50%;
-    background-color: white;
+  width: 100%;
+  height: 210px;
+  border-radius: 50%;
+  background-color: white;
   }
   .seller-profile{
-    padding: 10px;
+  padding: 10px;
   }
   #map {
-		height: 200px;
-    width: 200px;
-	}
+    height: 200px;
+  width: 200px;
+  }
   .maps{
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
   }
   .profile-pic-outer {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    justify-content: center;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
   }
 </style>
 <section>
   <div class="container mt-4 mb-4" id="seller-outer-warp">
    <% @sellers.each do |seller| %>
-    <div class="seller-profile rounded border mt-3 bg-light">
-      <div class="row">
-        <div class="col-md-3 profile-pic-outer">
-          <div class="profile-image-warp">
-            <% if seller.profile_pic.attached? %>
-            <%= image_tag seller.profile_pic, class: "seller-image", alt: "profile-pic"%>
-            <% else%>
-            <%= image_tag 'default_user.png', class: "seller-image", alt: "profile-pic " %>
-            <% end %>
-          </div>
-        </div>
-        <div class="col-md-9">
-          <div class="row">
-          <div class="col-md-9">
-          <div class="seller-name">
-            <b><%= seller.full_name %></b>
-          </div>
-
-          <div class="seller-address">
-            <div class="seller-city">city: <span><b><%= seller.city %></b></span></div>
-            <div class="seller-state">state: <span><b><%= seller.state %></b></span></div>
-            <div class="seller-country">country: <span><b><%= seller.country %></b></span></div>
-          </div>
-          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic minus dolore temporibus expedita optio dolorum nisi modi sint ut quasi quo similique, officia quos est veniam, error molestias, iure eaque.</p>
-          <div class="appoint">
-            <div class="ml-auto">
-            
-              <%= link_to "view profile", user_profile_path(seller.id), class: "ml-auto btn btn-primary" %>
-          </div>
-           </div>
-           <div>
-            <button class="btn btn-info" onclick="initialize('<%= seller.latitude %>', '<%=seller.longitude %>','map<%=seller.id%>')">view location</button>
-          </div>
-          </div>
-          <div class="col-md-3">
-            <div id="map<%=seller.id%>" class="maps">
-
-            </div>
-          </div>
-        </div>
-        </div>
+  <div class="seller-profile rounded border mt-3 bg-light">
+    <div class="row">
+    <div class="col-md-3 profile-pic-outer">
+      <div class="profile-image-warp">
+      <% if seller.profile_pic.attached? %>
+      <%= image_tag seller.profile_pic, class: "seller-image", alt: "profile-pic"%>
+      <% else%>
+      <%= image_tag 'default_user.png', class: "seller-image", alt: "profile-pic " %>
+      <% end %>
       </div>
     </div>
-    <% end %>
+    <div class="col-md-9">
+      <div class="row">
+      <div class="col-md-9">
+      <div class="seller-name">
+      <b><%= seller.full_name %></b>
+      </div>
+
+      <div class="seller-address">
+      <div class="seller-city">city: <span><b><%= seller.city.name %></b></span></div>
+      <div class="seller-state">state: <span><b><%= seller.state.name %></b></span></div>
+      <div class="seller-country">country: <span><b><%= seller.country.name %></b></span></div>
+      </div>
+      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic minus dolore temporibus expedita optio dolorum nisi modi sint ut quasi quo similique, officia quos est veniam, error molestias, iure eaque.</p>
+      <div class="appoint">
+      <div class="ml-auto">
+
+        <%= link_to "view profile", user_profile_path(seller.id), class: "ml-auto btn btn-primary" %>
+      </div>
+       </div>
+       <div>
+      <button class="btn btn-info" onclick="initialize('<%= seller.latitude %>', '<%=seller.longitude %>','map<%=seller.id%>')">view location</button>
+      </div>
+      </div>
+      <div class="col-md-3">
+      <div id="map<%=seller.id%>" class="maps">
+
+      </div>
+      </div>
+    </div>
+    </div>
+    </div>
+  </div>
+  <% end %>
   </div>
 </section>
 <script src="https://maps.googleapis.com/maps/api/js?key="></script>
@@ -84,79 +84,79 @@ let lock = false;
 $(window).scroll(function(e){
   var ot = $(window).scrollTop();
   if(ot>=($(document).height()-$(window).height()-10)){
-    fetchMore()
+  fetchMore()
   }
 })
 
 function fetchMore(){
   if(lock == false){
-    lock = true
-    page++;
-    get_sellers()
+  lock = true
+  page++;
+  get_sellers()
   }
 }
 
 function generate_html(sellers){
   html = ""
   sellers.forEach((seller)=>{
-    html += `<div class="seller-profile rounded border mt-3 bg-light">
-      <div class="row">
-        <div class="col-md-3 profile-pic-outer">
-          <div class="profile-image-warp">
-            <img src=${seller.profile_pic_url} class="seller-image" alt= "profile-pic">
-          </div>
-        </div>
-        <div class="col-md-9">
-          <div class="row">
-          <div class="col-md-9">
-          <div class="seller-name">
-            <b>${seller.name }</b>
-          </div>
-
-          <div class="seller-address">
-            <div class="seller-city">city: <span><b>${seller.city }</b></span></div>
-            <div class="seller-state">state: <span><b>${ seller.state }</b></span></div>
-            <div class="seller-country">country: <span><b>${seller.country }</b></span></div>
-          </div>
-          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic minus dolore temporibus expedita optio dolorum nisi modi sint ut quasi quo similique, officia quos est veniam, error molestias, iure eaque.</p>
-          <div class="appoint">
-            <div class="ml-auto">
-              <a link=${seller.profile_url} class= "ml-auto btn btn-primary" >view profile </a>
-          </div>
-           </div>
-           <div>
-            <button class="btn btn-info" onclick="initialize('${seller.latitude }', '${seller.longitude}','map${seller.id}')">view location</button>
-          </div>
-          </div>
-          <div class="col-md-3">
-            <div id="map${seller.id}" class="maps">
-            </div>
-          </div>
-        </div>
-        </div>
+  html += `<div class="seller-profile rounded border mt-3 bg-light">
+    <div class="row">
+    <div class="col-md-3 profile-pic-outer">
+      <div class="profile-image-warp">
+      <img src=${seller.profile_pic_url} class="seller-image" alt= "profile-pic">
       </div>
-    </div>`
+    </div>
+    <div class="col-md-9">
+      <div class="row">
+      <div class="col-md-9">
+      <div class="seller-name">
+      <b>${seller.name }</b>
+      </div>
+
+      <div class="seller-address">
+      <div class="seller-city">city: <span><b>${seller.city }</b></span></div>
+      <div class="seller-state">state: <span><b>${ seller.state }</b></span></div>
+      <div class="seller-country">country: <span><b>${seller.country }</b></span></div>
+      </div>
+      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic minus dolore temporibus expedita optio dolorum nisi modi sint ut quasi quo similique, officia quos est veniam, error molestias, iure eaque.</p>
+      <div class="appoint">
+      <div class="ml-auto">
+        <a link=${seller.profile_url} class= "ml-auto btn btn-primary" >view profile </a>
+      </div>
+       </div>
+       <div>
+      <button class="btn btn-info" onclick="initialize('${seller.latitude }', '${seller.longitude}','map${seller.id}')">view location</button>
+      </div>
+      </div>
+      <div class="col-md-3">
+      <div id="map${seller.id}" class="maps">
+      </div>
+      </div>
+    </div>
+    </div>
+    </div>
+  </div>`
   })
   $('#seller-outer-warp').append(html)
 }
 function get_sellers(){
   data = {
-    page: page
+  page: page
   }
   $.ajax(
-    {
-      data: data,
-      url: '<%=  ws_get_seller_profiles_path %>',
-      success: function(data){
-        lock = false
-        console.log(data)
-        generate_html(data['sellers'])
-      },
-      error: function(){
-
-      }
+  {
+    data: data,
+    url: '<%=  ws_get_seller_profiles_path %>',
+    success: function(data){
+    lock = false
+    console.log(data)
+    generate_html(data['sellers'])
+    },
+    error: function(){
 
     }
+
+  }
   )
 }
 </script>
@@ -164,29 +164,29 @@ function get_sellers(){
   function initialize(lat, lon, id) {
   var mapCanvas = document.getElementById(id);
   var mapOptions = {
-    center: new google.maps.LatLng(lat, lon),
-    zoom: 17,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
+  center: new google.maps.LatLng(lat, lon),
+  zoom: 17,
+  mapTypeId: google.maps.MapTypeId.ROADMAP
   };
   var map = new google.maps.Map(mapCanvas, mapOptions);
 
   // MARKER:
   var marker = new google.maps.Marker({
-    position: mapOptions.center,
-    label: "G",
-    map: map
+  position: mapOptions.center,
+  label: "G",
+  map: map
   });
-  
+
   // LABEL:
   var marker1 = new MarkerWithLabel({
-                   position: homeLatLng,
-                   draggable: true,
-                   raiseOnDrag: true,
-                   map: map,
-                   labelContent: "$425K",
-                   labelAnchor: new google.maps.Point(22, 0),
-                   labelClass: "labels", // the CSS class for the label
-                   labelStyle: {opacity: 0.75}
-            });
+           position: homeLatLng,
+           draggable: true,
+           raiseOnDrag: true,
+           map: map,
+           labelContent: "$425K",
+           labelAnchor: new google.maps.Point(22, 0),
+           labelClass: "labels", // the CSS class for the label
+           labelStyle: {opacity: 0.75}
+      });
 }
-    </script>
+  </script>

@@ -16,7 +16,7 @@ class User < ApplicationRecord
     enum role: {admin: "admin", seller: "seller", buyer: "buyer"}
     validates :first_name, presence: true, allow_blank: false
     validates :last_name, presence: true, allow_blank: false
-    validates :email, format: {with: URI::MailTo::EMAIL_REGEXP }, uniqueness: { case_sensitive: false }, if: :email_changed?
+    validates :email, format: {with: /\b[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\z/ }, uniqueness: { case_sensitive: false }
     validates :phone, numericality: true, length: {minimum: 10, maximum: 15}, allow_blank: true, presence: false
     validates :password, presence: true, allow_blank: false, confirmation: true, length: {in: 6..20}, if: :password_changed?
     validates_confirmation_of :password, message: "should match", if: :password_changed?
@@ -30,7 +30,10 @@ class User < ApplicationRecord
     has_one_attached :cover_pic, :dependent => :destroy
     has_one_attached :profile_pic, :dependent => :destroy
 
-    
+    belongs_to :city
+    belongs_to :state
+    belongs_to :country
+
     after_validation :address_settings
 
     before_save :confirmation_email_token
@@ -69,6 +72,10 @@ class User < ApplicationRecord
         updating_email || new_record?
     end
 
+    def buyer_appointment_exists(seller_appointment_id)
+        self.buyer_appointments.exists?(seller_appointment_id: seller_appointment_id )
+    end
+
     def phone_present_changed?
         !phone.blank?
     end
@@ -87,9 +94,6 @@ class User < ApplicationRecord
         save
     end
 
-    def address
-        return [city, state, zip_code, country].compact.join(', ')
-    end
 
     private
 
@@ -116,14 +120,19 @@ class User < ApplicationRecord
     end
     
     def address_settings
-        if !self.city.blank? && !self.state.blank? && !self.country.blank?
-            p = Geocoder.search(self.address);
+        
+        if !self.city_id.blank? && !self.state_id.blank? && !self.country_id.blank?
+            city = City.find(self.city_id)
+            state = State.find(self.state_id)
+            country = Country.find(self.country_id)
+            self.address = [city.name, state.name, zip_code, country.name].compact.join(', ')
+            p = Geocoder.search(address);
             if !p.blank?
                 self.longitude = p[0].data['lon']
                 self.latitude  = p[0].data['lat']
             end
             Rails.logger.info(p)
-            Rails.logger.info(self.address)
+            Rails.logger.info(address)
         end
     end
 end

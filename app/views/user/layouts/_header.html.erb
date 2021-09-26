@@ -6,10 +6,22 @@
   right: 0px;
   left: auto
 }
-#inform {
+#inform-notfound {
+  display: none;
   font-size:10px ;
   color: red;
+  margin: 0px;
 }
+#inform-found {
+  display: none;
+  font-size:10px;
+  color:green;
+  margin: 0px;
+}
+.fa {
+  margin-right: 10px;
+}
+
 </style>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="fixednav">
   <%= link_to 'Carbechoo', root_path, class: 'navbar-brand' %>
@@ -27,18 +39,19 @@
         </a>
         <div class="dropdown-menu d-left" aria-labelledby="navbarDropdown">
           <% if current_user.is_buyer? %>
-           <%= link_to "my appointments", all_buyer_appointments_path(current_user.id), class: "dropdown-item" %>
+           <%= link_to raw('<i class="fa fa-calendar"></i>my appointments'), all_buyer_appointments_path(current_user.id), class: "dropdown-item" %>
           <% else %>
-           <%= link_to "my appointments", all_seller_appointments_path(current_user.id), class: "dropdown-item" %>
+           <%= link_to raw('<i class="fa fa-calendar"></i>my appointments'), all_seller_appointments_path(current_user.id), class: "dropdown-item" %>
           <% end %>
           <form class="p-2">
             <input class="form-control" type="search" placeholder="Status" aria-label="Search", id="appointment">
-            <p id="inform"></p>
-            <button class="btn btn-outline-success", id="status" type="submit">check</button>
+            <p id="inform-found"></p>
+            <p id="inform-notfound"></p>
+            <button class="btn btn-outline-success mt-1", id="status" type="submit">check</button>
           </form>
-          <%= link_to 'sellers', sellers_path, class: "dropdown-item" %>
+          <%= link_to raw('<i class="fas fa-store"></i>sellers'), sellers_path, class: "dropdown-item" %>
           <div class="dropdown-divider"></div>
-          <%= link_to raw('<i class="fa fa-cog"></i> Settings'), user_settings_path(current_user.id), class:"dropdown-item" %>
+          <%= link_to raw('<i class="fa fa-cog"></i> Settings'), user_settings_path, class:"dropdown-item" %>
           </div>
         </div>
       </li>
@@ -60,6 +73,8 @@
     check_status_appointment()
   })
   function check_status_appointment(){
+    $('#inform-found').hide()
+    $('#inform-notfound').hide()
     $.ajax({
       type: 'get',
       url: '<%= check_status_appointment_url %>',
@@ -69,11 +84,18 @@
       },
       success: function(data){
         console.log(data)
-        $('#inform').text(data.msg)
+        if(data.error == 0){
+          $('#inform-found').text(data.msg)
+          $('#inform-found').show()
+        }else {
+          $('#inform-notfound').text(data.msg)
+          $('#inform-notfound').show()
+        }
       },
       error: function(error){
         console.log(error)
-        $('#inform').text(data.msg)
+        $('#inform-notfound').text(data.msg)
+        $('#inform-notfound').show()
       }
     })
   }
