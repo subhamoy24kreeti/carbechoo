@@ -1,28 +1,28 @@
 
 <div class="wrapper">
-    <%= render "admin/layouts/sidebar" %>
-    <div class='container-fluid p-0'>
-       <%= render "admin/layouts/header" %>
-        <section>
-        <% if flash.key? :alert %>
-        <p><%= flash[:alert] %></p>
-        <% end %>
-        <% if @brands.blank? %>
-          you do not create a model name until you create a brand
-        <% else %>
-        <div class="container pt-3">
-          <%= form_with url: admin_car_model_update_path(@car_model.id),  method: :put do |f|%>
-            <div class="form-group">
-               <%f.label 'model name' %>
-               <%=f.text_field :name, class:"form-control", value: @car_model.name %>
-            </div>
-            <div>
-            choose a brand
-            <%=select_tag(:brand_id, options_for_select(@brands, selected: @car_model.brand_id), class:"custom-select custom-select-lg mb-3", id:"country", include_blank: '--selecr your country--') %>
-            <%=f.submit :update ,class:"btn btn-info" %>
-          <% end%>
-        <% end %>
-        </div>
-        </section>
+  <%= render "admin/layouts/sidebar" %>
+  <div class='container-fluid p-0'>
+     <%= render "admin/layouts/header" %>
+    <section>
+    <% if flash.key? :alert %>
+    <p><%= flash[:alert] %></p>
+    <% end %>
+    <% if @brands.blank? %>
+      you do not create a model name until you create a brand
+    <% else %>
+    <div class="container pt-3">
+      <%= form_with url: admin_car_model_update_path(@car_model.id),  method: :put do |f|%>
+      <div class="form-group">
+         <%f.label 'model name' %>
+         <%=f.text_field :name, class:"form-control", value: @car_model.name %>
+      </div>
+      <div>
+      choose a brand
+      <%=select_tag(:brand_id, options_for_select(@brands, selected: @car_model.brand_id), class:"custom-select custom-select-lg mb-3", id:"country", include_blank: '--selecr your country--') %>
+      <%=f.submit :update ,class:"btn btn-info" %>
+      <% end%>
+    <% end %>
     </div>
-    </div>
+    </section>
+  </div>
+  </div>

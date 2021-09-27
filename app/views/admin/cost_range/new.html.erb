@@ -5,33 +5,33 @@
    <%= render "admin/layouts/header" %>
   <section>
   <div class="container mt-3">
-    <% if flash.key? :notice %>
-    <%= render 'layouts/alert_success', notice: flash[:notice] %>
-    <% end %>
+	<% if flash.key? :notice %>
+	<%= render 'layouts/alert_success', notice: flash[:notice] %>
+	<% end %>
 
-    <% if flash.key? :error %>
-    <%= render 'layouts/alert_error', error: flash[:error]%>
-    <% end %>
-    <%= form_with url: admin_cost_range_create_path,  method: :post do |f|%>
-    <div class="form-group">
-      <%=f.label :quality %>
-      <%=f.text_field :quality, class:"form-control" %>
-    </div>
-    <div class="form-group">
-     <%=f.label :range1 %>
-     <%=f.text_field :range1, class:"form-control" %>
-    </div>
-    <div class="form-group">
-      <%=f.label :range2 %>
-      <%=f.text_field :range2, class:"form-control" %>
-     </div>
-     <div class="form-group">
-      <%=f.label :currency %>
-      <%=select_tag(:currency, options_for_select([['INR','₹'],['USD','$']]), class:"custom-select custom-select-lg mb-3") %>
-     </div>
-    <%=f.submit :add ,class:"btn btn-info" %>
-    <% end%>
-    </div>
+	<% if flash.key? :error %>
+	<%= render 'layouts/alert_error', error: flash[:error]%>
+	<% end %>
+	<%= form_with url: admin_cost_range_create_path,  method: :post do |f|%>
+	<div class="form-group">
+	  <%=f.label :quality %>
+	  <%=f.text_field :quality, class:"form-control" %>
+	</div>
+	<div class="form-group">
+	 <%=f.label :range1 %>
+	 <%=f.text_field :range1, class:"form-control" %>
+	</div>
+	<div class="form-group">
+	  <%=f.label :range2 %>
+	  <%=f.text_field :range2, class:"form-control" %>
+	 </div>
+	 <div class="form-group">
+	  <%=f.label :currency %>
+	  <%=select_tag(:currency, options_for_select([['INR','₹'],['USD','$']]), class:"custom-select custom-select-lg mb-3") %>
+	 </div>
+	<%=f.submit :add ,class:"btn btn-info" %>
+	<% end%>
+	</div>
   </section>
 </div>
 </div>

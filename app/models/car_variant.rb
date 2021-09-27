@@ -1,3 +1,3 @@
 class CarVariant < ApplicationRecord
-    validates :variant, presence: true, allow_blank: false
+  validates :variant, presence: true, allow_blank: false
 end

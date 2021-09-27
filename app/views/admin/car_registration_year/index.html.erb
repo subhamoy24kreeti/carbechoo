@@ -1,56 +1,56 @@
 <style>
   table{
-    border-collapse: collapse;
-    width: 100%;
+  border-collapse: collapse;
+  width: 100%;
   }
   td,th{
-    border: 1px solid #dddddd;
-    text-align:left;
-    padding: 8px;
+  border: 1px solid #dddddd;
+  text-align:left;
+  padding: 8px;
   }
 </style>
 <div class="wrapper">
   <%= render "admin/layouts/sidebar" %>
   <div class='container-fluid p-0'>
-     <%= render "admin/layouts/header" %>
-    <section>
-      <% if flash.key? :notice %>
-      <%= render 'layouts/alert_success', notice: flash[:notice] %>
-      <% end %>
-
-      <% if flash.key? :error %>
-      <%= render 'layouts/alert_error', error: flash[:error]%>
-      <% end %>
-    <div class="container-fluid mt-3">
-
-    <% if @car_registration_years.blank? %>
-      <%= link_to 'create', new_admin_car_registration_year_path, class: "btn btn-info" %>
-    <% else %>
-    <table>
-      <thead>
-       <tr>
-    <th>id</th>
-    <th>range1</th>
-    <th>range2</th>
-    <th>actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @car_registration_years.each do |cr| %>
-    <tr>
-    <td><%=cr.id%></td>
-    <td><%=cr.range1 %></td>
-    <td><%=cr.range2 %></td>
-    <td>
-    <%= link_to 'delete', admin_car_registration_year_delete_path(cr.id), class:"btn btn-danger", onclick: 'return confirm("are you sure you want to delete this item")' %>
-    <%= link_to 'edit', edit_admin_car_registration_year_path(cr.id), class:"btn btn-info" %>
-    </td>
-    </tr>
+   <%= render "admin/layouts/header" %>
+  <section>
+    <% if flash.key? :notice %>
+    <%= render 'layouts/alert_success', notice: flash[:notice] %>
     <% end %>
-    </tbody>
-    </table>
+
+    <% if flash.key? :error %>
+    <%= render 'layouts/alert_error', error: flash[:error]%>
     <% end %>
-    </div>
-    </section>
+  <div class="container-fluid mt-3">
+
+  <% if @car_registration_years.blank? %>
+    <%= link_to 'create', new_admin_car_registration_year_path, class: "btn btn-info" %>
+  <% else %>
+  <table>
+    <thead>
+     <tr>
+  <th>id</th>
+  <th>range1</th>
+  <th>range2</th>
+  <th>actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @car_registration_years.each do |cr| %>
+  <tr>
+  <td><%=cr.id%></td>
+  <td><%=cr.range1 %></td>
+  <td><%=cr.range2 %></td>
+  <td>
+  <%= link_to 'delete', admin_car_registration_year_delete_path(cr.id), class:"btn btn-danger", onclick: 'return confirm("are you sure you want to delete this item")' %>
+  <%= link_to 'edit', edit_admin_car_registration_year_path(cr.id), class:"btn btn-info" %>
+  </td>
+  </tr>
+  <% end %>
+  </tbody>
+  </table>
+  <% end %>
+  </div>
+  </section>
   </div>
 </div>

@@ -14,17 +14,17 @@ td,th{
 <div class='container-fluid p-0'>
    <%= render "admin/layouts/header" %>
   <section>
-    <% if flash.key? :notice %>
-    <%= render 'layouts/alert_success', notice: flash[:notice] %>
-    <% end %>
+  <% if flash.key? :notice %>
+  <%= render 'layouts/alert_success', notice: flash[:notice] %>
+  <% end %>
 
-    <% if flash.key? :error %>
-    <%= render 'layouts/alert_error', error: flash[:error]%>
-    <% end %>
+  <% if flash.key? :error %>
+  <%= render 'layouts/alert_error', error: flash[:error]%>
+  <% end %>
   <div class="container-fluid mt-3">
   <table>
-    <thead>
-     <tr>
+  <thead>
+   <tr>
   <th>id</th>
   <th>city name</th>
   <th>state name</th>

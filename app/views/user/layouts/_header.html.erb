@@ -39,9 +39,9 @@
         </a>
         <div class="dropdown-menu d-left" aria-labelledby="navbarDropdown">
           <% if current_user.is_buyer? %>
-           <%= link_to raw('<i class="fa fa-calendar"></i>my appointments'), all_buyer_appointments_path(current_user.id), class: "dropdown-item" %>
+           <%= my_appointments_link(all_buyer_appointments_path(current_user.id)) %>
           <% else %>
-           <%= link_to raw('<i class="fa fa-calendar"></i>my appointments'), all_seller_appointments_path(current_user.id), class: "dropdown-item" %>
+           <%= my_appointments_link(all_seller_appointments_path(current_user.id)) %>
           <% end %>
           <form class="p-2">
             <input class="form-control" type="search" placeholder="Status" aria-label="Search", id="appointment">
@@ -49,9 +49,9 @@
             <p id="inform-notfound"></p>
             <button class="btn btn-outline-success mt-1", id="status" type="submit">check</button>
           </form>
-          <%= link_to raw('<i class="fas fa-store"></i>sellers'), sellers_path, class: "dropdown-item" %>
+          <%= seller_store_link(sellers_path) %>
           <div class="dropdown-divider"></div>
-          <%= link_to raw('<i class="fa fa-cog"></i> Settings'), user_settings_path, class:"dropdown-item" %>
+          <%= user_settings_link(user_settings_path) %>
           </div>
         </div>
       </li>
@@ -99,5 +99,5 @@
       }
     })
   }
-  
+
 </script>

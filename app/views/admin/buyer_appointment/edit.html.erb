@@ -1,117 +1,116 @@
 <style>
-    .quote-imgs-thumbs {
-      background: #eee;
-      border: 1px solid #ccc;
-      border-radius: 0.25rem;
-      margin: 1.5rem 0;
-      padding: 0.75rem;
-      display: flex;
-    }
-    .fa-trash:hover{
-      color:red;
-      cursor:pointer;
-    }
-    .quote-imgs-thumbs--hidden {
-      display: none;
-    }
-    .img-preview-thumb {
-      background: #fff;
-      border: 1px solid #777;
-      border-radius: 0.25rem;
-      box-shadow: 0.125rem 0.125rem 0.0625rem rgba(0, 0, 0, 0.12);
-      margin-right: 1rem;
-      max-width: 140px;
-      padding: 0.25rem;
-    }
-    </style>
-    
-    <div class="wrapper">
-      <%= render "admin/layouts/sidebar" %>
-      <div class="container-fluid p-0">
-        <%= render "admin/layouts/header" %>
-        <div class="container pt-3">
-     <%=form_with url: admin_buyer_appointment_update_path(@buyer_appointment.id), id: "car-details", method: :put  do |f|%>
-      
-      <div class="form-group">
-        <label for="appointment_id">buyer appopintment id</label>
-        <p><b><%= @buyer_appointment.id %></b></p>
-      </div>
+  .quote-imgs-thumbs {
+    background: #eee;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    margin: 1.5rem 0;
+    padding: 0.75rem;
+    display: flex;
+  }
+  .fa-trash:hover{
+    color:red;
+    cursor:pointer;
+  }
+  .quote-imgs-thumbs--hidden {
+    display: none;
+  }
+  .img-preview-thumb {
+    background: #fff;
+    border: 1px solid #777;
+    border-radius: 0.25rem;
+    box-shadow: 0.125rem 0.125rem 0.0625rem rgba(0, 0, 0, 0.12);
+    margin-right: 1rem;
+    max-width: 140px;
+    padding: 0.25rem;
+  }
+  </style>
 
-      <div class="form-group">
-        <label for="brand">brand</label>
-        <p><b><%= @buyer_appointment.seller_appointment.brand.brand_name %></b></p>
-      </div>
+  <div class="wrapper">
+    <%= render "admin/layouts/sidebar" %>
+    <div class="container-fluid p-0">
+    <%= render "admin/layouts/header" %>
+    <div class="container pt-3">
+   <%=form_with url: admin_buyer_appointment_update_path(@buyer_appointment.id), id: "car-details", method: :put  do |f|%>
 
-      <div class="form-group">
-        <label for="brand">car model</label>
-        <p><b><%=@buyer_appointment.seller_appointment.car_model.name%></b></p>
-      </div>
-    
-      <div class="form-group">
-        <label for="seller-appointment-id">seller appointment id</label>
-        <p><b><%= @buyer_appointment.seller_appointment.id %></b></p>
-      </div> 
-    
-      <div class="form-group">
-        <label for="seller-name">seller name</label>
-        <p><b><%= @buyer_appointment.seller_appointment.user.full_name %></b></p>
-      </div>
-    
-      <div class="form-group">
-        <label for="buyer-name">buyer name</label>
-        <p><b><%= @buyer_appointment.user.full_name %></b></p>
-      </div>
+    <div class="form-group">
+    <label for="appointment_id">buyer appopintment id</label>
+    <p><b><%= @buyer_appointment.id %></b></p>
+    </div>
 
-      <div class="form-group">
-        <label for="cost-range">cost range</label>
-        <p><b><%= @buyer_appointment.seller_appointment.cost_range.name %></b></p>
-      </div>
-    
-    
-      <div class="form-group field">
-        <label for="price">price </label>
-        <p><b><%= @buyer_appointment.seller_appointment.price %></b></p>
-      </div>
-  
-      <div class="form-group field">
-        <label for="price">price </label>
-        <p><b><%= @buyer_appointment.seller_appointment.year_of_buy %></b></p>
-      </div>
-    
-      
-      <div class="form-group">
-        <%=f.label 'status'%>
-        <%=select_tag(:status, options_for_select(@statuses, selected: @buyer_appointment.get_status_code), class:"custom-select custom-select-lg mb-3", id:"status") %>
-      </div>
-  
-      <div class="form-group">
-        <%=f.label 'sheduled appointment date'%>
-        <%=f.date_field :scheduled_date, class: "form-control", value: @buyer_appointment.scheduled_date %>
-      </div>
-  
-      <div class="form-group">
-        <%=f.label 'sheduled appointment time'%>
-        <%=f.time_field :scheduled_time, class: "form-control", value: (@buyer_appointment.scheduled_time)?@buyer_appointment.scheduled_time.strftime("%H:%M"):"" %>
-      </div>
-    
-      <div class="form-group field" id="uio">
-        <% if @buyer_appointment.seller_appointment.car_images.attached? %>
-        <% @buyer_appointment.seller_appointment.car_images.each do |p| %>
-        <%= image_tag p %>
-        <% end %>
-        <% end %>
-      </div>
+    <div class="form-group">
+    <label for="brand">brand</label>
+    <p><b><%= @buyer_appointment.seller_appointment.brand.brand_name %></b></p>
+    </div>
 
-      <div class="form-group">
-      <%=f.submit :submit , class:"btn btn-primary" %>
-      </div>
-     <% end%>
-    <div>
-      </div>
-        </div>
+    <div class="form-group">
+    <label for="brand">car model</label>
+    <p><b><%=@buyer_appointment.seller_appointment.car_model.name%></b></p>
+    </div>
+
+    <div class="form-group">
+    <label for="seller-appointment-id">seller appointment id</label>
+    <p><b><%= @buyer_appointment.seller_appointment.id %></b></p>
+    </div>
+
+    <div class="form-group">
+    <label for="seller-name">seller name</label>
+    <p><b><%= @buyer_appointment.seller_appointment.user.full_name %></b></p>
+    </div>
+
+    <div class="form-group">
+    <label for="buyer-name">buyer name</label>
+    <p><b><%= @buyer_appointment.user.full_name %></b></p>
+    </div>
+
+    <div class="form-group">
+    <label for="cost-range">cost range</label>
+    <p><b><%= @buyer_appointment.seller_appointment.cost_range.name %></b></p>
+    </div>
+
+
+    <div class="form-group field">
+    <label for="price">price </label>
+    <p><b><%= @buyer_appointment.seller_appointment.price %></b></p>
+    </div>
+
+    <div class="form-group field">
+    <label for="price">price </label>
+    <p><b><%= @buyer_appointment.seller_appointment.year_of_buy %></b></p>
+    </div>
+
+
+    <div class="form-group">
+    <%=f.label 'status'%>
+    <%=select_tag(:status, options_for_select(@statuses, selected: @buyer_appointment.get_status_code), class:"custom-select custom-select-lg mb-3", id:"status") %>
+    </div>
+
+    <div class="form-group">
+    <%=f.label 'sheduled appointment date'%>
+    <%=f.date_field :scheduled_date, class: "form-control", value: @buyer_appointment.scheduled_date %>
+    </div>
+
+    <div class="form-group">
+    <%=f.label 'sheduled appointment time'%>
+    <%=f.time_field :scheduled_time, class: "form-control", value: (@buyer_appointment.scheduled_time)?@buyer_appointment.scheduled_time.strftime("%H:%M"):"" %>
+    </div>
+
+    <div class="form-group field" id="uio">
+    <% if @buyer_appointment.seller_appointment.car_images.attached? %>
+    <% @buyer_appointment.seller_appointment.car_images.each do |p| %>
+    <%= image_tag p %>
+    <% end %>
+    <% end %>
+    </div>
+
+    <div class="form-group">
+    <%=f.submit :submit , class:"btn btn-primary" %>
+    </div>
+   <% end%>
+  <div>
     </div>
     </div>
-    <%= render 'layouts/helper_address' %>
-    
-    <script>
-    
+  </div>
+  </div>
+  <%= render 'layouts/helper_address' %>
+
+  <script>

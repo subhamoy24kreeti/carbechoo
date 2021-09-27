@@ -13,9 +13,9 @@ class SellerController < ApplicationController
   end
 
   def new
-     @seller = User.new
-     @countries = Country.all.map{|country|  [country.name, country.id]}
-     render 'signup'
+    @seller = User.new
+    @countries = Country.all.map{|country|  [country.name, country.id]}
+    render 'signup'
   end
 
 

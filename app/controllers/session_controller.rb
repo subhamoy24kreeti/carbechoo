@@ -4,9 +4,9 @@ class SessionController < ApplicationController
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
       if user.role.eql?'seller'
-      redirect_to seller_dashboard_path, notice: "successfully logged in seller"
+        redirect_to seller_dashboard_path, notice: "successfully logged in seller"
       else
-      redirect_to buyer_dashboard_path, notice: "successfully logged in buyer"
+        redirect_to buyer_dashboard_path, notice: "successfully logged in buyer"
       end
       #redirect_to posts_path, notice: "Logged in!"
     else
@@ -17,7 +17,7 @@ class SessionController < ApplicationController
 
   def admin_login
     user = User.find_by_email(params[:email])
-    if  !user.blank? && user.is_admin? && user.authenticate(params[:password])
+    if !user.blank? && user.is_admin? && user.authenticate(params[:password])
       session[:user_id] = user.id
       redirect_to admin_dashboard_path, notice: "Logged in!"
     else

@@ -5,100 +5,100 @@
   <h4>Carbechoo</h4>
   </div>
   <ul class="list-unstyled components">
-    <li class="active border-top">
-    <a href="#user-list" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">User</a>
-    <ul class="collapse list-unstyled pr-0" id="user-list">
-      <li class="list-item bg-dark border-top"><%= link_to 'admin-list', admin_all_admin_path %></li>
-      <li  class="list-item bg-dark border-top"><%= link_to 'seller-list', admin_all_seller_path %></li>
-      <li class="list-item bg-dark border-top"><%= link_to 'buyer-list', admin_all_buyer_path %></li>
-    </ul>
+  <li class="active border-top">
+  <a href="#user-list" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">User</a>
+  <ul class="collapse list-unstyled pr-0" id="user-list">
+    <li class="list-item bg-dark border-top"><%= link_to 'admin-list', admin_all_admin_path %></li>
+    <li  class="list-item bg-dark border-top"><%= link_to 'seller-list', admin_all_seller_path %></li>
+    <li class="list-item bg-dark border-top"><%= link_to 'buyer-list', admin_all_buyer_path %></li>
+  </ul>
+  </li>
+  <li class="border-top">
+  <a href="#appointment" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">appointments</a>
+  <ul class="collapse list-unstyled pr-0" id="appointment">
+    <li class="list-item bg-dark border-top"><%= link_to 'seller appointment', admin_seller_appointment_index_path %></li>
+    <li class="list-item bg-dark border-top"><%= link_to 'buyer appointment', admin_buyer_appointment_index_path %> </li>
+  </ul>
+  </li>
+  <li class="border-top">
+  <a href="#brand" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">brands</a>
+  <ul class="collapse list-unstyled pr-0" id="brand">
+    <li class="list-item bg-dark border-top"> <%= link_to 'create brand', new_admin_brand_path %></li>
+    <li class="list-item bg-dark border-top"> <%= link_to 'brand-list', admin_brand_index_path %></li>
+  </ul>
+  </li>
+    <li class="border-top">
+      <%= link_to 'all-cars', admin_all_cars_path %>
     </li>
     <li class="border-top">
-    <a href="#appointment" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">appointments</a>
-    <ul class="collapse list-unstyled pr-0" id="appointment">
-      <li class="list-item bg-dark border-top"><%= link_to 'seller appointment', admin_seller_appointment_index_path %></li>
-      <li class="list-item bg-dark border-top"><%= link_to 'buyer appointment', admin_buyer_appointment_index_path %> </li>
-    </ul>
-    </li>
-    <li class="border-top">
-    <a href="#brand" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">brands</a>
-    <ul class="collapse list-unstyled pr-0" id="brand">
-      <li class="list-item bg-dark border-top"> <%= link_to 'create brand', new_admin_brand_path %></li>
-      <li class="list-item bg-dark border-top"> <%= link_to 'brand-list', admin_brand_index_path %></li>
-    </ul>
-    </li>
-        <li class="border-top">
-          <%= link_to 'all-cars', admin_all_cars_path %>
-        </li>
-        <li class="border-top">
-          <a href="#country" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">countries</a>
-          <ul class="collapse list-unstyled pr-0" id="country">
-          <li class="list-item bg-dark border-top"> <%= link_to 'add country', new_admin_country_path %></li>
-          <li class="list-item bg-dark border-top"> <%= link_to 'all-country', admin_country_index_path %></li>
-          </ul>
-        </li>
-        <li class="border-top">
-          <a href="#state" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">states</a>
-          <ul class="collapse list-unstyled pr-0" id="state">
-          <li class="list-item bg-dark border-top"> <%= link_to 'add state', new_admin_state_path %></li>
-          <li class="list-item bg-dark border-top"> <%= link_to 'all-state', admin_state_index_path %></li>
-          </ul>
-          </li>
-        <li class="border-top">
-        <a href="#city" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">cities</a>
-        <ul class="collapse list-unstyled pr-0" id="city">
-          <li class="list-item bg-dark border-top"> <%= link_to 'add city', new_admin_city_path %></li>
-          <li class="list-item bg-dark border-top"> <%= link_to 'all-city', admin_city_index_path %></li>
-        </ul>
-        </li>
-        <li class="border-top">
-        <a href="#car-registration" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">car registration code</a>
-        <ul class="collapse list-unstyled pr-0" id="car-registration">
-          <li class="list-item bg-dark border-top"> <%= link_to 'add registrtion code', new_admin_car_registration_path %></li>
-          <li class="list-item bg-dark border-top"> <%= link_to 'all-rgistration codes', admin_car_registration_index_path %></li>
-        </ul>
-        </li>
-        </li>
-        <li class="border-top">
-        <a href="#car-model" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">car models</a>
-        <ul class="collapse list-unstyled pr-0" id="car-model">
-          <li class="list-item bg-dark border-top"> <%= link_to 'add model', new_admin_car_model_path %></li>
-          <li class="list-item bg-dark border-top"> <%= link_to 'all-models', admin_car_model_index_path %></li>
-        </ul>
-        </li>
-        <li class="border-top">
-        <a href="#km-driven" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">km driven</a>
-        <ul class="collapse list-unstyled pr-0" id="km-driven">
-          <li class="list-item bg-dark border-top"> <%= link_to 'add range', new_admin_killometer_driven_path %></li>
-          <li class="list-item bg-dark border-top"> <%= link_to 'all-ranges', admin_killometer_driven_index_path %></li>
-        </ul>
-        </li>
-        <li class="border-top">
-        <a href="#car-variant" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">car variant</a>
-        <ul class="collapse list-unstyled pr-0" id="car-variant">
-          <li class="list-item bg-dark border-top"> <%= link_to 'add variant', new_admin_car_variant_path %></li>
-          <li class="list-item bg-dark border-top"> <%= link_to 'all-variants', admin_car_variant_index_path %></li>
-        </ul>
-        </li>
-        <li class="border-top">
-        <a href="#cost-ranges" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">cost ranges</a>
-        <ul class="collapse list-unstyled pr-0" id="cost-ranges">
-          <li class="list-item bg-dark border-top"> <%= link_to 'add cost range', new_admin_cost_range_path %></li>
-          <li class="list-item bg-dark border-top"> <%= link_to 'all-cost ranges ', admin_cost_range_index_path %></li>
-        </ul>
-        </li>
-        <li class="border-top">
-          <a href="#car-registration-year" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">car registration year</a>
-          <ul class="collapse list-unstyled pr-0" id="car-registration-year">
-          <li class="list-item bg-dark border-top"> <%= link_to 'year ranges ', admin_car_registration_year_index_path %></li>
-          </ul>
-        </li>
+      <a href="#country" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">countries</a>
+      <ul class="collapse list-unstyled pr-0" id="country">
+      <li class="list-item bg-dark border-top"> <%= link_to 'add country', new_admin_country_path %></li>
+      <li class="list-item bg-dark border-top"> <%= link_to 'all-country', admin_country_index_path %></li>
       </ul>
-    </nav>
+    </li>
+    <li class="border-top">
+      <a href="#state" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">states</a>
+      <ul class="collapse list-unstyled pr-0" id="state">
+      <li class="list-item bg-dark border-top"> <%= link_to 'add state', new_admin_state_path %></li>
+      <li class="list-item bg-dark border-top"> <%= link_to 'all-state', admin_state_index_path %></li>
+      </ul>
+      </li>
+    <li class="border-top">
+    <a href="#city" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">cities</a>
+    <ul class="collapse list-unstyled pr-0" id="city">
+      <li class="list-item bg-dark border-top"> <%= link_to 'add city', new_admin_city_path %></li>
+      <li class="list-item bg-dark border-top"> <%= link_to 'all-city', admin_city_index_path %></li>
+    </ul>
+    </li>
+    <li class="border-top">
+    <a href="#car-registration" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">car registration code</a>
+    <ul class="collapse list-unstyled pr-0" id="car-registration">
+      <li class="list-item bg-dark border-top"> <%= link_to 'add registrtion code', new_admin_car_registration_path %></li>
+      <li class="list-item bg-dark border-top"> <%= link_to 'all-rgistration codes', admin_car_registration_index_path %></li>
+    </ul>
+    </li>
+    </li>
+    <li class="border-top">
+    <a href="#car-model" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">car models</a>
+    <ul class="collapse list-unstyled pr-0" id="car-model">
+      <li class="list-item bg-dark border-top"> <%= link_to 'add model', new_admin_car_model_path %></li>
+      <li class="list-item bg-dark border-top"> <%= link_to 'all-models', admin_car_model_index_path %></li>
+    </ul>
+    </li>
+    <li class="border-top">
+    <a href="#km-driven" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">km driven</a>
+    <ul class="collapse list-unstyled pr-0" id="km-driven">
+      <li class="list-item bg-dark border-top"> <%= link_to 'add range', new_admin_killometer_driven_path %></li>
+      <li class="list-item bg-dark border-top"> <%= link_to 'all-ranges', admin_killometer_driven_index_path %></li>
+    </ul>
+    </li>
+    <li class="border-top">
+    <a href="#car-variant" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">car variant</a>
+    <ul class="collapse list-unstyled pr-0" id="car-variant">
+      <li class="list-item bg-dark border-top"> <%= link_to 'add variant', new_admin_car_variant_path %></li>
+      <li class="list-item bg-dark border-top"> <%= link_to 'all-variants', admin_car_variant_index_path %></li>
+    </ul>
+    </li>
+    <li class="border-top">
+    <a href="#cost-ranges" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">cost ranges</a>
+    <ul class="collapse list-unstyled pr-0" id="cost-ranges">
+      <li class="list-item bg-dark border-top"> <%= link_to 'add cost range', new_admin_cost_range_path %></li>
+      <li class="list-item bg-dark border-top"> <%= link_to 'all-cost ranges ', admin_cost_range_index_path %></li>
+    </ul>
+    </li>
+    <li class="border-top">
+      <a href="#car-registration-year" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle unstyled">car registration year</a>
+      <ul class="collapse list-unstyled pr-0" id="car-registration-year">
+      <li class="list-item bg-dark border-top"> <%= link_to 'year ranges ', admin_car_registration_year_index_path %></li>
+      </ul>
+    </li>
+    </ul>
+  </nav>
   <script>
   $(document).ready(function(){
-    $("#sidebarCollapse").on('click',function(){
-      $('#sidebar').toggleClass('active')
-    })
+  $("#sidebarCollapse").on('click',function(){
+    $('#sidebar').toggleClass('active')
+  })
   })
 </script>

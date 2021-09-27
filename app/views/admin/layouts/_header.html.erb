@@ -1,61 +1,61 @@
 <style>
-	.wrapper{
-	  display: flex;
-	  width: 100%;
-	  align-items: stretch;
-	}
-	#header{
-	  position: fixed;
-	  width: 100%;
-	}
-	#sidebar.active{
-		margin-left: -250px;
-	}
-	.user-content{
-		padding:30px;
-	}
-	.user-card{
-		border: 2px solid blue;
-	}
-	#sidebar{
-		min-height: 100vh;
-		width: 250px;
-		background-color: rgb(0, 140, 255);
-		cursor: pointer;
-	}
-	#sidebar ul li{
-		padding: 10px 0px 10px 0px
-	}
-	.border-top a{
-		all:unset;
-	}
-	.border-top a{
-		padding:10px;
-	}
-	.border-top a:hover{
-	padding:10px;
-	border: none;
-	color: white;
-	}
+  .wrapper{
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+  }
+  #header{
+    position: fixed;
+    width: 100%;
+  }
+  #sidebar.active{
+    margin-left: -250px;
+  }
+  .user-content{
+    padding:30px;
+  }
+  .user-card{
+    border: 2px solid blue;
+  }
+  #sidebar{
+    min-height: 100vh;
+    width: 250px;
+    background-color: rgb(0, 140, 255);
+    cursor: pointer;
+  }
+  #sidebar ul li{
+    padding: 10px 0px 10px 0px
+  }
+  .border-top a{
+    all:unset;
+  }
+  .border-top a{
+    padding:10px;
+  }
+  .border-top a:hover{
+  padding:10px;
+  border: none;
+  color: white;
+  }
 
-	.fa{
-		font-size: 30px;
-		margin-right: 10px;
-	}
+  .fa{
+    font-size: 30px;
+    margin-right: 10px;
+  }
 </style>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<div class="container-fluid">
-		<button class="btn btn-info" id="sidebarCollapse">
-			<i class="fa fa-angle-left"></i>
-		</button>
-		<div class="d-flex">
-		<div>
-			<i class="fa fa-user m-0"></i>
-			<span><%= current_user.full_name %></span>
-		</div>
-		<div>
-			<%= link_to 'Logout', user_logout_path, class: "btn btn-outline-success my-2 my-sm-0 ml-3" %>
-		</div>
-		</div>
-	</div>
+  <div class="container-fluid">
+    <button class="btn btn-info" id="sidebarCollapse">
+      <i class="fa fa-angle-left"></i>
+    </button>
+    <div class="d-flex">
+    <div>
+      <i class="fa fa-user m-0"></i>
+      <span><%= current_user.full_name %></span>
+    </div>
+    <div>
+      <%= link_to 'Logout', user_logout_path, class: "btn btn-outline-success my-2 my-sm-0 ml-3" %>
+    </div>
+    </div>
+  </div>
 </nav>
