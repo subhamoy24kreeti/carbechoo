@@ -4,8 +4,11 @@
   <div class='container-fluid p-0'>
    <%= render "admin/layouts/header" %>
   <section>
-  <% if flash.key? :alert %>
-  <p><%= flash[:alert] %></p>
+  <% if flash.key? :notice %>
+  <%= render 'layouts/alert_success', notice: flash[:notice] %>
+  <% end %>
+  <% if flash.key? :error %>
+  <%= render 'layouts/alert_success', notice: flash[:error] %>
   <% end %>
   <div class="container pt-3">
     <%= form_with url: admin_car_registration_year_update_path(@car_registration_year.id),  method: :put do |f|%>
