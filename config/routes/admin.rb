@@ -1,17 +1,17 @@
 namespace :admin do
   resources :admin
-  resources :car_model
-  resources :brand
-  resources :car_registration
-  resources :car_variant
-  resources :country
-  resources :state
-  resources :city
-  resources :car_registration_year
-  resources :killometer_driven
-  resources :seller_appointment
-  resources :buyer_appointment
-  resources :cost_range
+  resources :car_model,  except: [:destroy, :update, :create]
+  resources :brand, except: [:destroy, :update, :create]
+  resources :car_registration, except: [:destroy, :update, :create]
+  resources :car_variant, except: [:destroy, :update, :create]
+  resources :country, except: [:destroy, :update, :create]
+  resources :state, except: [:destroy, :update, :create]
+  resources :city, except: [:destroy, :update, :create]
+  resources :car_registration_year, except: [:destroy, :update, :create]
+  resources :killometer_driven, except: [:destroy, :update, :create]
+  resources :seller_appointment, except: [:destroy, :update, :create]
+  resources :buyer_appointment, except: [:destroy, :update, :create]
+  resources :cost_range,  except: [:destroy, :update, :create]
   post "brand/create", to:"brand#create", as: 'brand_create'
   post "car-registration-year/create", to:"car_registration_year#create", as: 'car_registration_year_create'
   post "car-registration/create", to:"car_registration#create", as: 'car_registration_create'

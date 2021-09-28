@@ -3,7 +3,7 @@ class Admin::BrandController < ApplicationController
   before_action :authorize_admin
 
   def new
-     @brand = Brand.new
+    @brand = Brand.new
   end
 
   def create

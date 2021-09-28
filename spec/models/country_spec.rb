@@ -4,7 +4,7 @@ RSpec.describe Country, type: :model do
   subject { build(:country) }
 
   before {subject.save}
-  context 'names' do
+  context 'country name' do
     it 'should not be nil' do
       subject.name = nil
       expect(subject).to_not be_valid

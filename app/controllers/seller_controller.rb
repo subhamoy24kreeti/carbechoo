@@ -3,12 +3,10 @@ class SellerController < ApplicationController
 
   def seller_authorization
     if current_user.blank?
-      redirect_to root_path
-      return
+      redirect_to root_path and return
     end
     if current_user.role == 'buyer'
-      redirect_to buyer_dashboard_path
-      return
+      redirect_to buyer_dashboard_path and return
     end
   end
 
@@ -17,7 +15,6 @@ class SellerController < ApplicationController
     @countries = Country.all.map{|country|  [country.name, country.id]}
     render 'signup'
   end
-
 
   def create
     Rails.logger.info(params)
@@ -45,6 +42,7 @@ class SellerController < ApplicationController
       redirect_to seller_registration_path, flash: { error: @seller.errors.full_messages}
     end
   end
+
   def dashboard
     @appointment_under_process = SellerAppointment.limit(5).where(user_id: current_user.id, status: 'processing').order('updated_at DESC')
     @appointment_under_investigation = SellerAppointment.limit(5).where(user_id: current_user.id, status: 'investigating').order('updated_at DESC')

@@ -41,7 +41,7 @@
     state: <b><%= @seller.state.name %></b>
     </div>
     <div class="country">
-    country: <b><%= @seller.country.name %></b>
+    country: <b><%=@seller.country.name %></b>
     </div>
     <div class="zip-code">
     zip code: <b><%= @seller.zip_code %></b>
@@ -49,31 +49,28 @@
   </div>
   </section>
 
-  <section>
+  <section class="m-3">
   <h3><b>Latest items</b></h3>
   <div class="latest-items">
     <div class="container">
-    <% if !@seller_items.blank? %>
+    <% if !@latest_seller_items.blank? %>
     <div class="d-flex flex-wrap">
-      <% @seller_items.each do |item| %>
+      <% @latest_seller_items.each do |item| %>
       <div class="border rounded">
       <div class="seller-item">
         <% if item.car_images.attached? %>
         <%= image_tag item.car_images[0], class:"img-fluid" %>
         <% end %>
       </div>
+      <div class="p-2">
       <div class="description">
         <%= item.description %>
       </div>
 
       <div class="d-flex justify-content-between">
-        <button class="btn btn-success">
-        view
-        </button>
-
-        <button class="btn btn-primary">
-        appoint
-        </button>
+        <%= link_to "view", car_single_path(item.id), class: "btn btn-outline-success" %>
+      </div>
+      </div>
       </div>
       </div>
       <% end %>

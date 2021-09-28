@@ -1,4 +1,3 @@
-
 <% content_for :stylesheets do %>
 <%= stylesheet_link_tag 'car_single' , media: 'all', 'data-turbolinks-track': 'reload'%>
 <% end %>
@@ -55,7 +54,7 @@
   </b>
   </div>
   <div class="seller-name d-flex align-items-center">
-   <b> <%= link_to @car.user.full_name, user_profile_path(@car.id) %> </b>
+   <b> <%= link_to @car.user.full_name, user_profile_path(@car.user.id) %> </b>
   </div>
 </div>
 <div class="car-description mt-3">
@@ -67,7 +66,7 @@
 </div>
 <%= f.text_field 'seller_user_id', type:"hidden", value:@car.user_id %>
 <div class="appoint">
-<% if !current_user.buyer_appointment_exists(@car.id) %>
+<% if current_user.blank? || !current_user.buyer_appointment_exists(@car.id) %>
 <%= f.submit "appoint",class:"btn btn-primary"%>
 <% else %>
 <div class="bg-primary p-2 rounded">
@@ -97,13 +96,13 @@
     <div class="container">
     <ul class="list-unstyled car-details-list">
       <li>
-      <i>car vaiant:</i> <span><%= @car.car_variant.variant %></span>
+        <i>car vaiant:</i> <span><%= @car.car_variant.variant %></span>
       </li>
       <li>
-      <i>killometer driven:</i> <span><%= @car.killometer_driven.killometer_range %></span>
+        <i>killometer driven:</i> <span><%= @car.killometer_driven.killometer_range %></span>
       </li>
       <li>
-      <i>car registration:</i> <span><%= @car.car_registration.state_code %></span>
+        <i>car registration:</i> <span><%= @car.car_registration.state_code %></span>
       </li>
     </ul>
     </div>
@@ -126,7 +125,7 @@
     <div class="modal-body">
     <form id="phone-put">
       <div class="form-group">
-      <input type="text" class="form-control" id="user-phone"  pattern="[1-9]{1}[0-9]{9}">
+        <input type="text" class="form-control" id="user-phone"  pattern="[1-9]{1}[0-9]{9}">
       </div>
       <button type="submit" class="btn btn-primary">save number</button>
       <div class="notify-success notify-phone-success"></div>
@@ -179,32 +178,36 @@
 <script>
 var user = <%= current_user.to_json.html_safe %>
 
-    function slide(f){
-      if(f == "1"){
-        $(".slider").animate({scrollLeft: "-=100"},"fast")
-      }else{
-        $(".slider").animate({scrollLeft: "+=100"},"fast")
-      }
-    }
-    $(".slider-image").on('click', function(){
-      if($(this).hasClass("active")){
-        return false
-      }else{
-        $(".slider-image").removeClass("active")
-        $(this).addClass("active")
-        console.log($(this).attr('src'))
-        console.log($("#main-img").attr('src'))
-        var image =  $("#main-img")
-        var selectedurl = $(this).attr('src')
-        image.fadeOut('fast', function(){
-          image.attr('src', selectedurl)
-          image.fadeIn('fast')
-        })
-      }
+console.log(user)
+function slide(f){
+  if(f == "1"){
+    $(".slider").animate({scrollLeft: "-=100"},"fast")
+  }else{
+    $(".slider").animate({scrollLeft: "+=100"},"fast")
+  }
+}
+$(".slider-image").on('click', function(){
+  if($(this).hasClass("active")){
+    return false
+  }else{
+    $(".slider-image").removeClass("active")
+    $(this).addClass("active")
+    console.log($(this).attr('src'))
+    console.log($("#main-img").attr('src'))
+    var image =  $("#main-img")
+    var selectedurl = $(this).attr('src')
+    image.fadeOut('fast', function(){
+      image.attr('src', selectedurl)
+      image.fadeIn('fast')
     })
+  }
+})
 let user_email_verified = false;
 let user_phone_verified = false;
-let user_phone = user.phone;
+let user_phone = null;
+if(user) {
+  user_phone = user.phone;
+}
 $('#phone-put').submit(function(e){
   e.preventDefault()
   var re = /^[1-9]{1}[0-9]{9}$/im
@@ -216,7 +219,7 @@ $('#phone-put').submit(function(e){
     method: 'put',
     data: {
     phone: p,
-    user_id: '<%= (!current_user.blank?)?(current_user.id):"" %>'
+    user_id: '<%= (!current_user.blank?)? (current_user.id) : "" %>'
     },
     url: "<%= save_user_phone_path %>",
     success: function(data){
@@ -239,7 +242,7 @@ $('#phone-put').submit(function(e){
 })
 function generate_verification_email(){
   data = {
-  user_id: '<%= (!current_user.blank?)?(current_user.id):"" %>',
+  user_id: '<%= (!current_user.blank?)?(current_user.id) : "" %>',
   }
   $.ajax({
   type: 'get',
@@ -266,7 +269,7 @@ function generate_verification_email(){
 
 function verify_email(){
   data ={
-  user_id: '<%= (!current_user.blank?)?(current_user.id):"" %>'
+  user_id: '<%= (!current_user.blank?)?(current_user.id) : "" %>'
   }
   $.ajax({
   type: 'get',
@@ -291,9 +294,10 @@ function verify_email(){
 
 $('#appoint-form').submit(function(e){
   console.log(user_phone)
+  console.log(user);
   if(!user){
-  $('#register-modal').modal('show')
-  return false
+    $('#register-modal').modal('show')
+    return false
   }
 
   var email_verified = user.email_confirmed

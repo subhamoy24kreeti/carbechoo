@@ -7,7 +7,7 @@ RSpec.describe KillometerDriven, type: :model do
   context "killometer range" do
     it "should not be empty" do
       subject.killometer_range = nil
-      subject.to_not be_valid
+      expect(subject).to_not be_valid
     end
   end
 

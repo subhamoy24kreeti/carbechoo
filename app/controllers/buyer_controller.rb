@@ -4,12 +4,10 @@ class BuyerController < ApplicationController
 
   def buyer_authorization
     if current_user.blank?
-    redirect_to root_path
-    return
+      redirect_to root_path and return
     end
     if current_user.role == 'seller'
-    redirect_to seller_dashboard_path
-    return
+      redirect_to seller_dashboard_path and return
     end
   end
 
@@ -49,15 +47,14 @@ class BuyerController < ApplicationController
   #buyer appointment creation controller
   def create_appointment
     if current_user.blank?
-    redirect_to 'buyer_login_path'
-    return
+      redirect_to 'buyer_login_path' and return
     end
     buyer_appointment = BuyerAppointment.new(user_id: current_user.id, seller_appointment_id: params[:seller_appointment_id]);
     if buyer_appointment.save
-    BuyerMailer.appointment_submission_mail(current_user, buyer_appointment.id).deliver
-    render 'appointment_success', info: "Successfully created an appointment"
+      BuyerMailer.appointment_submission_mail(current_user, buyer_appointment.id).deliver
+      render 'appointment_success', info: "Successfully created an appointment"
     else
-    redirect_to car_single_path(params[:seller_appointment_id]), error: "Do not create appointment"
+      redirect_to car_single_path(params[:seller_appointment_id]), error: "Do not create appointment"
     end
   end
 
@@ -78,8 +75,10 @@ class BuyerController < ApplicationController
     @cost_ranges = CostRange.all.map{|cost_range| [cost_range.currency+cost_range.range1.to_s+"-"+cost_range.range2.to_s, cost_range.id]}
     @car_registration_year = CarRegistrationYear.first()
     @years = []
-    for year in @car_registration_year.range1..@car_registration_year.range2
-    @years.append([year, year])
+    if !@car_registration_year.blank?
+      for year in @car_registration_year.range1..@car_registration_year.range2
+        @years.append([year, year])
+      end
     end
     @cars = SellerAppointment.where(status: 'approved')
   end

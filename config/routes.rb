@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   draw :admin
   draw :api
-  
+
   #seller specific
   scope :seller do
     get "register", to:"seller#new", as:"seller_registration"
@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     get "all-appointments/:id", to:"seller#all_appointments", as: "all_seller_appointments"
     get "seller-appointment-single/:id", to: "seller#seller_appointment_single", as: "seller_appointment_single"
   end
- 
+
   #buyer specific
   scope :buyer do
     get "register", to:"buyer#new", as:"buyer_registration"
@@ -25,12 +25,12 @@ Rails.application.routes.draw do
     get "dashboard", to:"buyer#dashboard", as:"buyer_dashboard"
     post "create-appointment", to:"buyer#create_appointment", as: "create_buyer_appointment"
     get "all-appointments/:id", to:"buyer#all_appointments", as: "all_buyer_appointments"
-  end  
-  
+  end
+
   #login paths for user
   get 'login', to:"user#login", as:"user_login_get"
-  post 'login', to:"session#user_login", as:"user_login_post" 
- 
+  post 'login', to:"session#user_login", as:"user_login_post"
+
   get 'logout', to:"session#destroy", as: "user_logout"
   #forget password
   get 'forget-password-request', to:'user#forget_password_request', as: 'forget_password_request'
@@ -49,11 +49,11 @@ Rails.application.routes.draw do
   put 'save-user-phone', to:"user#save_user_phone", as:"save_user_phone"
 
   get 'verify-user-email', to: "user#verify_email", as:"email_verification"
-  
-  
-   
+
+
+
   #default paths
-  get "car-single/:id", to:"user#car_single", as:"car_single"  
+  get "car-single/:id", to:"user#car_single", as:"car_single"
   get 'check-status', to: 'user#check_status_appointment', as: 'check_status_appointment'
   get 'user-profile/:id', to:"user#user_profile", as:"user_profile"
   put 'user-profile-upadte', to:"user#user_profile_update", as:"user_update_profile"

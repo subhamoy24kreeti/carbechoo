@@ -67,7 +67,7 @@
 </div>
 </nav>
 <script>
-  var role = '<%= (!current_user.blank?)?(current_user.role):'' %>'
+  var role = '<%= (!current_user.blank?)?(current_user.role) : '' %>'
   $('#status').click(function(e){
     e.preventDefault()
     check_status_appointment()

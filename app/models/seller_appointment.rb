@@ -12,6 +12,9 @@ class SellerAppointment < ApplicationRecord
   belongs_to :car_registration
   has_many :buyer_appointments
 
+  validates :year_of_buy, presence: true, allow_blank: false
+  validates :price, presence: true, allow_blank: false, numericality: true
+
   scope :search_filter, ->(search) {
     where('status = ?','approved').joins(:city, :killometer_driven, :state, :country, :car_variant, :car_model, :brand).where('cities.name LIKE :search OR killometer_drivens.killometer_range LIKE :search OR states.name LIKE :search OR countries.name LIKE :search OR car_variants.variant LIKE :search OR car_models.name LIKE :search OR brands.brand_name LIKE :search OR seller_appointments.zip_code LIKE :search', search: "%#{search}%")
   }
@@ -33,31 +36,42 @@ class SellerAppointment < ApplicationRecord
   }
 
   scope :params_filter, ->(params){
-    values =[]
-    q = ""
-    i = 0
-    params.each do |k, v|
-      if i == 0
-        q = "#{k} = ?"
+    conditions = {}
+
+    conditions[:city_id] = params[:city_id] if !params[:city_id].blank?
+    conditions[:brand_id] =  params[:brand_id]  if !params[:brand_id].blank?
+    conditions[:car_model_id] = params[:car_model_id] if !params[:car_model_id].blank?
+    conditions[:year_of_buy] = params[:year_of_buy] if !params[:year_of_buy].blank?
+    conditions[:car_variant_id] = params[:car_variant_id] if !params[:car_variant_id].blank?
+    conditions[:car_registration_id] = params[:car_registration_id] if !params[:car_registration_id].blank?
+    conditions[:killometer_driven_id] = params[:killometer_driven_id] if !params[:killometer_driven_id].blank?
+    conditions[:cost_range_id] = params[:cost_range_id] if !params[:cost_range_id].blank?
+
+    if !conditions.blank?
+      if !params[:search].blank?
+        where(status: 'approved').where(conditions).search_filter(params[:search])
       else
-        q += " AND #{k} = ?"
+        where(status: 'approved').where(conditions)
       end
-      values.append(v)
-      i += 1
+    else
+      if !params[:search].blank?
+        where(status: 'approved').where(conditions).search_filter(params[:search])
+      else
+        where(status: 'approved').where(conditions)
+      end
     end
-    where('status = ?','approved').where(q, values)
   }
 
   def get_status_code
     statuses = { 'processing' => 0, 'investigating' => 1, 'approved' => 2, 'rejecting' => 3, 'sold out'=> 4 }
-    return statuses[self.status]
+    statuses[status]
   end
 
   def get_price
     if currency.blank?
-      return '₹'+" "+price.to_s
+      '₹'+" "+price.to_s
     else
-      return currency+" "+price.to_s
+      currency+" "+price.to_s
     end
   end
 end

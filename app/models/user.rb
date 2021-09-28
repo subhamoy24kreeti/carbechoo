@@ -45,11 +45,11 @@ class User < ApplicationRecord
   end
 
   def is_seller?
-    return (role.blank?)? false :(role.eql?"seller")
+    (role.blank?)? false :(role.eql?"seller")
   end
 
   def full_name
-    return first_name+" "+last_name
+    first_name+" "+last_name
   end
 
   scope :nearest_seller, ->(longitude, latitude){
@@ -86,8 +86,8 @@ class User < ApplicationRecord
   end
 
   def activate_email
-    self.email_confirmed = true
-    self.confirm_token_email = nil
+    write_attribute(:email_confirmed, true)
+    write_attribute(:confirm_token_email, nil)
     save
   end
 
@@ -95,32 +95,33 @@ class User < ApplicationRecord
   private
 
   def password_reset_token_generate
-    self.password_reset_token = SecureRandom.urlsafe_base64.to_s
-    self.password_reset_token_sent_at = Time.now
+    @password_reset_token = SecureRandom.urlsafe_base64.to_s
+    write_attribute(:password_reset_token_sent_at, Time.now)
   end
 
   def confirmation_email_token
     if email_changed? || new_record? || email_verification_token_request?
-      self.confirm_token_email = SecureRandom.urlsafe_base64.to_s
+      write_attribute(:confirm_token_email, SecureRandom.urlsafe_base64.to_s)
     end
   end
 
   def confirmation_phone_token
     if !email.blank? && elf.confirmation_phone_token.blank?
-      self.confirmation_phone_token = SecureRandom.urlsafe_base64.to_s
+      write_attribute(:confirmation_phone_token, SecureRandom.urlsafe_base64.to_s)
     end
   end
 
   def address_settings
-    if !self.city_id.blank? && !self.state_id.blank? && !self.country_id.blank?
-      city = City.find(self.city_id)
-      state = State.find(self.state_id)
-      country = Country.find(self.country_id)
-      self.address = [city.name, state.name, zip_code, country.name].compact.join(', ')
+    if !city_id.blank? && !state_id.blank? && !country_id.blank?
+      city = City.find(city_id)
+      state = State.find(state_id)
+      country = Country.find(country_id)
+      address = [city.name, state.name, zip_code, country.name].compact.join(', ')
+      write_attribute(:address, address)
       p = Geocoder.search(address);
       if !p.blank?
-        self.longitude = p[0].data['lon']
-        self.latitude  = p[0].data['lat']
+        write_attribute(:longitude, p[0].data['lon'])
+        write_attribute(:latitude, p[0].data['lat'])
       end
       Rails.logger.info(p)
       Rails.logger.info(address)

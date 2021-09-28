@@ -71,7 +71,7 @@
 
     <div class="form-group">
     <b><%=label_tag 'cost ranges'%></b>
-    <%=(@seller_appointment.cost_range)?@seller_appointment.cost_range.name: ""%>
+    <%=(@seller_appointment.cost_range)?(@seller_appointment.cost_range.name) : ""%>
     </div>
 
     <div class="form-group">

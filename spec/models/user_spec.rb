@@ -4,6 +4,12 @@ RSpec.describe User, type: :model do
   subject { build(:user) }
 
   before {subject.save}
+  it 'phone number length  is 10' do
+    subject.phone = '9889758985'
+    expect(subject).to be_valid
+  end
+
+  before {subject.save}
   it 'first_name must be present' do
     subject.first_name = ''
     expect(subject).to_not be_valid
@@ -41,11 +47,6 @@ RSpec.describe User, type: :model do
     expect(subject).to_not be_valid
   end
 
-  before {subject.save}
-  it 'phone number length  is 10' do
-    subject.phone = '9889758985'
-    expect(subject).to be_valid
-  end
 
   before {subject.save}
   it 'phone number should not greater 10' do
@@ -73,14 +74,14 @@ RSpec.describe User, type: :model do
   end
 
   before {subject.save}
-  it 'email must be valid' do
+  it 'when email must be valid' do
     subject.email = 'hfhhdh255@ghiii.com'
     expect(subject).to be_valid
   end
 
 
   after {subject.save}
-  it'email should be unique' do
+  it'email should not be unique' do
     n = build(:user)
     expect(n).to_not be_valid
   end
