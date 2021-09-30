@@ -23,14 +23,14 @@ class Admin::KillometerDrivenController < ApplicationController
 		check = KillometerDriven.where(id: params[:id]).update(killometer_range: params[:killometer_range])
 
 		if check
-			redirect_to admin_killometer_driven_index_path, lash: {error: 'Successfully created' }
+			redirect_to admin_killometer_driven_index_path, flash: {notice: 'Successfully created' }
 		else
 			redirect_to admin_killometer_driven_index_path, flash: {error: 'an error occured' }
 		end
 	end
 
 	def delete
-		KillometerDriven.destroy(params[:id])
+		KillometerDriven.destroy(params[:id]), flash: {notice: 'Successfully deleted' }
 		redirect_to admin_killometer_driven_index_path
 	end
 

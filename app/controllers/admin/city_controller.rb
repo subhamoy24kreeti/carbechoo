@@ -22,7 +22,7 @@ class Admin::CityController < ApplicationController
 		state = State.find(@city.state_id)
 		@countries = Country.all.map{|country| [country.name, country.id]}
 		@selected_country_id = state.country_id
-		@states = State.where('country_id=?', state.country_id).map{|country| [country.name, country.id]}
+		@states = State.where(country_id: state.country_id).map{|country| [country.name, country.id]}
 	end
 
 	def update
@@ -35,6 +35,6 @@ class Admin::CityController < ApplicationController
 	end
 
 	def index
-		@cities = City.includes(:state, :country).all()
+		@cities = City.all()
 	end
 end

@@ -25,7 +25,7 @@
     </button>
     <div class="dropdown-menu">
     <a class="dropdown-item cities" href="javascript:void(0)" data-id="">all</a>
-    <% @cities.each do |city|%>
+    <%  get_cities_dropdown.each do |city|%>
     <a class="dropdown-item cities" href="javascript:void(0)" data-id="<%=city[1]%>"><%=city[0]%></a>
     <% end %>
     </div>
@@ -39,7 +39,7 @@
     </button>
     <div class="dropdown-menu">
     <a class="dropdown-item brands" href="javascript:void(0)" data-id="">all</a>
-    <% @brands.each do |brand| %>
+    <% get_brands_dropdown.each do |brand| %>
     <a class="dropdown-item brands" href="javascript:void(0)" data-id="<%=brand[1]%>"><%=brand[0]%></a>
     <% end %>
     </div>
@@ -51,7 +51,7 @@
     <button type="button" id="btn-car-model" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">models</button>
     <div class="dropdown-menu">
     <a class="dropdown-item car-models" href="javascript:void(0)" data-id="">all</a>
-    <% @car_models.each do |car_model| %>
+    <% get_car_models_dropdown.each do |car_model| %>
     <a class="dropdown-item car-models" href="javascript:void(0)" data-id="<%=car_model[1]%>"><%=car_model[0] %></a>
     <% end %>
     </div>
@@ -63,7 +63,7 @@
     <button type="button" id="btn-year" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Registration year</button>
     <div class="dropdown-menu">
     <a class="dropdown-item years" href="javascript:void(0)" data-id="">all</a>
-    <% @years.each do |year| %>
+    <% get_car_registration_years.each do |year| %>
     <a class="dropdown-item years" href="javascript:void(0)" data-id="<%=year[1]%>"><%= year[0] %></a>
     <% end %>
     </div>
@@ -75,7 +75,7 @@
     <button type="button" id="btn-car-variant" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Car variant</button>
     <div class="dropdown-menu">
     <a class="dropdown-item car-variants" href="javascript:void(0)" data-id="">all</a>
-    <% @car_variants.each do |car_variant| %>
+    <% get_car_variants_dropdown.each do |car_variant| %>
     <a class="dropdown-item car-variants" href="javascript:void(0)" data-id="<%=car_variant[1]%>"><%=car_variant[0] %></a>
     <% end %>
     </div>
@@ -88,7 +88,7 @@
   </button>
   <div class="dropdown-menu">
   <a class="dropdown-item car-registrations" href="javascript:void(0)" data-id="">all</a>
-  <% @car_registrations.each do |car_registration| %>
+  <% get_car_registrations_dropdown.each do |car_registration| %>
     <a class="dropdown-item car-registrations" href="javascript:void(0)" data-id="<%=car_registration[1]%>"><%= car_registration[0] %></a>
   <% end %>
   </div>
@@ -101,7 +101,7 @@
   </button>
   <div class="dropdown-menu">
   <a class="dropdown-item killometer-drivens" href="javascript:void(0)" data-id="">all</a>
-  <% @killometer_drivens.each do |killometer_driven| %>
+  <% get_killometer_drivens_dropdown.each do |killometer_driven| %>
     <a class="dropdown-item killometer-drivens" href="javascript:void(0)" data-id="<%=killometer_driven[1]%>"><%= killometer_driven[0] %></a>
   <% end %>
   </div>
@@ -116,7 +116,7 @@
   </button>
   <div class="dropdown-menu">
     <a class="dropdown-item cost-ranges" href="javascript:void(0)" data-id="">all</a>
-    <% @cost_ranges.each do |cost_range| %>
+    <% get_cost_ranges_dropdown.each do |cost_range| %>
     <a class="dropdown-item cost-ranges" href="javascript:void(0)" data-id="<%=cost_range[1]%>"><%= cost_range[0] %></a>
     <% end %>
   </div>
@@ -130,7 +130,7 @@
       <div class="main-outer">
         <div class="container-fluid pt-3" >
           <div class="d-flex full-width flex-wrap" id="car-content">
-            <% @cars.each do |car| %>
+            <% get_cars.each do |car| %>
              <div class="p-3 car-cards">
             <div class="rounded border">
               <div class="img-box">

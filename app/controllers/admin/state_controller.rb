@@ -36,6 +36,6 @@ class Admin::StateController < ApplicationController
   end
 
   def index
-    @states = State.includes(:country).all()
+    @states = State.all()
   end
 end

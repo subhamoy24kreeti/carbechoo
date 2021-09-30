@@ -15,6 +15,20 @@
   color: red;
   font-size: 10px;
   }
+  @media screen and (max-width:1000px) {
+    .signup-box {
+      height: 400px;
+      overflow-y: scroll;
+      padding: 10px 100px 10px 100px;
+    }
+  }
+  @media screen and (max-width: 700px) {
+    .signup-box {
+      height: 400px;
+      overflow-y: scroll;
+      padding: 10px;
+    }
+  }
 </style>
 <header id="fixed-head">
   <%= render "user/layouts/header" %>
@@ -32,50 +46,50 @@
   <div class="rounded border signup-box">
   <%= form_with url: buyer_create_path, id: 'signup-form', method: :post do |f| %>
     <div class="form-group required">
-    <%= f.label 'first name' ,class:"control-label"%>
-    <%= f.text_field :first_name, required: true, class: "form-control", id: 'first-name'%>
+    <%= f.label 'first name', class:"control-label"%>
+    <%= f.text_field :first_name, name: "buyer[first_name]" ,required: true, class: "form-control", id: 'first-name'%>
     <div class="error" id="error-fn"></div>
     </div>
     <div class="form-group required">
-    <%= f.label 'last name' ,class:"control-label"%>
-    <%= f.text_field :last_name, class: "form-control", id: 'last-name'%>
+    <%= f.label 'last name', class:"control-label"%>
+    <%= f.text_field :last_name, name: "buyer[last_name]", class: "form-control", id: 'last-name'%>
     <div class="error" id="error-ln"></div>
     </div>
     <div class="form-group required">
     <%= f.label :email ,class:"control-label"%>
-    <%= f.email_field :email, class: "form-control", id: 'email'%>
+    <%= f.email_field :email, name: "buyer[email]", class: "form-control", id: 'email'%>
     <div class="error" id="error-email"></div>
     </div>
 
     <div class="form-group required">
     <%=f.label 'choose your country', class:"control-label"%>
-    <%=select_tag(:country_id, options_for_select(@countries), class:"custom-select custom-select-lg mb-3", id: 'country',  include_blank: '--selecr your country--', required: true) %>
+    <%=select_tag(:country_id, options_for_select(get_countries_dropdown), class:"custom-select custom-select-lg mb-3", name: "buyer[country_id]", id: 'country',  include_blank: '--selecr your country--', required: true) %>
 
     </div>
     <div class="form-group required">
     <%=f.label 'choose your state', class:"control-label"%>
-    <%=select_tag(:state_id, options_for_select('<option></option>'), class:"custom-select custom-select-lg mb-3", id: 'state', required: true) %>
+    <%=select_tag(:state_id, options_for_select('<option></option>'), class:"custom-select custom-select-lg mb-3",name: "buyer[state_id]", id: 'state', required: true) %>
     </div>
 
     <div class="form-group required">
     <%=f.label 'choose your city', class:"control-label"%>
-    <%=select_tag(:city_id, options_for_select('<option></option>'), class:"custom-select custom-select-lg mb-3", id: 'city', required: true) %>
+    <%=select_tag(:city_id, options_for_select('<option></option>'), class:"custom-select custom-select-lg mb-3", name: "buyer[city_id]", id: 'city', required: true) %>
     </div>
 
     <div class="form-group required">
     <%=f.label 'zip code', class:"control-label"%>
-    <%=f.text_field 'zip_code', class: "form-control", id: 'zip-code', required: true %>
+    <%=f.text_field 'zip_code', class: "form-control", id: 'zip-code', name: "buyer[zip_code]", required: true %>
     </div>
 
     <div class="form-group required">
     <%= f.label :password  ,class:"control-label"%>
-    <%= f.password_field :password, class: "form-control", id: "password" %>
+    <%= f.password_field :password, name: "buyer[password]", class: "form-control", id: "password" %>
     <div class="error" id="error-password"></div>
     </div>
 
     <div class="form-group required">
     <%= f.label 'confirm password', class:"control-label"%>
-    <%= f.password_field :password_confirmation, class: "form-control", id:"password-confirmation" %>
+    <%= f.password_field :password_confirmation, name: "buyer[password_confirmation]", class: "form-control", id:"password-confirmation" %>
     <div class="error" id="error-password-c"></div>
     </div>
 

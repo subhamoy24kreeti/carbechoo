@@ -22,7 +22,7 @@ class Admin::CarModelController < ApplicationController
 	end
 
 	def update
-		check = CarModel.where('id=?',params[:id]).update(brand_id: params[:brand_id], name: params[:name])
+		check = CarModel.where(id: params[:id]).update(brand_id: params[:brand_id], name: params[:name])
 		if check
 			redirect_to admin_car_model_index_path, flash: {notice: "Successfully updated"}
 		else
@@ -40,6 +40,6 @@ class Admin::CarModelController < ApplicationController
 	end
 
 	def index
-		@car_models = CarModel.includes(:brand)
+		@car_models = CarModel.all
 	end
 end

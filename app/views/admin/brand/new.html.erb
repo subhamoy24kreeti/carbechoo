@@ -15,7 +15,7 @@
       <%= form_with url: admin_brand_create_path,  method: :post do |f|%>
       <div class="form-group">
          <%f.label :brand_name %>
-         <%=f.text_field :brand_name, class:"form-control" %>
+         <%=f.text_field :brand_name, name="[brand][brand_name]", class:"form-control" %>
       </div>
       <%=f.submit :add ,class:"btn btn-info" %>
       <% end%>

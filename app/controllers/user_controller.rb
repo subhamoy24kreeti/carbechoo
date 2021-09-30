@@ -10,22 +10,6 @@ class UserController < ApplicationController
         redirect_to buyer_dashboard_path and return
       end
     end
-    @cities = City.all.map{|city| [city.name, city.id]}
-    @brands = Brand.all.map{|brand| [brand.brand_name, brand.id]}
-    @car_models = CarModel.all.map{|car_model| [car_model.name, car_model.id]}
-    @car_variants = CarVariant.all.map{|car_variant| [car_variant.variant, car_variant.id]}
-    @car_registrations = CarRegistration.all.map{|car_registration| [car_registration.state_code, car_registration.id]}
-    @killometer_drivens = KillometerDriven.all.map{|killometer_driven| [killometer_driven.killometer_range, killometer_driven.id]}
-    @cost_ranges = CostRange.all.map{|cost_range| [cost_range.currency+cost_range.range1.to_s+"-"+cost_range.range2.to_s, cost_range.id]}
-    @cars = SellerAppointment.where(status: 'approved')
-    @car_registration_year = CarRegistrationYear.first()
-    @years = []
-    if !@car_registration_year.blank?
-      for year in @car_registration_year.range1..@car_registration_year.range2
-        @years.append([year, year])
-      end
-    end
-    render 'landing'
   end
 
   def car_single
@@ -224,7 +208,6 @@ class UserController < ApplicationController
   def user_profile
     @seller = User.find(params[:id])
     @latest_seller_items = SellerAppointment.limit(5).where(user_id: params[:id], status: 'approved').order('updated_at DESC')
-    render 'user_profile'
   end
 
   def sellers
@@ -238,7 +221,7 @@ class UserController < ApplicationController
       page = params[:page].to_i
     end
     offset = page*10
-    sellers = User.includes(:country, :state, :city).limit(10).offset(offset).where(role: 'seller')
+    sellers = User.limit(10).offset(offset).where(role: 'seller')
     root_link = root_url
 
     sellers = sellers.map{|seller| {:id => seller.id, :profile_url => user_profile_path(seller.id), :profile_pic_url => (seller.cover_pic.attached?)?url_for(seller.profile_pic):(root_link+'assets/images/default_profile.png'), :about=> seller.about, :name => seller.full_name, :city => (seller.city ? seller.city.name : ""), :state => (seller.state ? seller.state.name : "") , :country => (seller.country ? seller.country.name : "")}}
@@ -246,13 +229,8 @@ class UserController < ApplicationController
   end
 
   def user_settings
-
-    @countries = Country.all.map{|country| [country.name, country.id]}
     @states = State.where(country_id: current_user.state_id).map{|state| [state.name, state.id]}
     @cities = City.where(state_id: current_user.city_id).map{|city| [city.name, city.id]}
-
-
-    render 'user/user_settings'
   end
 
   def user_profile_update
@@ -261,11 +239,9 @@ class UserController < ApplicationController
     email_changed = false
     if user.email != params[:email]
       user.email = params[:email]
-      if user.changed?
-        email_changed = true
-        update_user[:email] = params[:email]
-        update_user[:updating_email] = true
-      end
+      email_changed = true
+      update_user[:email] = params[:email]
+      update_user[:updating_email] = true
     end
 
     if !params[:phone].blank? && !user.phone.blank?

@@ -14,6 +14,7 @@ module SellerHelper
     seller[:city_id] = params[:city_id]
 
     seller[:zip_code] = params[:zip_code]
+    Rails.logger.info(seller)
     seller
   end
 
