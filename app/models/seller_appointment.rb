@@ -19,20 +19,14 @@ class SellerAppointment < ApplicationRecord
     where('status = ?','approved').joins(:city, :killometer_driven, :state, :country, :car_variant, :car_model, :brand).where('cities.name LIKE :search OR killometer_drivens.killometer_range LIKE :search OR states.name LIKE :search OR countries.name LIKE :search OR car_variants.variant LIKE :search OR car_models.name LIKE :search OR brands.brand_name LIKE :search OR seller_appointments.zip_code LIKE :search', search: "%#{search}%")
   }
 
-  scope :search_with_params_filter, ->(query, params){
-    values =[]
-    i = 0
-    q = ""
-    params.each do |k, v|
-      if i == 0
-        q = "#{k} = ?"
-      else
-        q += " AND #{k} = ?"
-      end
-      values.append(v)
-      i += 1
-    end
-    search_filter(query).where(q, values)
+  scope :recent_processing_appointments, ->(user) {
+    limit(5).where(user_id: user.id, status: 'processing').order('updated_at DESC')
+  }
+  scope :recent_investigating_appointments, ->(user)  {
+    limit(5).where(user_id: user.id, status: 'investigating').order('updated_at DESC')
+  }
+  scope :recent_approved_appointments, ->(user) {
+    limit(5).where(user_id: user.id, status: 'approved').order('updated_at DESC')
   }
 
   scope :params_filter, ->(params){

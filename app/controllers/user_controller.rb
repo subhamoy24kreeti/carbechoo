@@ -256,16 +256,8 @@ class UserController < ApplicationController
   end
 
   def user_profile_update
-    update_user = {}
-    update_user[:first_name] = params[:first_name]
-    update_user[:last_name] = params[:last_name]
-    update_user[:country_id] = params[:country_id]
-    update_user[:state_id] = params[:state_id]
-    update_user[:city_id] = params[:city_id]
-    update_user[:phone] = params[:phone]
-    update_user[:zip_code] = params[:zip_code]
     user =  User.find(params[:id])
-
+    update_user = helpers.update_user_profile_params_check(params)
     email_changed = false
     if user.email != params[:email]
       user.email = params[:email]

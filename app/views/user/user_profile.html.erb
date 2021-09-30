@@ -1,14 +1,14 @@
 <% content_for :stylesheets do %>
-<%= stylesheet_link_tag 'user_profile' , media: 'all', 'data-turbolinks-track': 'reload'%>
+<%= stylesheet_link_tag 'user_profile' , media: 'all', 'data-turbolinks-track': 'reload' %>
 <% end %>
-<%= render 'user/layouts/header'%>
+<%= render 'user/layouts/header' %>
 <div class="container border rounded mt-3">
   <div class="image-view">
   <div class="cover-img-wrap">
     <% if @seller.cover_pic.attached? %>
-    <%= image_tag @seller.cover_pic, class:"cover-img", alt:"cover-img" %>
+    <%= image_tag @seller.cover_pic, class: "cover-img", alt: "cover-img" %>
     <%else %>
-    <%= image_tag 'default_user.png', class:"cover-img", alt:"cover-img" %>
+    <%= image_tag 'default_user.png', class: "cover-img", alt: "cover-img" %>
     <% end %>
   </div>
   <div class="profile-img-wrap">

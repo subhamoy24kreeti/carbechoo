@@ -17,20 +17,7 @@ class SellerController < ApplicationController
   end
 
   def create
-    Rails.logger.info(params)
-    seller = {}
-    seller[:first_name] = params[:first_name]
-    seller[:last_name] = params[:last_name]
-    seller[:email] = params[:email]
-    seller[:password] = params[:password]
-    seller[:password_confirmation] = params[:password_confirmation]
-    seller[:role] = "seller"
-    seller[:country_id] = params[:country_id]
-    seller[:state_id] = params[:state_id]
-    seller[:city_id] = params[:city_id]
-
-    seller[:zip_code] = params[:zip_code]
-
+    seller = helpers.seller_user_params_check(params)
     @seller = User.new(seller)
     @countries = Country.all.map{|country| [country.name, country.id]}
     if @seller.save
@@ -44,9 +31,9 @@ class SellerController < ApplicationController
   end
 
   def dashboard
-    @appointment_under_process = SellerAppointment.limit(5).where(user_id: current_user.id, status: 'processing').order('updated_at DESC')
-    @appointment_under_investigation = SellerAppointment.limit(5).where(user_id: current_user.id, status: 'investigating').order('updated_at DESC')
-    @appointment_approved = SellerAppointment.limit(5).where(user_id: current_user.id, status: 'approved').order('updated_at DESC')
+    @appointment_under_process = SellerAppointment.recent_processing_appointments(current_user)
+    @appointment_under_investigation = SellerAppointment.recent_investigating_appointments(current_user)
+    @appointment_approved = SellerAppointment.recent_approved_appointments(current_user)
   end
 
   def add_car_details
@@ -69,25 +56,7 @@ class SellerController < ApplicationController
   end
 
   def create_seller_appointment
-    seller_appointment = {}
-    seller_appointment[:city_id] = params[:city_id]
-    seller_appointment[:killometer_driven_id] = params[:killometer_driven_id]
-    seller_appointment[:car_variant_id] = params[:car_variant_id]
-    seller_appointment[:car_model_id] = params[:car_model_id]
-    seller_appointment[:car_registration_id] = params[:car_registration_id]
-    seller_appointment[:brand_id] = params[:brand_id]
-    seller_appointment[:country_id] = params[:country_id]
-    seller_appointment[:state_id] = params[:state_id]
-    seller_appointment[:city_id] = params[:city_id]
-    seller_appointment[:zip_code] = params[:zip_code]
-    seller_appointment[:status] = 'processing'
-    seller_appointment[:price] = params[:price]
-    seller_appointment[:description] = params[:description]
-    seller_appointment[:car_images] = params[:car_images]
-    seller_appointment[:user_id] = params[:user_id]
-    seller_appointment[:year_of_buy] = params[:year_of_buy]
-    seller_appointment[:currency] = params[:currency]
-
+    seller_appointment = helpers.seller_appointment_create(params)
     se = SellerAppointment.new(seller_appointment)
     @user = User.find(params[:user_id])
     if se.save
@@ -95,7 +64,7 @@ class SellerController < ApplicationController
       redirect_to seller_add_car_details_path, flash: { notice: "successfully created an appointment"}
     else
       Rails.logger.info(se.errors.full_messages)
-      redirect_to seller_add_car_details_path, flash: {error: se.errors.full_messages}
+      redirect_to seller_add_car_details_path, flash: { error: se.errors.full_messages }
     end
   end
 

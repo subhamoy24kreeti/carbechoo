@@ -12,7 +12,6 @@ class Admin::CarModelController < ApplicationController
 		if p.save
 			redirect_to new_admin_car_model_path, flash: {notice: "successfully created"}
 		else
-			flash.now[:alert] = "error occured"
 			redirect_to new_admin_car_model_path, flash: {error: "en error occured"}
 		end
 	end
@@ -23,8 +22,6 @@ class Admin::CarModelController < ApplicationController
 	end
 
 	def update
-		params[:brand_id]
-		params[:name]
 		check = CarModel.where('id=?',params[:id]).update(brand_id: params[:brand_id], name: params[:name])
 		if check
 			redirect_to admin_car_model_index_path, flash: {notice: "Successfully updated"}
