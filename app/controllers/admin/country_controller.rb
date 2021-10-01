@@ -20,7 +20,7 @@ class Admin::CountryController < ApplicationController
   end
 
   def update
-    check = Country.where(id: params[:id]).update(name: params[:name])
+    check = Country.update_country(params)
     if check
       redirect_to admin_country_index_path, flash: {notice: 'Successfully updated' }
     else

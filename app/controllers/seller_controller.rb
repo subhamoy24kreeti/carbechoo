@@ -33,8 +33,8 @@ class SellerController < ApplicationController
   end
 
   def add_car_details
-    @states = State.where(country_id: current_user.country_id).map{|st| [st.name, st.id]}
-    @cities = City.where(state_id: current_user.city_id).map{|ct| [ct.name, ct.id]}
+    @states = State.state_map(current_user.country_id)
+    @cities = City.city_map(current_user.state_id)
   end
 
   def create_seller_appointment
@@ -54,8 +54,7 @@ class SellerController < ApplicationController
   end
 
   def all_appointments
-    @all_seller_appointments = SellerAppointment.where(user_id: params[:id])
-    render 'all_appointments'
+    @all_seller_appointments = SellerAppointment.seller_appointments(params[:id])
   end
 
   def seller_create_params_check

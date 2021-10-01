@@ -20,7 +20,7 @@ class Admin::BrandController < ApplicationController
   end
 
   def update
-    Brand.where(id: params[:id]).update(brand_name: params[:brand_name])
+    Brand.update_brand(params)
     redirect_to admin_brand_index_path
   end
 
@@ -35,7 +35,7 @@ class Admin::BrandController < ApplicationController
   end
 
   def index
-    @brands = Brand.all()
+    @brands = Brand.all
   end
 
 end

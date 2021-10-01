@@ -24,11 +24,7 @@ class Admin::CostRangeController < ApplicationController
   end
 
   def update
-    quality = params[:quality]
-    cost_range1 = params[:range1]
-    cost_range2 = params[:range2]
-    currency = params[:currency]
-    check = CostRange.where(id: params[:id]).update(quality: quality, range1: cost_range1, range2: cost_range2, currency: currency)
+    check = CostRange.update_cost_range(params)
     if check
       redirect_to admin_cost_range_index_path, flash: {notice: 'Successfully updated' }
     else

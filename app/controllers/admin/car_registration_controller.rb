@@ -20,7 +20,7 @@ class Admin::CarRegistrationController < ApplicationController
   end
 
   def update
-    check = CarRegistration.where(id: params[:id]).update(state_code: params[:state_code])
+    check = CarRegistration.update_car_registration(params)
     if check
       redirect_to admin_car_registration_index_path, flash: {notice: "successfully updated"}
     else
@@ -38,6 +38,6 @@ class Admin::CarRegistrationController < ApplicationController
   end
 
   def index
-    @car_registrations = CarRegistration.all()
+    @car_registrations = CarRegistration.all
   end
 end

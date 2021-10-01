@@ -4,7 +4,6 @@ class Admin::SellerAppointmentController < ApplicationController
 
 
   def new
-
   end
 
   def create

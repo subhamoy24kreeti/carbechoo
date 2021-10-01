@@ -23,7 +23,7 @@ class Admin::CarRegistrationYearController < ApplicationController
   end
 
   def update
-    p = CarRegistrationYear.where(id: params[:id]).update(range1: params[:range1], range2: params[:range2])
+    p = CarRegistrationYear.update_car_registion_year(params)
     if p
       redirect_to admin_car_registration_year_index_path, flash: {notice: "Successfully updated"}
     else

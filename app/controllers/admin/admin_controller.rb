@@ -19,19 +19,19 @@ class Admin::AdminController < ApplicationController
   end
 
   def all_admin
-    @users = User.where(role: 'admin')
+    @users = User.admins
   end
 
   def all_buyer
-    @users = User.where(role: 'buyer')
+    @users = User.buyers
   end
 
   def all_seller
-    @users = User.where(role: 'seller')
+    @users = User.sellers
   end
 
   def cars
-    @cars = SellerAppointment.where('status=?', 'approved').order('updated_at DESC')
+    @cars = SellerAppointment.cars
   end
 
   def user_destroy

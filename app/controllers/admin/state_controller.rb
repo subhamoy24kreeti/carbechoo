@@ -22,7 +22,7 @@ class Admin::StateController < ApplicationController
   end
 
   def update
-    check = State.where(id: params[:id]).update(name: params[:name], country_id: params[:country_id])
+    check = State.update_state(params)
     if check
       redirect_to admin_state_index_path, flash: {notice: "Successfully updated"}
     else
@@ -30,12 +30,12 @@ class Admin::StateController < ApplicationController
     end
   end
 
-  def destroy
+  def delete
     State.destroy(params[:id])
     redirect_to admin_state_index_path
   end
 
   def index
-    @states = State.all()
+    @states = State.all
   end
 end

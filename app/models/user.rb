@@ -52,6 +52,17 @@ class User < ApplicationRecord
     first_name+" "+last_name
   end
 
+  scope :admins, -> { where(role: 'admin') }
+  scope :buyers, -> { where(role: 'buyer') }
+  scope :sellers, -> { where(role: 'seller') }
+
+  scope :update_forget_password, ->(params) { update(password: params[:password], password_confirmation: params[:password_confirmation], password_reset_token: nil, password_reset_token_sent_at: nil) }
+
+  scope :update_password, ->(params) { update(password: params[:password], password_confirmation: params[:password_confirmation]) }
+
+  scope :seller_with_offset, ->(offset) { limit(10).offset(offset).where(role: 'seller') }
+
+
   scope :nearest_seller, ->(longitude, latitude){
     radius = 100
     lng_min = (longitude - radius / (Math.cos(latitude/ 180.0 * Math::PI) * 69).abs)

@@ -13,12 +13,10 @@ class UserController < ApplicationController
   end
 
   def car_single
-    @car = SellerAppointment.where(status: 'approved').find(params[:id])
-    render 'car_single'
+    @car = SellerAppointment.find(params[:id])
   end
 
   def forget_password_request
-    render 'forget_password_request'
   end
 
   def forget_password_request_generate
@@ -86,7 +84,7 @@ class UserController < ApplicationController
     end
     if !@user.password_reset_token.blank? && @user.password_reset_token == params[:password_token]
       @user.updating_password = true
-      check = @user.update(password: params[:password], password_confirmation: params[:password_confirmation], password_reset_token: nil, password_reset_token_sent_at: nil)
+      check = @user.update_forget_password(params)
       if check
         @response = "Successfully updated your password please login now"
         @success = 1
@@ -110,7 +108,7 @@ class UserController < ApplicationController
     @user = User.find_by_id(current_user.id)
     if @user.authenticate(params[:old_password])
       @user.updating_password = true
-      check = @user.update(password: params[:password], password_confirmation: params[:password_confirmation])
+      check = @user.update_password(params)
       if check
         redirect_to user_settings_path, flash: {notice: "Successfully updated password"}
       else
@@ -161,11 +159,8 @@ class UserController < ApplicationController
 
 
   def ws_get_cities
-    @cities = City.where(state_id: params[:state_id])
-    option = "<option value=''>--select your city--</option>"
-    @cities.each do |city|
-      option = option + "<option value=#{city.id}>#{city.name}</option>"
-    end
+    cities = City.where(state_id: params[:state_id])
+    option = helpers.get_city_options(cities)
     render json: {html: option}
   end
 
@@ -207,11 +202,11 @@ class UserController < ApplicationController
 
   def user_profile
     @seller = User.find(params[:id])
-    @latest_seller_items = SellerAppointment.limit(5).where(user_id: params[:id], status: 'approved').order('updated_at DESC')
+    @latest_seller_items = SellerAppointment.latest_seller_cars(params)
   end
 
   def sellers
-    @sellers = User.limit(10).where(role: 'seller')
+    @sellers = User.seller_with_offset(0)
     render 'buyer/sellers'
   end
 
@@ -221,16 +216,14 @@ class UserController < ApplicationController
       page = params[:page].to_i
     end
     offset = page*10
-    sellers = User.limit(10).offset(offset).where(role: 'seller')
-    root_link = root_url
-
-    sellers = sellers.map{|seller| {:id => seller.id, :profile_url => user_profile_path(seller.id), :profile_pic_url => (seller.cover_pic.attached?)?url_for(seller.profile_pic):(root_link+'assets/images/default_profile.png'), :about=> seller.about, :name => seller.full_name, :city => (seller.city ? seller.city.name : ""), :state => (seller.state ? seller.state.name : "") , :country => (seller.country ? seller.country.name : "")}}
+    sellers = User.seller_with_offset(offset)
+    sellers = helpers.seller_formated(sellers)
     render json: {sellers: sellers}
   end
 
   def user_settings
-    @states = State.where(country_id: current_user.state_id).map{|state| [state.name, state.id]}
-    @cities = City.where(state_id: current_user.city_id).map{|city| [city.name, city.id]}
+    @states = State.state_map(current_user.country_id)
+    @cities = City.city_map(current_user.state_id)
   end
 
   def user_profile_update
@@ -265,20 +258,14 @@ class UserController < ApplicationController
   end
 
   def ws_get_states
-    @states = State.where(country_id: params[:country_id])
-    options = "<option value=''>--select your state--</option>"
-    @states.each do |state|
-      options = options+ "<option value=#{state.id}>#{state.name}</option>"
-    end
+    states = Country.get_states(params)
+    options = helpers.get_state_options(states)
     render json: {html: options}
   end
 
   def ws_get_car_models
-    @car_models = CarModel.where(brand_id: params[:brand_id])
-    options = ""
-    @car_models.each do |car_model|
-      options = options + "<option value=#{car_model.id}>#{car_model.name}</option>"
-    end
+    car_models = CarModel.get_car_models_by_brand(params)
+    options = helpers.get_car_model_options(car_models)
     render json: {html: options}
   end
 
@@ -300,24 +287,12 @@ class UserController < ApplicationController
   end
 
   def get_filtered_cars
-    query = ""
-    params_for_filter = {}
-    page = 0
-
-    if( !params[:page].blank?)
-      page = params[:page]
-    end
-
-    cars = SellerAppointment.offset(page*10).limit(10)
-    cars = cars.params_filter(params)
-    cars = cars.map{|car| {:description => car.description, :price => car.get_price, :image_url => url_for(car.car_images[0]), :single_link => car_single_path(car.id) }}
-
+    cars = SellerAppointment.params_filter(params)
+    cars = helpers.car_formated(cars)
     render json: { cars: cars }
   end
 
-
   def login
-    render 'login'
   end
 
 end

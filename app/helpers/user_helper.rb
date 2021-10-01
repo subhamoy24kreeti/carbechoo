@@ -22,4 +22,36 @@ module UserHelper
     update_user[:zip_code] = params[:zip_code]
     update_user
   end
+
+  def seller_formated(sellers)
+    root_link = root_path
+    sellers.map{|seller| {:id => seller.id, :profile_url => user_profile_path(seller.id), :profile_pic_url => (seller.cover_pic.attached?)?url_for(seller.profile_pic):(root_link+'assets/images/default_profile.png'), :about=> seller.about, :name => seller.full_name, :city => (seller.city ? seller.city.name : ""), :state => (seller.state ? seller.state.name : "") , :country => (seller.country ? seller.country.name : "")}}
+  end
+
+  def car_formated(cars)
+    cars.map{|car| {:description => car.description, :price => car.get_price, :image_url => url_for(car.car_images[0]), :single_link => car_single_path(car.id) }}
+  end
+
+  def get_state_options(states)
+    options = "<option value=''>--select your state--</option>"
+    states.each do |state|
+      options = options+ "<option value=#{state.id}>#{state.name}</option>"
+    end
+    options
+  end
+
+  def get_car_model_options(car_models)
+    options = ""
+    car_models.each do |car_model|
+      options = options + "<option value=#{car_model.id}>#{car_model.name}</option>"
+    end
+    options
+  end
+
+  def get_city_options(cities)
+    option = "<option value=''>--select your city--</option>"
+    cities.each do |city|
+      option = option + "<option value=#{city.id}>#{city.name}</option>"
+    end
+  end
 end

@@ -17,9 +17,10 @@
          <%=f.text_field :name, class:"form-control", value: @car_model.name %>
       </div>
       <div>
-      choose a brand
-      <%=select_tag(:brand_id, options_for_select(@brands, selected: @car_model.brand_id), class:"custom-select custom-select-lg mb-3", id:"country", include_blank: '--selecr your country--') %>
-      <%=f.submit :update ,class:"btn btn-info" %>
+      <div class="form-group required">
+      <%=f.label 'choose the brand', class: "control-label"%>
+      <%= select_tag(:brand_id, options_for_select( get_brands_dropdown, selected: @car_model.brand_id ), class:"custom-select custom-select-lg mb-3",  name:"seller_appointment[brand_id]", id: "brand", include_blank: '--selecr your brand--') %>
+      </div>
       <% end%>
     <% end %>
     </div>
