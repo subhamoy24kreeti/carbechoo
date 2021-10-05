@@ -63,17 +63,17 @@
 
     <div class="form-group required">
     <%=f.label 'choose your country', class:"control-label"%>
-    <%=select_tag(:country_id, name: "seller[country_id]", options_for_select(get_countries_dropdown), class:"custom-select custom-select-lg mb-3", id: 'country',  include_blank: '--selecr your country--', required: true) %>
+    <%=select_tag(:country_id, options_for_select(get_countries_dropdown), class:"custom-select custom-select-lg mb-3", name: "seller[country_id]", id: 'country',  include_blank: '--selecr your country--', required: true) %>
 
     </div>
     <div class="form-group required">
     <%=f.label 'choose your state', class:"control-label"%>
-    <%=select_tag(:state_id,  name: "seller[state_id]", options_for_select('<option></option>'), class:"custom-select custom-select-lg mb-3", id: 'state', required: true) %>
+    <%=select_tag(:state_id, options_for_select('<option></option>'), class:"custom-select custom-select-lg mb-3",name: "seller[state_id]", id: 'state', required: true) %>
     </div>
 
     <div class="form-group required">
     <%=f.label 'choose your city', class:"control-label"%>
-    <%=select_tag(:city_id,  name: "seller[city_id]", options_for_select('<option></option>'), class:"custom-select custom-select-lg mb-3", id: 'city', required: true) %>
+    <%=select_tag(:city_id, options_for_select('<option></option>'), class:"custom-select custom-select-lg mb-3", name: "seller[city_id]", id: 'city', required: true) %>
     </div>
 
     <div class="form-group required">

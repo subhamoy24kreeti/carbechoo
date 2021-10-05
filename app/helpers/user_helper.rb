@@ -19,6 +19,7 @@ module UserHelper
     update_user[:state_id] = params[:state_id]
     update_user[:city_id] = params[:city_id]
     update_user[:phone] = params[:phone]
+    upadte_user[:email] = params[:email]
     update_user[:zip_code] = params[:zip_code]
     update_user
   end

@@ -15,6 +15,8 @@ class SellerAppointment < ApplicationRecord
   validates :year_of_buy, presence: true, allow_blank: false
   validates :price, presence: true, allow_blank: false, numericality: true
 
+  after_create :appointment_creation_mail
+
   scope :search_filter, ->(search) {
     where(status: 'approved').joins(:city, :killometer_driven, :state, :country, :car_variant, :car_model, :brand).where('cities.name LIKE :search OR killometer_drivens.killometer_range LIKE :search OR states.name LIKE :search OR countries.name LIKE :search OR car_variants.variant LIKE :search OR car_models.name LIKE :search OR brands.brand_name LIKE :search OR seller_appointments.zip_code LIKE :search', search: "%#{search}%")
   }
@@ -71,5 +73,26 @@ class SellerAppointment < ApplicationRecord
     else
       currency+" "+price.to_s
     end
+  end
+
+  def update_seller_appointment(params)
+    check = false
+    if status != params[:status]
+      check = true
+    end
+
+    if update(params)
+      if check
+        SellerMailer.appointment_updates_mail(self).deliver
+      end
+      true
+    else
+      false
+    end
+  end
+
+  private
+  def appointment_creation_mail
+    SellerMailer.appointment_submission_mail( user, id).deliver
   end
 end

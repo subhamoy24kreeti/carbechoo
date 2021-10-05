@@ -15,4 +15,16 @@ module BuyerHelper
     buyer[:zip_code] = params[:zip_code]
     buyer
   end
+
+
+  private
+
+  def buyer_authorization
+    if current_user.blank?
+      redirect_to root_path and return
+    end
+    if current_user.role == 'seller'
+      redirect_to seller_dashboard_path and return
+    end
+  end
 end

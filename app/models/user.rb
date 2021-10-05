@@ -27,14 +27,18 @@ class User < ApplicationRecord
   has_one_attached :cover_pic, :dependent => :destroy
   has_one_attached :profile_pic, :dependent => :destroy
 
-  belongs_to :city
-  belongs_to :state
-  belongs_to :country
+  belongs_to :city, optional: true
+  belongs_to :state, optional: true
+  belongs_to :country, optional: true
 
   after_validation :address_settings
 
-  before_save :confirmation_email_token
-  before_save :password_reset_token_generate, if: :password_reset_token_request?
+  before_create :confirmation_email_token
+
+  after_update :email_verification_mail
+
+  after_create :user_creation_mails
+
 
   def is_admin?
     (role.blank?)? false :(role.eql?"admin")
@@ -61,7 +65,6 @@ class User < ApplicationRecord
   scope :update_password, ->(params) { update(password: params[:password], password_confirmation: params[:password_confirmation]) }
 
   scope :seller_with_offset, ->(offset) { limit(10).offset(offset).where(role: 'seller') }
-
 
   scope :nearest_seller, ->(longitude, latitude){
     radius = 100
@@ -102,13 +105,43 @@ class User < ApplicationRecord
     save
   end
 
+  def user_profile_update(params)
+    if email != params[:email]
+      @updating_email =  true
+    end
+
+    if !params[:phone].blank?
+      if(params[:phone] != user.phone)
+        @updating_phone = true
+      end
+    end
+
+    update(params)
+  end
+
+  def email_verification_key_set
+    self.confirm_token_email = SecureRandom.urlsafe_base64.to_s
+    if save
+      UserMailer.email_verification_mail(self).deliver_now
+      true
+    else
+      false
+    end
+  end
+
+  def forget_password_key_set
+    self.password_reset_token_make = true
+    self.password_reset_token = SecureRandom.urlsafe_base64.to_s
+    self.password_reset_token_sent_at = Time.now
+    if save
+      UserMailer.forget_password_change_mail(self).deliver
+      true
+    else
+      false
+    end
+  end
 
   private
-
-  def password_reset_token_generate
-    @password_reset_token = SecureRandom.urlsafe_base64.to_s
-    write_attribute(:password_reset_token_sent_at, Time.now)
-  end
 
   def confirmation_email_token
     if email_changed? || new_record? || email_verification_token_request?
@@ -138,4 +171,24 @@ class User < ApplicationRecord
       Rails.logger.info(address)
     end
   end
+
+  def email_verification_mail
+    if(updating_email)
+      Rails.logger.info(email)
+      UserMailer.email_verification_mail(self).deliver
+    end
+  end
+
+  def user_creation_mails
+    if role == 'seller'
+      SellerMailer.welcome_mail(self).deliver
+      UserMailer.email_verification_mail(self).deliver
+    elsif role == 'buyer'
+      BuyerMailer.welcome_mail(self).deliver
+      UserMailer.email_verification_mail(self).deliver
+    end
+  end
+
+
+
 end

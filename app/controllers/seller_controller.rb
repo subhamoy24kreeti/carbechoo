@@ -1,14 +1,7 @@
 class SellerController < ApplicationController
-  before_action :seller_authorization, except: [:new, :create]
 
-  def seller_authorization
-    if current_user.blank?
-      redirect_to root_path and return
-    end
-    if current_user.role == 'buyer'
-      redirect_to buyer_dashboard_path and return
-    end
-  end
+  include SellerHelper
+  before_action :seller_authorization, except: [:new, :create]
 
   def new
     render 'signup'
@@ -18,8 +11,6 @@ class SellerController < ApplicationController
     @seller = User.new(seller_create_params_check)
     if @seller.save
       session[:user_id] = @seller.id
-      SellerMailer.welcome_mail(@seller).deliver
-      UserMailer.email_verification_mail(@seller).deliver
       redirect_to root_path, flash: { notice: "Successfully Created! account"}
     else
       redirect_to seller_registration_path, flash: { error: @seller.errors.full_messages}
@@ -39,12 +30,9 @@ class SellerController < ApplicationController
 
   def create_seller_appointment
     se = SellerAppointment.new(params_check_seller_appointment_check)
-    @user = User.find(params[:seller_appointment][:user_id])
     if se.save
-      SellerMailer.appointment_submission_mail(@user, se.id).deliver
       redirect_to seller_add_car_details_path, flash: { notice: "successfully created an appointment"}
     else
-      Rails.logger.info(se.errors.full_messages)
       redirect_to seller_add_car_details_path, flash: { error: se.errors.full_messages }
     end
   end
@@ -54,9 +42,10 @@ class SellerController < ApplicationController
   end
 
   def all_appointments
-    @all_seller_appointments = SellerAppointment.seller_appointments(params[:id])
+    @all_seller_appointments = SellerAppointment.seller_appointment(current_user.id)
   end
 
+  private
   def seller_create_params_check
     params.require(:seller).permit(:first_name, :last_name, :email, :password, :password_confirmation, :country_id, :state_id, :city_id, :zip_code).merge!(role: 'seller')
   end

@@ -1,5 +1,8 @@
 class UserController < ApplicationController
 
+  include ApplicationHelper
+  include UserHelper
+
   before_action :authorize_user, only: [:user_settings, :user_profile_update ]
 
   def landing
@@ -23,14 +26,11 @@ class UserController < ApplicationController
     email = params[:email]
     @user_data = User.find_by_email(email)
     if !@user_data.blank?
-      @user_data.password_reset_token_make = true
-      if @user_data.save
-        UserMailer.forget_password_change_mail(@user_data).deliver
+      if @user_data.forget_password_key_set
         @response = "Successfully link sent to your mail"
-        render 'forget_password_response', flash: { notice: "Successfully Created! account"}
-
+        render 'forget_password_response', flash: { notice: "Successfully sent link"}
       else
-        redirect_back(fallback_location: {action: :forget_password_request}, flash: { notice: "Successfully Created! account"})
+        redirect_back(fallback_location: {action: :forget_password_request}, flash: { notice: "there is something went wrong"})
       end
     else
       redirect_back(fallback_location: {action: :forget_password_request})
@@ -122,9 +122,8 @@ class UserController < ApplicationController
   def email_verification_request_generate
     @user = User.find(params[:user_id])
     if !@user.blank?
-      @user.email_verification_token_make = true
-      if @user.save
-        UserMailer.email_verification_mail(@user).deliver_now
+      check = @user.email_verification_key_set
+      if check
         render json: {status: 1, error: 0, msg: 'successfully sent mail' }
       else
         render json: {status: 0, error: 1, msg: 'sorry there is a problem'}
@@ -160,7 +159,7 @@ class UserController < ApplicationController
 
   def ws_get_cities
     cities = City.where(state_id: params[:state_id])
-    option = helpers.get_city_options(cities)
+    option = get_city_options(cities)
     render json: {html: option}
   end
 
@@ -217,7 +216,7 @@ class UserController < ApplicationController
     end
     offset = page*10
     sellers = User.seller_with_offset(offset)
-    sellers = helpers.seller_formated(sellers)
+    sellers = seller_formated(sellers)
     render json: {sellers: sellers}
   end
 
@@ -228,44 +227,27 @@ class UserController < ApplicationController
 
   def user_profile_update
     user =  User.find(params[:id])
-    update_user = helpers.update_user_profile_params_check(params)
+    update_user = update_user_profile_params_check(params)
     email_changed = false
-    if user.email != params[:email]
-      user.email = params[:email]
-      email_changed = true
-      update_user[:email] = params[:email]
-      update_user[:updating_email] = true
-    end
-
-    if !params[:phone].blank? && !user.phone.blank?
-      if(params[:phone] != user.phone.blank)
-        update_user[:phone] = params[:phone]
-      end
-    end
-
-    check = user.update(update_user)
+    check = user.user_profile_update(update_user)
 
     if check
-      if(email_changed)
-        Rails.logger.info(user.email)
-        UserMailer.email_verification_mail(user).deliver
-      end
       redirect_to user_settings_path, flash: { notice: "Successfully updated! account"}
     else
-      session[:user_id] = user.id
       redirect_to user_settings_path, flash: { error: user.errors.full_messages }
     end
+
   end
 
   def ws_get_states
     states = Country.get_states(params)
-    options = helpers.get_state_options(states)
+    options = get_state_options(states)
     render json: {html: options}
   end
 
   def ws_get_car_models
     car_models = CarModel.get_car_models_by_brand(params)
-    options = helpers.get_car_model_options(car_models)
+    options = get_car_model_options(car_models)
     render json: {html: options}
   end
 
@@ -288,7 +270,7 @@ class UserController < ApplicationController
 
   def get_filtered_cars
     cars = SellerAppointment.params_filter(params)
-    cars = helpers.car_formated(cars)
+    cars = car_formated(cars)
     render json: { cars: cars }
   end
 

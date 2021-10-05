@@ -39,4 +39,16 @@ module SellerHelper
     seller_appointment[:currency] = params[:currency]
     seller_appointment
   end
+
+  private
+
+  def seller_authorization
+    if current_user.blank?
+      redirect_to root_path and return
+    end
+    if current_user.role == 'buyer'
+      redirect_to buyer_dashboard_path and return
+    end
+  end
+
 end
