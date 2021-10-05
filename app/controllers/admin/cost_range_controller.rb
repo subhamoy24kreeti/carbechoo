@@ -7,11 +7,7 @@ class Admin::CostRangeController < ApplicationController
   end
 
   def create
-    quality = params[:quality]
-    cost_range1 = params[:range1]
-    cost_range2 = params[:range2]
-    currency = params[:currency]
-    @cost_range = CostRange.new(quality: quality, range1: cost_range1, range2: cost_range2, currency: currency)
+    @cost_range = CostRange.new(check_cost_range_params)
     if(@cost_range.save)
       redirect_to new_admin_cost_range_path, flash: {notice: "Successfully created"}
     else
@@ -43,5 +39,10 @@ class Admin::CostRangeController < ApplicationController
     else
       redirect_to admin_cost_range_index_path, flash: {error: 'an error occured' }
     end
+  end
+
+  private
+  def check_cost_range_params
+    params.permit(:quality, :range1, :range2, :currency)
   end
 end

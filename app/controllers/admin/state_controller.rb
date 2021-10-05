@@ -4,7 +4,6 @@ class Admin::StateController < ApplicationController
 
   def new
     @state = State.new
-    @countries = Country.all.map{|country| [country.name, country.id]}
   end
 
   def create
@@ -17,8 +16,7 @@ class Admin::StateController < ApplicationController
   end
 
   def edit
-    @countries = Country.all.map{|country| [country.name, country.id]}
-    @state = State.find(params[:id])
+    @state = State.find_by_id(params[:id])
   end
 
   def update
