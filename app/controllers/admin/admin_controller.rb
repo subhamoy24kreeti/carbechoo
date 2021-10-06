@@ -26,10 +26,10 @@ class Admin::AdminController < ApplicationController
   end
 
   def user_destroy
-    u = User.destroy(id: params[:id]).
-    if u.is_admin
+    u = User.destroy(id: params[:id])
+    if u.is_admin?
       redirect_to admin_all_admin_path, flash: {notice: "Successfully deleted"}
-    elsif u.is_seller
+    elsif u.is_seller?
       redirect_to admin_all_seller_path, flash: {notice: "Successfully deleted"}
     else
       redirect_to admin_all_buyer_path, flash: {notice: "Successfully deleted"}

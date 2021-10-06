@@ -29,8 +29,8 @@ class Admin::KillometerDrivenController < ApplicationController
   end
 
   def delete
-    KillometerDriven.destroy(params[:id]), flash: {notice: 'Successfully deleted' }
-    redirect_to admin_killometer_driven_index_path
+    KillometerDriven.destroy(params[:id])
+    redirect_to admin_killometer_driven_index_path, flash: {notice: 'Successfully deleted' }
   end
 
   def index

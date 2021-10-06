@@ -23,7 +23,7 @@ module BuyerHelper
     if current_user.blank?
       redirect_to root_path and return
     end
-    if current_user.role == 'seller'
+    if current_user.is_seller?
       redirect_to seller_dashboard_path and return
     end
   end

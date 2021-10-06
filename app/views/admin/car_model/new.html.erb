@@ -12,7 +12,7 @@
     <% if flash.key? :error %>
     <%= render 'layouts/alert_error', error: flash[:error]%>
     <% end %>
-    <% if @brands.blank? %>
+    <% if get_brands_dropdown.blank? %>
     you do not create a model name until you create a brand
     <% else %>
     <%= form_with url: admin_car_model_create_path,  method: :post do |f|%>
