@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+
+
   attr_accessor :updating_password
   attr_accessor :updating_email
   attr_accessor :password_reset_token_make

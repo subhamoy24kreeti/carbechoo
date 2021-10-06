@@ -1,54 +1,55 @@
 module ApplicationHelper
 
-  def get_cities_dropdown
-    City.all.map { |city| [city.name, city.id] }
+  def get_cities_dropdown(state_id)
+    City.city_map(state_id)
   end
 
-  def get_states_dropdown
-    State.all.map { |state| [state.name, state.id]}
+  def get_all_cities_dropdown
+    City.all_city_map
+  end
+
+  def get_all_states_dropdown
+    State.all_state_map
+  end
+
+  def get_states_dropdown(country_id)
+    City.state_map(country_id)
   end
 
   def get_countries_dropdown
-    Country.all.map { |country| [country.name, country.id]}
+    Country.get_country_map
   end
 
   def get_brands_dropdown
-    Brand.all.map{|brand| [brand.brand_name, brand.id]}
+    Brand.brand_map
   end
 
   def get_car_models_dropdown
-    CarModel.all.map{|car_model| [car_model.name, car_model.id]}
+    CarModel.car_model_map
   end
 
   def get_car_variants_dropdown
-    CarVariant.all.map{|car_variant| [car_variant.variant, car_variant.id]}
+    CarVariant.car_variant_map
   end
 
   def get_car_registrations_dropdown
-    CarRegistration.all.map{|car_registration| [car_registration.state_code, car_registration.id]}
+    CarRegistration.car_registration_map
   end
 
   def get_killometer_drivens_dropdown
-    KillometerDriven.all.map{|killometer_driven| [killometer_driven.killometer_range, killometer_driven.id]}
+    KillometerDriven.killometer_driven_map
   end
 
   def get_cost_ranges_dropdown
-    CostRange.all.map{|cost_range| [cost_range.name, cost_range.id]}
+    CostRange.cost_range_map
   end
 
   def get_cars
-    SellerAppointment.where(status: 'approved')
+    SellerAppointment.cars
   end
 
   def get_car_registration_years
-    car_registration_year = CarRegistrationYear.first()
-    years = []
-    if !car_registration_year.blank?
-      for year in car_registration_year.range1..car_registration_year.range2
-        years.append([year, year])
-      end
-    end
-    years
+    CarRegistrationYear.year_map
   end
 
   def get_statuses_dropdown

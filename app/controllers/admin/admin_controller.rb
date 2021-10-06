@@ -9,15 +9,6 @@ class Admin::AdminController < ApplicationController
     render "admin/dashboard"
   end
 
-  def seller_destroy
-    check = User::destroy(params[:id])
-    if check
-      redirect_to admin_seller_index_path flash: {notice: "Successfully deleted"}
-    else
-      redirect_to admin_seller_index_path flash: {error: "there is a problem while deleting"}
-    end
-  end
-
   def all_admin
     @users = User.admins
   end
@@ -35,18 +26,16 @@ class Admin::AdminController < ApplicationController
   end
 
   def user_destroy
-    u = User.where(id: params[:id]).destroy_all
-    if !u.blank?
-      if u[0].role == 'admin'
-        redirect_to admin_all_admin_path, flash: {notice: "Successfully deleted"}
-      elsif u[0].role == 'seller'
-        redirect_to admin_all_seller_path, flash: {notice: "Successfully deleted"}
-      else
-        redirect_to admin_all_buyer_path, flash: {notice: "Successfully deleted"}
-      end
+    u = User.destroy(id: params[:id]).
+    if u.is_admin
+      redirect_to admin_all_admin_path, flash: {notice: "Successfully deleted"}
+    elsif u.is_seller
+      redirect_to admin_all_seller_path, flash: {notice: "Successfully deleted"}
     else
-      redirect_to admin_all_buyer_path, flash: {error: "there is a problem while deleting"}
+      redirect_to admin_all_buyer_path, flash: {notice: "Successfully deleted"}
     end
+  rescue
+    redirect_to admin_all_buyer_path, flash: {error: "there is a problem while deleting"}
   end
 
   def user_view

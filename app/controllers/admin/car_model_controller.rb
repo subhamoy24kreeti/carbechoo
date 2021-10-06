@@ -8,9 +8,9 @@ class Admin::CarModelController < ApplicationController
   def create
     p = CarModel.new(brand_id: params[:brand_id],name: params[:name])
     if p.save
-      redirect_to new_admin_car_model_path, flash: {notice: "successfully created"}
+      redirect_to new_admin_car_model_path, flash: { notice: "successfully created" }
     else
-      redirect_to new_admin_car_model_path, flash: {error: "en error occured"}
+      redirect_to new_admin_car_model_path, flash: { error: "an error occured" }
     end
   end
 
@@ -21,18 +21,18 @@ class Admin::CarModelController < ApplicationController
   def update
     check = CarModel.update_car_model(params)
     if check
-      redirect_to admin_car_model_index_path, flash: {notice: "Successfully updated"}
+      redirect_to admin_car_model_index_path, flash: { notice: "Successfully updated" }
     else
-      redirect_to admin_car_model_index_path, flash: {error: "an error occured"}
+      redirect_to admin_car_model_index_path, flash: { error: "an error occured" }
     end
   end
 
   def delete
     p = CarModel.destroy(params[:id])
     if p
-      redirect_to admin_car_model_index_path, flash: {notice: "successfully deleted"}
+      redirect_to admin_car_model_index_path, flash: { notice: "successfully deleted" }
     else
-      redirect_to admin_car_model_index_path, flash: {error: "an error occured"}
+      redirect_to admin_car_model_index_path, flash: { error: "an error occured" }
     end
   end
 

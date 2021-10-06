@@ -12,7 +12,6 @@ module SellerHelper
     seller[:country_id] = params[:country_id]
     seller[:state_id] = params[:state_id]
     seller[:city_id] = params[:city_id]
-
     seller[:zip_code] = params[:zip_code]
     Rails.logger.info(seller)
     seller
@@ -46,7 +45,7 @@ module SellerHelper
     if current_user.blank?
       redirect_to root_path and return
     end
-    if current_user.role == 'buyer'
+    if current_user.is_buyer?
       redirect_to buyer_dashboard_path and return
     end
   end

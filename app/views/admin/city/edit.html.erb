@@ -15,11 +15,11 @@
     <%= form_with url: admin_city_update_path(@city.id),  method: :put do |f|%>
     <div class="from-group">
     <%=f.label 'Choose the country'%>
-    <%=select_tag(:country_id, options_for_select(get_countries_dropdown, selected: @selected_country_id), class:"custom-select custom-select-lg mb-3", id: "country") %>
+    <%=select_tag(:country_id, options_for_select(get_countries_dropdown, selected: @state.country_id), class:"custom-select custom-select-lg mb-3", id: "country") %>
     </div>
     <div class="form-group">
     <%=f.label 'Choose the state'%>
-    <%=select_tag(:state_id, options_for_select(@states, selected: @city.state_id), class:"custom-select custom-select-lg mb-3", id: "state") %>
+    <%=select_tag(:state_id, options_for_select( get_statuses_dropdown(@state.country_id), selected: @city.state_id), class:"custom-select custom-select-lg mb-3", id: "state") %>
     </div>
     <div class="form-group">
      <%f.label :name %>

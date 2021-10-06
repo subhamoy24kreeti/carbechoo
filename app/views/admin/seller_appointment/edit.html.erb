@@ -85,12 +85,12 @@
 
   <div class="form-group">
     <%=f.label 'choose your state'%>
-    <%=select_tag(:state_id, options_for_select( get_states_dropdown, selected: @seller_appointment.state_id), class:"custom-select custom-select-lg mb-3", id:"state") %>
+    <%=select_tag(:state_id, options_for_select( get_states_all_dropdown, selected: @seller_appointment.state_id), class:"custom-select custom-select-lg mb-3", id:"state") %>
   </div>
 
   <div class="form-group">
     <%=f.label 'choose your city'%>
-    <%=select_tag(:city_id, options_for_select( get_cities_dropdown, selected: @seller_appointment.city_id), class:"custom-select custom-select-lg mb-3", id:"city") %>
+    <%=select_tag(:city_id, options_for_select( get_cities_dropdown(@seller_appointment.state_id), selected: @seller_appointment.city_id), class:"custom-select custom-select-lg mb-3", id:"city") %>
   </div>
 
   <div class="form-group">

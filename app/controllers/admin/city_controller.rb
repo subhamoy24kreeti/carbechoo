@@ -3,9 +3,6 @@ class Admin::CityController < ApplicationController
   before_action :authorize_admin
 
   def new
-    @city = City.new
-    @states = State.all.map{|state| [state.name, state.id] }
-    @countries = Country.all.map{|country| [country.name, country.id]}
   end
 
   def create
@@ -19,10 +16,7 @@ class Admin::CityController < ApplicationController
 
   def edit
     @city = City.find(params[:id])
-    state = State.find(@city.state_id)
-    @countries = Country.all.map{|country| [country.name, country.id]}
-    @selected_country_id = state.country_id
-    @states = State.where(country_id: state.country_id).map{|country| [country.name, country.id]}
+    @state = State.find(@city.state_id)
   end
 
   def update
