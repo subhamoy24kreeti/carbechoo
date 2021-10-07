@@ -22,7 +22,7 @@ class BuyerController < ApplicationController
   def create_appointment
     buyer_appointment = BuyerAppointment.new(user_id: current_user.id, seller_appointment_id: params[:seller_appointment_id]);
     if buyer_appointment.save
-      render 'appointment_success', flash: { info: "Successfully created an appointment" }
+      render 'appointment_success', flash: { notice: "Successfully created an appointment" }
     else
       redirect_to car_single_path(params[:seller_appointment_id]), flash: { error: "Do not create appointment" }
     end

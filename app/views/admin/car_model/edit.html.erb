@@ -4,8 +4,8 @@
   <div class='container-fluid p-0'>
      <%= render "admin/layouts/header" %>
     <section>
-    <% if flash.key? :alert %>
-    <p><%= flash[:alert] %></p>
+    <% if flash.key? :error %>
+    <%= render 'layouts/alert_error', error: flash[:error]%>
     <% end %>
     <% if @brands.blank? %>
       you do not create a model name until you create a brand

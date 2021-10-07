@@ -8,7 +8,7 @@
   <%= render 'layouts/alert_success', notice: flash[:notice] %>
   <% end %>
   <% if flash.key? :error %>
-  <%= render 'layouts/alert_success', notice: flash[:error] %>
+  <%= render 'layouts/alert_error', error: flash[:error] %>
   <% end %>
   <div class="container pt-3">
     <%= form_with url: admin_car_registration_year_update_path(@car_registration_year.id),  method: :put do |f|%>

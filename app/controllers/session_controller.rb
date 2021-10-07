@@ -3,15 +3,14 @@ class SessionController < ApplicationController
     user = User.find_by_email(params[:email])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      if user.role.eql?'seller'
-        redirect_to seller_dashboard_path, notice: "successfully logged in seller"
+      if user.is_seller?
+        redirect_to seller_dashboard_path, flash: { notice: "successfully logged in seller" }
       else
-        redirect_to buyer_dashboard_path, notice: "successfully logged in buyer"
+        redirect_to buyer_dashboard_path, flash: { notice: "successfully logged in buyer" }
       end
       #redirect_to posts_path, notice: "Logged in!"
     else
-      flash.now[:alert] = "Email or password is invalid"
-      redirect_to user_login_get_path
+      redirect_to user_login_get_path, flash: { error:  "Email or password is invalid" }
     end
   end
 
@@ -19,15 +18,14 @@ class SessionController < ApplicationController
     user = User.find_by_email(params[:email])
     if !user.blank? && user.is_admin? && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to admin_dashboard_path, notice: "Logged in!"
+      redirect_to admin_dashboard_path, flash: { notice: "Logged in!" }
     else
-      flash.now[:error] = "Email or password is invalid"
-      render "admin/login"
+      render "admin/login", flash: { error:  "Email or password is invalid" }
     end
   end
 
   def destroy
     session[:user_id] = nil
-    redirect_to root_url, notice: "Logged out!"
+    redirect_to root_url, flash: { notice: "Logged out!" }
   end
 end

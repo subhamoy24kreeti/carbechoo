@@ -8,7 +8,7 @@ class UserController < ApplicationController
 
   def landing
     if !current_user.blank?
-      if current_user == 'seller'
+      if current_user.is_seller?
         redirect_to seller_dashboard_path and return
       else
         redirect_to buyer_dashboard_path and return
@@ -142,7 +142,7 @@ class UserController < ApplicationController
       @user.activate_email
       redirect_to root_path, flash: { notice: "Successfully verified email" }
     else
-      redirect_to root_path, flash: { alert: "Some thing went wrong" }
+      redirect_to root_path, flash: { error: "Some thing went wrong" }
     end
   end
 

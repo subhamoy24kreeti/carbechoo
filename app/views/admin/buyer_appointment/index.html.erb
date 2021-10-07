@@ -15,9 +15,7 @@
   <%= render "admin/layouts/header" %>
   <section>
   <% if flash.key? :notice %>
-  <div class="alert alert-success">
-    <%= flash[:notice] %>
-  </div>
+    <%= render 'layouts/alert_notice', notice: flash[:notice]%>
   <% end %>
   <div class="container-fluid mt-3">
   <table>

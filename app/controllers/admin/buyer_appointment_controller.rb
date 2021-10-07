@@ -4,7 +4,6 @@ class Admin::BuyerAppointmentController < ApplicationController
   before_action :authorize_admin
 
   def edit
-    @statuses = [['processing',0], ['scheduled', 1], ['rejected', 2], ['sold out', 3]]
     @buyer_appointment = BuyerAppointment.find(params[:id])
   end
 
