@@ -14,4 +14,5 @@ class CarRegistrationYear < ApplicationRecord
     end
     years
   end
+  
 end

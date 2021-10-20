@@ -1,6 +1,4 @@
 class User < ApplicationRecord
-
-
   attr_accessor :updating_password
   attr_accessor :updating_email
   attr_accessor :password_reset_token_make
@@ -25,22 +23,31 @@ class User < ApplicationRecord
   has_many :seller_appointments, :dependent => :destroy
   has_many :buyer_appointments, :dependent => :destroy
   has_many :cities, :through => :seller_appointments
-
   has_one_attached :cover_pic, :dependent => :destroy
   has_one_attached :profile_pic, :dependent => :destroy
-
   belongs_to :city, optional: true
   belongs_to :state, optional: true
   belongs_to :country, optional: true
 
   after_validation :address_settings
-
   before_create :confirmation_email_token
-
   after_update :email_verification_mail
-
   after_create :user_creation_mails
 
+  scope :admins, -> { where(role: 'admin') }
+  scope :buyers, -> { where(role: 'buyer') }
+  scope :sellers, -> { where(role: 'seller') }
+  scope :update_forget_password, ->(params) { update(password: params[:password], password_confirmation: params[:password_confirmation], password_reset_token: nil, password_reset_token_sent_at: nil) }
+  scope :update_password, ->(params) { update(password: params[:password], password_confirmation: params[:password_confirmation]) }
+  scope :seller_with_offset, ->(offset) { limit(10).offset(offset).where(role: 'seller') }
+  scope :nearest_seller, ->(longitude, latitude){
+    radius = 100
+    lng_min = (longitude - radius / (Math.cos(latitude/ 180.0 * Math::PI) * 69).abs)
+    lng_max = (longitude + radius / (Math.cos(latitude/ 180.0 * Math::PI) * 69).abs)
+    lat_min = (latitude - (radius / 69))
+    lat_max = (latitude + (radius / 69))
+    where('role = ?','seller').where('longitude >= ?', lng_min).where('longitude <= ?', lng_max).where('latitude >= ?', lat_min).where('latitude <= ?', lat_max);
+  }
 
   def is_admin?
     (role.blank?)? false :(role.eql?"admin")
@@ -57,25 +64,6 @@ class User < ApplicationRecord
   def full_name
     first_name+" "+last_name
   end
-
-  scope :admins, -> { where(role: 'admin') }
-  scope :buyers, -> { where(role: 'buyer') }
-  scope :sellers, -> { where(role: 'seller') }
-
-  scope :update_forget_password, ->(params) { update(password: params[:password], password_confirmation: params[:password_confirmation], password_reset_token: nil, password_reset_token_sent_at: nil) }
-
-  scope :update_password, ->(params) { update(password: params[:password], password_confirmation: params[:password_confirmation]) }
-
-  scope :seller_with_offset, ->(offset) { limit(10).offset(offset).where(role: 'seller') }
-
-  scope :nearest_seller, ->(longitude, latitude){
-    radius = 100
-    lng_min = (longitude - radius / (Math.cos(latitude/ 180.0 * Math::PI) * 69).abs)
-    lng_max = (longitude + radius / (Math.cos(latitude/ 180.0 * Math::PI) * 69).abs)
-    lat_min = (latitude - (radius / 69))
-    lat_max = (latitude + (radius / 69))
-    where('role = ?','seller').where('longitude >= ?', lng_min).where('longitude <= ?', lng_max).where('latitude >= ?', lat_min).where('latitude <= ?', lat_max);
-  }
 
   def password_changed?
     updating_password || new_record?
@@ -190,7 +178,5 @@ class User < ApplicationRecord
       UserMailer.email_verification_mail(self).deliver
     end
   end
-
-
-
+  
 end

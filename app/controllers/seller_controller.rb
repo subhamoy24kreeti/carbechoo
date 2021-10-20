@@ -46,7 +46,6 @@ class SellerController < ApplicationController
   end
 
   private
-
   def seller_create_params_check
     params.require(:seller).permit(:first_name, :last_name, :email, :password, :password_confirmation, :country_id, :state_id, :city_id, :zip_code).merge!(role: 'seller')
   end

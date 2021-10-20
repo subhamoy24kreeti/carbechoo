@@ -1,4 +1,5 @@
 class SellerAppointment < ApplicationRecord
+  
   has_many_attached :car_images, dependent: :destroy
   belongs_to :user
   belongs_to :city
@@ -14,7 +15,6 @@ class SellerAppointment < ApplicationRecord
 
   validates :year_of_buy, presence: true, allow_blank: false
   validates :price, presence: true, allow_blank: false, numericality: true
-
   after_create :appointment_creation_mail
 
   scope :search_filter, ->(search) {
@@ -95,4 +95,5 @@ class SellerAppointment < ApplicationRecord
   def appointment_creation_mail
     SellerMailer.appointment_submission_mail( user, id).deliver
   end
+
 end

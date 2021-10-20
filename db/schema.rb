@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(version: 2021_09_25_171831) do
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["state_id"], name: "index_cities_on_states_id"
+    t.index ["state_id"], name: "index_cities_on_state_id"
   end
 
   create_table "cost_ranges", force: :cascade do |t|
@@ -107,9 +107,10 @@ ActiveRecord::Schema.define(version: 2021_09_25_171831) do
 
   create_table "countries", force: :cascade do |t|
     t.string "name", null: false
-    t.string "code"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "code"
+    t.string "#<ActiveRecord::ConnectionAdapters::PostgreSQL::TableDefinition"
   end
 
   create_table "killometer_drivens", force: :cascade do |t|
@@ -156,7 +157,7 @@ ActiveRecord::Schema.define(version: 2021_09_25_171831) do
     t.bigint "country_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["country_id"], name: "index_states_on_countries_id"
+    t.index ["country_id"], name: "index_states_on_country_id"
   end
 
   create_table "users", force: :cascade do |t|

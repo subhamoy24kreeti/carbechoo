@@ -1,4 +1,5 @@
 class BuyerAppointment < ApplicationRecord
+
   belongs_to :user
   belongs_to :seller_appointment
 
