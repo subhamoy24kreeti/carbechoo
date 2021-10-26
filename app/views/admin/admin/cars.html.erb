@@ -48,9 +48,9 @@
     <td><%= c.user.email %></td>
     <td><%= c.price %></td>
     <td>
-    <%= link_to 'delete', admin_seller_appointment_delete_path(c.id), class:"btn btn-danger", onclick: 'return confirm("are you sure you want to delete this user")' %>
-    <%= link_to 'view', admin_seller_appointment_path(c.id), class:"btn btn-info" %>
-     <%= link_to 'edit', edit_admin_seller_appointment_path(c.id), class:"btn btn-info" %>
+    <%= link_to 'delete', admin_seller_appointment_delete_path(c.id), class: "btn btn-danger", onclick: 'return confirm("are you sure you want to delete this user")' %>
+    <%= link_to 'view', admin_seller_appointment_path(c.id), class: "btn btn-info" %>
+     <%= link_to 'edit', edit_admin_seller_appointment_path(c.id), class: "btn btn-info" %>
     </td>
     </tr>
     <% end %>

@@ -13,7 +13,7 @@
   </div>
   <div class="profile-img-wrap">
     <% if @seller.profile_pic.attached? %>
-    <%= image_tag @seller.profile_pic, class:"profile-img", alt: "profile-img" %>
+    <%= image_tag @seller.profile_pic, class: "profile-img", alt: "profile-img" %>
     <% else %>
     <%= image_tag "default_user.png", class: "profile-img", alt: "profile-img" %>
     <% end %>
@@ -59,7 +59,7 @@
       <div class="border rounded">
       <div class="seller-item">
         <% if item.car_images.attached? %>
-        <%= image_tag item.car_images[0], class:"img-fluid" %>
+        <%= image_tag item.car_images[0], class: "img-fluid" %>
         <% end %>
       </div>
       <div class="p-2">

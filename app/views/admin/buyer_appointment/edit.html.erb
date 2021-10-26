@@ -81,7 +81,7 @@
 
     <div class="form-group">
     <%=f.label 'status'%>
-    <%=select_tag(:status, options_for_select(get_statuses_dropdown, selected: @buyer_appointment.get_status_code), class:"custom-select custom-select-lg mb-3", id:"status") %>
+    <%=select_tag(:status, options_for_select(get_statuses_dropdown, selected: @buyer_appointment.get_status_code), class: "custom-select custom-select-lg mb-3", id:"status") %>
     </div>
 
     <div class="form-group">
@@ -103,7 +103,7 @@
     </div>
 
     <div class="form-group">
-    <%=f.submit :submit , class:"btn btn-primary" %>
+    <%=f.submit :submit , class: "btn btn-primary" %>
     </div>
    <% end%>
   <div>

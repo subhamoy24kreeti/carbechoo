@@ -8,7 +8,7 @@ module UserHelper
   end
 
   def user_settings_link(path)
-    link_to ('<i class="fa fa-cog"></i> Settings').html_safe, path, class:"dropdown-item"
+    link_to ('<i class="fa fa-cog"></i> Settings').html_safe, path, class: "dropdown-item"
   end
 
   def update_user_profile_params_check(params)

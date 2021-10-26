@@ -12,7 +12,7 @@
   <% end %>
   <div class="container">
   <div class="m-3">
-    <%= link_to "add car details", seller_add_car_details_path,  class:"btn btn-info" %>
+    <%= link_to "add car details", seller_add_car_details_path,  class: "btn btn-info" %>
   </div>
   </div>
     <section class="appointments-under-process">
@@ -27,7 +27,7 @@
               <div class="rounded border">
                 <div class="img-box">
                 <% if car.car_images.attached? %>
-                <%= image_tag car.car_images[0], class:"img-fixed resize-car", alt:"car images" %>
+                <%= image_tag car.car_images[0], class: "img-fixed resize-car", alt:"car images" %>
                 <% end %>
                 </div>
                 <div class="p-2">
@@ -66,7 +66,7 @@
             <div class="rounded border">
               <div class="img-box">
               <% if car.car_images.attached? %>
-              <%= image_tag car.car_images[0], class:"img-fixed resize-car", alt:"car images" %>
+              <%= image_tag car.car_images[0], class: "img-fixed resize-car", alt:"car images" %>
               <% end %>
               </div>
               <div class="p-2">
@@ -104,7 +104,7 @@
             <div class="rounded border">
               <div class="img-box">
               <% if car.car_images.attached? %>
-              <%= image_tag car.car_images[0], class:"img-fixed resize-car", alt:"car images" %>
+              <%= image_tag car.car_images[0], class: "img-fixed resize-car", alt:"car images" %>
               <% end %>
               </div>
               <div class="p-2">

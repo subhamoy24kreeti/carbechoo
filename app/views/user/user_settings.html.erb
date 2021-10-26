@@ -14,7 +14,7 @@
     <div class="image-view">
       <div class="cover-img-wrap">
         <% if current_user.cover_pic.attached? %>
-        <%= image_tag current_user.cover_pic, class:'cover-img', alt: "user-cover"%>
+        <%= image_tag current_user.cover_pic, class: 'cover-img', alt: "user-cover"%>
         <% else %>
          <%= image_tag 'default_user.png', class: 'cover-img', alt: "user-cover" %>
         <% end %>
@@ -26,7 +26,7 @@
       </div>
       <div class="profile-img-wrap">
         <%if current_user.profile_pic.attached? %>
-        <%= image_tag current_user.profile_pic, class:"profile-img", alt:"user-profile"%>
+        <%= image_tag current_user.profile_pic, class: "profile-img", alt:"user-profile"%>
         <% else %>
         <%= image_tag 'default_user.png', class: 'profile-img', alt: "user-profile" %>
         <% end %>
@@ -42,30 +42,30 @@
 
       <%= f.text_field :id, type:"hidden", value: current_user.id %>
       <div class="form-group">
-      <%= f.label 'first name' ,class:"form-lebel"%>
+      <%= f.label 'first name' ,class: "form-lebel"%>
       <%= f.text_field :first_name, required: true ,class: "form-control", value: current_user.first_name%>
       </div>
       <div class="form-group">
-      <%= f.label 'last name' ,class:"form-lebel"%>
+      <%= f.label 'last name' ,class: "form-lebel"%>
       <%= f.text_field :last_name, required: true ,class: "form-control", value: current_user.last_name%>
       </div>
       <div class="form-group">
-      <%= f.label :email ,class:"form-lebel"%>
+      <%= f.label :email ,class: "form-lebel"%>
       <%= email_field_tag :email, "", required: true ,class: "form-control", value: current_user.email%>
       </div>
 
       <div class="form-group">
       <%=f.label 'choose your country'%>
-      <%=select_tag(:country_id, options_for_select(get_countries_dropdown, selected: current_user.country_id), class:"custom-select custom-select-lg mb-3", id:"country") %>
+      <%=select_tag(:country_id, options_for_select(get_countries_dropdown, selected: current_user.country_id), class: "custom-select custom-select-lg mb-3", id:"country") %>
       </div>
       <div class="form-group">
       <%=f.label 'choose your state'%>
-      <%=select_tag(:state_id, options_for_select(@states, selected: current_user.state_id), class:"custom-select custom-select-lg mb-3", id:"state")%>
+      <%=select_tag(:state_id, options_for_select(@states, selected: current_user.state_id), class: "custom-select custom-select-lg mb-3", id:"state")%>
       </div>
 
       <div class="form-group">
       <%=f.label 'choose your city'%>
-      <%=select_tag(:city_id, options_for_select(@cities, selected: current_user.city_id), class:"custom-select custom-select-lg mb-3", id:"city") %>
+      <%=select_tag(:city_id, options_for_select(@cities, selected: current_user.city_id), class: "custom-select custom-select-lg mb-3", id:"city") %>
       </div>
 
       <div class="form-group">

@@ -38,8 +38,8 @@
     <td><%=state.name%></td>
     <td><%=state.country.name %></td>
     <td>
-    <%= link_to 'delete', admin_state_delete_path(state.id), onclick: 'return confirm("are you sure you want to delete this item")', class:"btn btn-danger" %>
-    <%= link_to 'edit', edit_admin_state_path(state.id), class:"btn btn-info" %>
+    <%= link_to 'delete', admin_state_delete_path(state.id), onclick: 'return confirm("are you sure you want to delete this item")', class: "btn btn-danger" %>
+    <%= link_to 'edit', edit_admin_state_path(state.id), class: "btn btn-info" %>
     </td>
     </tr>
     <% end %>

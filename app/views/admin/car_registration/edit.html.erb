@@ -8,9 +8,9 @@
       <%= form_with url: admin_car_registration_update_path,  method: :put do |f|%>
       <div class="form-group">
         <%f.label 'car registration' %>
-        <%=f.text_field :state_code, class:"form-control", value: @car_registration.state_code %>
+        <%=f.text_field :state_code, class: "form-control", value: @car_registration.state_code %>
       </div>
-      <%=f.submit :update ,class:"btn btn-info" %>
+      <%=f.submit :update ,class: "btn btn-info" %>
       <% end%>
     </div>
     </section>

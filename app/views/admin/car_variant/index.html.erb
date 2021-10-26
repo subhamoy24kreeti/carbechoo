@@ -36,8 +36,8 @@
   <td><%=c.id%></td>
   <td><%=c.variant%></td>
   <td>
-  <%= link_to 'delete', admin_car_variant_delete_path(c.id), class:"btn btn-danger", onclick: 'return confirm("are you sure you want to delete this item")' %>
-  <%= link_to 'edit', edit_admin_car_variant_path(c.id), class:"btn btn-info" %>
+  <%= link_to 'delete', admin_car_variant_delete_path(c.id), class: "btn btn-danger", onclick: 'return confirm("are you sure you want to delete this item")' %>
+  <%= link_to 'edit', edit_admin_car_variant_path(c.id), class: "btn btn-info" %>
   </td>
   </tr>
   <% end %>

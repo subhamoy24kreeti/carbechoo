@@ -14,7 +14,7 @@
 <div class="car-gallery">
 <div class="main-thumb">
   <% if @car.car_images.attached? %>
-  <%= image_tag @car.car_images[0], alt:"car image", class:"img-fix", id:"main-img" %>
+  <%= image_tag @car.car_images[0], alt:"car image", class: "img-fix", id:"main-img" %>
   <% end %>
 </div>
 <div class="d-flex align-items-center">
@@ -25,7 +25,7 @@
   <ul class="list-unstyled slider d-flex mb-0">
       <% @car.car_images.each do |image| %>
       <li class="img-item">
-        <%= image_tag image, alt:"car image", class:"slider-image"%>
+        <%= image_tag image, alt:"car image", class: "slider-image"%>
       </li>
      <% end %>
   </ul>
@@ -64,10 +64,10 @@
 <div class="price">
 <h5><b><%= @car.get_price %></b></h5>
 </div>
-<%= f.text_field 'seller_user_id', type:"hidden", value:@car.user_id %>
+<%= f.text_field 'seller_user_id', type:"hidden", value:  @car.user_id %>
 <div class="appoint">
 <% if current_user.blank? || !current_user.buyer_appointment_exists(@car.id) %>
-<%= f.submit "appoint",class:"btn btn-primary"%>
+<%= f.submit "appoint",class: "btn btn-primary"%>
 <% else %>
 <div class="bg-primary p-2 rounded">
   <p class="m-0"><b>you have been made an appointment</b></p>

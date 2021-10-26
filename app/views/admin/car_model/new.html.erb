@@ -18,15 +18,15 @@
     <%= form_with url: admin_car_model_create_path,  method: :post do |f|%>
     <div class="form-group">
     <%f.label 'model name' %>
-    <%=f.text_field :name, class:"form-control" %>
+    <%=f.text_field :name, class: "form-control" %>
     </div>
     <div>
     <div class="form-group required">
     <%=f.label 'choose the brand', class: "control-label"%>
-    <%= select_tag(:brand_id, options_for_select( get_brands_dropdown ), class:"custom-select custom-select-lg mb-3", id: "brand", include_blank: '--selecr your brand--') %>
+    <%= select_tag(:brand_id, options_for_select( get_brands_dropdown ), class: "custom-select custom-select-lg mb-3", id: "brand", include_blank: '--selecr your brand--') %>
     </div>
     </div>
-    <%=f.submit :add ,class:"btn btn-info" %>
+    <%=f.submit :add ,class: "btn btn-info" %>
     <% end%>
   <% end %>
   </div>

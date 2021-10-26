@@ -27,32 +27,32 @@
 
   <div class="form-group required">
   <%=f.label 'choose the brand', class: "control-label"%>
-  <%= select_tag(:brand_id, options_for_select( get_brands_dropdown ), class:"custom-select custom-select-lg mb-3",  name:"seller_appointment[brand_id]", id: "brand", include_blank: '--selecr your brand--') %>
+  <%= select_tag(:brand_id, options_for_select( get_brands_dropdown ), class: "custom-select custom-select-lg mb-3",  name: "seller_appointment[brand_id]", id: "brand", include_blank: '--selecr your brand--') %>
   </div>
 
   <div class="form-group required">
   <%=f.label 'choose the model', class: "control-label"%>
-  <%=select_tag(:car_model_id, options_for_select('<option></option>'), class:"custom-select custom-select-lg mb-3", name: "seller_appointment[car_model_id]", id:"car-model") %>
+  <%=select_tag(:car_model_id, options_for_select('<option></option>'), class: "custom-select custom-select-lg mb-3", name: "seller_appointment[car_model_id]", id:"car-model") %>
   </div>
 
   <div class="form-group required">
   <%=f.label 'choose the range', class: "control-label"%>
-  <%=select_tag(:killometer_driven_id, options_for_select( get_killometer_drivens_dropdown ), class:"custom-select custom-select-lg mb-3", name: "seller_appointment[killometer_driven_id]", id:'killometer-driven') %>
+  <%=select_tag(:killometer_driven_id, options_for_select( get_killometer_drivens_dropdown ), class: "custom-select custom-select-lg mb-3", name: "seller_appointment[killometer_driven_id]", id:'killometer-driven') %>
   </div>
 
   <div class="form-group required">
   <%=f.label 'choose the registered state code', class: "control-label"%>
-  <%=select_tag(:car_registration_id, options_for_select( get_car_registrations_dropdown ), class:"custom-select custom-select-lg mb-3", name: "seller_appointment[car_registration_id]", id:"car-registration", required: true) %>
+  <%=select_tag(:car_registration_id, options_for_select( get_car_registrations_dropdown ), class: "custom-select custom-select-lg mb-3", name: "seller_appointment[car_registration_id]", id:"car-registration", required: true) %>
   </div>
 
   <div class="form-group required">
   <%=f.label 'choose the type', class: "control-label"%>
-  <%=select_tag(:car_variant_id, options_for_select( get_car_variants_dropdown ), class:"custom-select custom-select-lg mb-3", name: "seller_appointment[car_variant_id]", id: "car-variant", required: true) %>
+  <%=select_tag(:car_variant_id, options_for_select( get_car_variants_dropdown ), class: "custom-select custom-select-lg mb-3", name: "seller_appointment[car_variant_id]", id: "car-variant", required: true) %>
   </div>
 
   <div class="form-group required">
    <%=f.label "description", class: "control-label"%>
-   <%=f.text_area :description, name: "seller_appointment[description]", class:"form-control", id: "description"%>
+   <%=f.text_area :description, name: "seller_appointment[description]", class: "form-control", id: "description"%>
   </div>
 
   <div class="form-group required">
@@ -62,27 +62,27 @@
 
   <div class="form-group required">
   <%= f.label 'currency', class: "control-label"%>
-  <%=select_tag(:currency, options_for_select([['INR','₹'],['USD','$']]), class:"custom-select custom-select-lg mb-3", name: "seller_appointment[currency]") %>
+  <%=select_tag(:currency, options_for_select([['INR','₹'],['USD','$']]), class: "custom-select custom-select-lg mb-3", name: "seller_appointment[currency]") %>
   </div>
 
   <div class="form-group required">
   <%=f.label "year of buy", class: "control-label"%>
-  <%=select_tag(:year_of_buy, options_for_select( get_car_registration_years ), class:"custom-select custom-select-lg mb-3", name: "seller_appointment[year_of_buy]", id:"year", required: true) %>
+  <%=select_tag(:year_of_buy, options_for_select( get_car_registration_years ), class: "custom-select custom-select-lg mb-3", name: "seller_appointment[year_of_buy]", id:"year", required: true) %>
    </div>
 
   <div class="form-group required">
   <%=f.label "seller's country", class: "control-label" %>
-  <%=select_tag(:country_id, options_for_select( get_countries_dropdown, selected: current_user.country_id), class:"custom-select custom-select-lg mb-3", name: "seller_appointment[country_id]", id:"country", include_blank: '--selecr your country--') %>
+  <%=select_tag(:country_id, options_for_select( get_countries_dropdown, selected: current_user.country_id), class: "custom-select custom-select-lg mb-3", name: "seller_appointment[country_id]", id:"country", include_blank: '--selecr your country--') %>
   </div>
 
   <div class="form-group required">
   <%=f.label "seller's state", class: "control-label"%>
-  <%=select_tag(:state_id, options_for_select( @states, selected: current_user.state_id), class:"custom-select custom-select-lg mb-3", name: "seller_appointment[state_id]", id:"state") %>
+  <%=select_tag(:state_id, options_for_select( @states, selected: current_user.state_id), class: "custom-select custom-select-lg mb-3", name: "seller_appointment[state_id]", id:"state") %>
   </div>
 
   <div class="form-group required">
   <%=f.label "seller's city", class: "control-label"%>
-  <%=select_tag(:city_id, options_for_select( @cities, selected: current_user.city_id), class:"custom-select custom-select-lg mb-3", name: "seller_appointment[city_id]", id:"city") %>
+  <%=select_tag(:city_id, options_for_select( @cities, selected: current_user.city_id), class: "custom-select custom-select-lg mb-3", name: "seller_appointment[city_id]", id:"city") %>
   </div>
 
   <div class="form-group required">
@@ -91,13 +91,13 @@
   </div>
 
   <div class="form-group" id="uio">
-  <%=f.file_field :upload_imgs, id: "upload_imgs", multiple: true, name: 'images[]', class:"show-for-sr", hidden: true%>
+  <%=f.file_field :upload_imgs, id: "upload_imgs", multiple: true, name: 'images[]', class: "show-for-sr", hidden: true%>
   <button class="btn btn-primary" id="upload-btn">add images<i class="fa fa-plus"></i></button>
   </div>
 
   <div class="quote-imgs-thumbs quote-imgs-thumbs--hidden" id="img_preview" aria-live="polite"></div>
   <div class="form-group">
-  <%=f.submit :submit , class:"btn btn-primary" %>
+  <%=f.submit :submit , class: "btn btn-primary" %>
   </div>
   <% end%>
 </div>
