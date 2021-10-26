@@ -12,19 +12,19 @@ class BuyerController < ApplicationController
     @buyer = User.new(buyer_create_parmas_check)
     if @buyer.save
       session[:user_id] = @buyer.id
-      redirect_to buyer_dashboard_path, flash: { notice: "Successfully Created! account" }
+      redirect_to buyer_dashboard_path, :flash => { :notice => "Successfully Created! account" }
     else
-      redirect_to buyer_registration_path, flash: { error: @buyer.errors.full_messages }
+      redirect_to buyer_registration_path, :flash => { :error => @buyer.errors.full_messages }
     end
   end
 
   #buyer appointment creation controller
   def create_appointment
-    buyer_appointment = BuyerAppointment.new(user_id: current_user.id, seller_appointment_id: params[:seller_appointment_id]);
+    buyer_appointment = BuyerAppointment.new(:user_id => current_user.id, :seller_appointment_id => params[:seller_appointment_id]);
     if buyer_appointment.save
-      render 'appointment_success', flash: { notice: "Successfully created an appointment" }
+      render 'appointment_success', :flash => { :notice => "Successfully created an appointment" }
     else
-      redirect_to car_single_path(params[:seller_appointment_id]), flash: { error: "Do not create appointment" }
+      redirect_to car_single_path(params[:seller_appointment_id]), :flash => { :error => "Do not create appointment" }
     end
   end
 

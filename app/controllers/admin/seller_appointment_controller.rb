@@ -16,12 +16,16 @@ class Admin::SellerAppointmentController < ApplicationController
   end
 
   def update
-    @seller_appointment = SellerAppointment.find(params[:id])
-    check = @seller_appointment.update_seller_appointment(params_check_seller_appointment(params))
-    if check
-      redirect_to admin_seller_appointment_index_path, flash: {notice: 'Scccessfully updated' }
+    @seller_appointment = SellerAppointment.find_by_id(params[:id])
+    if @seller_appointment
+      check = @seller_appointment.update_seller_appointment(params_check_seller_appointment(params))
+      if check
+        redirect_to admin_seller_appointment_index_path, :flash => { :notice =>  'Scccessfully updated' }
+      else
+        redirect_to admin_seller_appointment_index_path,  :flash => { :error => 'there is some error' }
+      end
     else
-      redirect_to admin_seller_appointment_index_path,  flash: {error: 'there is some error' }
+      redirect_to admin_seller_appointment_index_path,  :flash => { :error => 'cannot be updated' }
     end
   end
 
@@ -35,7 +39,12 @@ class Admin::SellerAppointmentController < ApplicationController
   end
 
   def delete
-    SellerAppointment.destroy(params[:id])
-    redirect_to admin_seller_appointment_index_path
+    @seller_appointment = SellerAppointment.find_by_id(params[:id])
+    if @seller_appointment
+      @seller_appointment.destroy
+      redirect_to admin_seller_appointment_index_path, :flash => { :notice => "Succesfully deleted" }
+    else
+      redirect_to admin_seller_appointment_index_path, :flash => { :error => "cannot be deleted" }
+    end
   end
 end

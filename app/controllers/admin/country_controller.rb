@@ -7,37 +7,43 @@ class Admin::CountryController < ApplicationController
   end
 
   def create
-    p = Country.new(name: params[:name])
+    p = Country.new(:name => params[:name])
     if p.save
-      redirect_to new_admin_country_path, flash: {notice: "Successfully updated"}
+      redirect_to new_admin_country_path, :flash => { :notice =>  "Successfully updated"}
     else
-      redirect_to new_admin_country_path, flash: {error: 'an error occured' }
+      redirect_to new_admin_country_path, :flash => { :error => 'an error occured' }
     end
   end
 
   def edit
-    @country = Country.find_by_id(params[:id])
+    @country = Country.find(params[:id])
   end
 
   def update
-    check = Country.update_country(params)
-    if check
-      redirect_to admin_country_index_path, flash: {notice: 'Successfully updated' }
+    @country = Country.find_by_id(params[:id])
+    if @country
+      check = @country.update(:name => params[:name])
+      if check
+        redirect_to admin_country_index_path, :flash => { :notice =>  'Successfully updated' }
+      else
+        redirect_to admin_country_index_path, :flash => { :error => 'an error occured' }
+      end
     else
-      redirect_to admin_country_index_path, flash: {error: 'an error occured' }
+      redirect_to admin_country_index_path, :flash => { :error => 'cannot be deleted' }
     end
   end
 
   def delete
-    p = Country.destroy(params[:id])
-    if p
-      redirect_to admin_country_index_path, flash: {notice: 'Successfully deleted' }
+    @country = Country.find_by_id(params[:id])
+    if @country
+      @country.destroy
+      redirect_to admin_country_index_path, :flash => { :notice =>  'Successfully deleted' }
     else
-      redirect_to admin_country_index_path, flash: {error: 'an error occured' }
+      redirect_to admin_country_index_path, :flash => { :error => 'cannot be deleted' }
     end
   end
 
   def index
-    @countries = Country.all()
+    @countries = Country.all
   end
 end

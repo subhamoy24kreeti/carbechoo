@@ -6,11 +6,11 @@ class Admin::CityController < ApplicationController
   end
 
   def create
-    p = City.new(state_id:params[:state_id], name: params[:name])
+    p = City.new(city_params_check)
     if p.save
-      redirect_to new_admin_city_path, flash: {notice: "Successfully updated"}
+      redirect_to new_admin_city_path, :flash => { :notice =>  "Successfully updated" }
     else
-      redirect_to new_admin_city_path
+      redirect_to new_admin_city_path, :flash => { :notice => "cannot be created" }
     end
   end
 
@@ -20,20 +20,36 @@ class Admin::CityController < ApplicationController
   end
 
   def update
-    check = City.update_city(params)
-    if check
-      redirect_to admin_city_index_path, flash: {notice: "Successfully updated"}
+    @city = City.find_by_id(params[:id])
+    if @city
+      check = @city.update(city_params_check)
+      if check
+        redirect_to admin_city_index_path, :flash => { :notice =>  "Successfully updated" }
+      else 
+        redirect_to admin_city_index_path, :flash => { :error => 'an error occured' }
+      end
     else
-      redirect_to admin_city_index_path, flash: {error: 'an error occured' }
+      redirect_to admin_city_index_path, :flash => { :error => 'cannot be deleted' }
     end
   end
 
   def delete
-    p = City.destroy(params[:id])
-    redirect_to admin_city_index_path
+    @city = City.find_by_id(params[:id])
+    if @city
+      @city.destroy
+      redirect_to admin_city_index_path, :flash => { :notice =>  "Successfully deleted"}
+    else
+      redirect_to admin_city_index_path, :flash => { :error => 'cannot be deleted' }
+    end
   end
 
   def index
     @cities = City.all()
   end
+
+  private
+  def city_params_check
+    params.permit(:state_id, :name)
+  end
+  
 end

@@ -37,8 +37,7 @@ class User < ApplicationRecord
   scope :admins, -> { where(role: 'admin') }
   scope :buyers, -> { where(role: 'buyer') }
   scope :sellers, -> { where(role: 'seller') }
-  scope :update_forget_password, ->(params) { update(password: params[:password], password_confirmation: params[:password_confirmation], password_reset_token: nil, password_reset_token_sent_at: nil) }
-  scope :update_password, ->(params) { update(password: params[:password], password_confirmation: params[:password_confirmation]) }
+  scope :update_password, ->(params) { update(password: params[:password], password_confirmation: params[:password_confirmation], password_reset_token: nil, password_reset_token_sent_at: nil) }
   scope :seller_with_offset, ->(offset) { limit(10).offset(offset).where(role: 'seller') }
   scope :nearest_seller, ->(longitude, latitude){
     radius = 100

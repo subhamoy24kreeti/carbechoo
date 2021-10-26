@@ -9,22 +9,27 @@ class Admin::CostRangeController < ApplicationController
   def create
     @cost_range = CostRange.new(check_cost_range_params)
     if(@cost_range.save)
-      redirect_to new_admin_cost_range_path, flash: {notice: "Successfully created"}
+      redirect_to new_admin_cost_range_path, :flash => { :notice =>  "Successfully created"}
     else
-      redirect_to new_admin_cost_range_path, flash: {error: 'an error occured' }
+      redirect_to new_admin_cost_range_path, :flash => { :error => 'an error occured' }
     end
   end
 
   def edit
-    @cost_range = CostRange.find_by_id(params[:id])
+    @cost_range = CostRange.find(params[:id])
   end
 
   def update
-    check = CostRange.update_cost_range(params)
-    if check
-      redirect_to admin_cost_range_index_path, flash: {notice: 'Successfully updated' }
+    @cost_range = CostRange.find_by_id(params[:id])
+    if @cost_range
+      check = @cost_range.update(check_cost_range_params)
+      if check
+        redirect_to admin_cost_range_index_path, :flash => { :notice =>  'Successfully updated' }
+      else
+        redirect_to admin_cost_range_index_path, :flash => { :error => 'an error occured' }
+      end
     else
-      redirect_to admin_cost_range_index_path, flash: {error: 'an error occured' }
+      redirect_to admin_cost_range_index_path, :flash => { :error => 'cannot be deleted' }
     end
   end
 
@@ -33,11 +38,12 @@ class Admin::CostRangeController < ApplicationController
   end
 
   def delete
-    p = CostRange.destroy(params[:id])
-    if !p.blank?
-      redirect_to admin_cost_range_index_path, flash: {notice: 'Successfully Deleted' }
+    @cost_range = CostRange.find_by_id(params[:id])
+    if @cost_range
+      @cost_range.destroy
+      redirect_to admin_cost_range_index_path, :flash => { :notice =>  'Successfully Deleted' }
     else
-      redirect_to admin_cost_range_index_path, flash: {error: 'an error occured' }
+      redirect_to admin_cost_range_index_path, :flash => { :error => 'cannot be deleted' }
     end
   end
 

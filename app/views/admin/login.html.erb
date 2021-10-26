@@ -4,7 +4,7 @@
 <section class="admin-login">
 <div class="container">
   <% if flash.key? :error %>
-  <%= render 'layouts/alert_error', error: flash[:error]%>
+  <%= render 'layouts/alert_error',  :error => flash[:error]%>
   <% end %>
   <h3 class="text-center text-white">admin login</h3>
  <%= form_with url: admin_login_auth_path, method: :post do |f| %>

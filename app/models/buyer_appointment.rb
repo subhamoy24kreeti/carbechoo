@@ -5,7 +5,7 @@ class BuyerAppointment < ApplicationRecord
 
   after_create :appointment_creation_mail
 
-  scope :all_appointments, ->(user_id) { where(user_id: user_id )}
+  scope :all_appointments, ->(user_id) { where(:user_id => user_id )}
 
   def get_status_code
     statuses = { 'processing' => 0,'scheduled' => 1, 'rejected' => 2, 'sold out'=> 3 }

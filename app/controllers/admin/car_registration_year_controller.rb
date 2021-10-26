@@ -7,14 +7,11 @@ class Admin::CarRegistrationYearController < ApplicationController
   end
 
   def create
-    car_registration_year = {}
-    car_registration_year[:range1] = params[:range1]
-    car_registration_year[:range2] = params[:range2]
-    @car_registration_year = CarRegistrationYear.new(car_registration_year)
+    @car_registration_year = CarRegistrationYear.new(car_registration_year_params_check)
     if @car_registration_year.save
-      redirect_to admin_car_registration_year_index_path, flash: {notice: "Successfully updated"}
+      redirect_to admin_car_registration_year_index_path, :flash => { :notice => "Successfully updated" }
     else
-      redirect_to new_admin_car_registration_year_path,  flash: {notice: "an error occured"}
+      redirect_to new_admin_car_registration_year_path,  :flash => { :notice => "an error occured" }
     end
   end
 
@@ -23,15 +20,26 @@ class Admin::CarRegistrationYearController < ApplicationController
   end
 
   def update
-    p = CarRegistrationYear.update_car_registion_year(params)
-    if p
-      redirect_to admin_car_registration_year_index_path, flash: {notice: "Successfully updated"}
+    @car_registration_year = CarRegistrationYear.find_by_id(params[:id])
+    if @car_registration_year
+      check = @car_registration_year.update(car_registration_year_params_check)
+      if check
+        redirect_to admin_car_registration_year_index_path, :flash => { :notice => "Successfully updated" }
+      else
+        redirect_to admin_car_registration_year_index_path, :flash => { :error => 'an error occured' }
+      end
     else
-      redirect_to admin_car_registration_year_index_path, flash: {error: 'an error occured' }
+      redirect_to admin_car_registration_year_index_path, :flash => { :error => 'cannot be deleted' }
     end
   end
 
   def index
     @car_registration_years = CarRegistrationYear.all
   end
+
+  private
+  def car_registration_year_params_check
+    params.permit(:range1, :range2)
+  end
+
 end
