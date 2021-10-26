@@ -17,4 +17,5 @@ class SellerMailer < ApplicationMailer
     @appointment = appointment
     mail(to: @appointment.user.email, subject: 'Selling Appointment Updates')
   end
+  
 end

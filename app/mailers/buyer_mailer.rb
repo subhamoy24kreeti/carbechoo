@@ -1,4 +1,5 @@
 class BuyerMailer < ApplicationMailer
+  
   default from: 'notifications@carbechoo.com'
 
   def welcome_mail(user)
