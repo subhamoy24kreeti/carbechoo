@@ -3,13 +3,11 @@ class Admin::SellerAppointmentController < ApplicationController
   include Admin::SellerAppointmentHelper
   before_action :authorize_admin
 
-
   def new
   end
 
   def create
   end
-
 
   def edit
     @seller_appointment = SellerAppointment.find(params[:id])
