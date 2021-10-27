@@ -9,9 +9,9 @@ class Admin::CarRegistrationController < ApplicationController
   def create
     p = CarRegistration.new(car_registration_params_check)
     if p.save
-      redirect_to new_admin_car_registration_path, :flash => { :notice => "Successfully created" }
+      redirect_to new_admin_car_registration_path, flash: { notice: "Successfully created" }
     else
-      redirect_to new_admin_car_registration_path, :flash => { :error => "an error occured" }
+      redirect_to new_admin_car_registration_path, flash: { error: "an error occured" }
     end
   end
 
@@ -24,12 +24,12 @@ class Admin::CarRegistrationController < ApplicationController
     if @car_registration
       check = @car_registration.update(car_registration_params_check)
       if check
-        redirect_to admin_car_registration_index_path, :flash => { :notice => "successfully updated" }
+        redirect_to admin_car_registration_index_path, flash: { notice: "successfully updated" }
       else
-        redirect_to admin_car_registration_index_path, :flash => { :error => "error occured" }
+        redirect_to admin_car_registration_index_path, flash: { error: "error occured" }
       end
     else
-      redirect_to admin_car_registration_index_path, :flash => { :error => "cannot be deleted" }
+      redirect_to admin_car_registration_index_path, flash: { error: "cannot be deleted" }
     end
   end
 
@@ -37,9 +37,9 @@ class Admin::CarRegistrationController < ApplicationController
     @car_registration = CarRegistration.find_by_id(params[:id])
     if @car_registration
       @car_registration.destroy
-      redirect_to admin_car_registration_index_path, :flash => { :notice => "successfully deleted" }
+      redirect_to admin_car_registration_index_path, flash: { notice: "successfully deleted" }
     else
-      redirect_to admin_car_registration_index_path, :flash => { :error => "cannot be deleted" }
+      redirect_to admin_car_registration_index_path, flash: { error: "cannot be deleted" }
     end
   end
 
@@ -48,6 +48,7 @@ class Admin::CarRegistrationController < ApplicationController
   end
 
   private
+  
   def car_registration_params_check
     params.permit(:state_code)
   end

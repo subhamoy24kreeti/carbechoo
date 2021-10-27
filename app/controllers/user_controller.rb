@@ -1,10 +1,9 @@
 class UserController < ApplicationController
-
   include ApplicationHelper
   include UserHelper
 
-  before_action :authorize_user, only: [:user_settings, :user_profile_update]
-  skip_before_action :verify_authenticity_token, only: [:ws_user_profile_pic_upload, :ws_user_cover_pic_upload]
+  before_action :authorize_user, only: %i[ user_settings, user_profile_update]
+  skip_before_action :verify_authenticity_token, only: %i[ws_user_profile_pic_upload, ws_user_cover_pic_upload]
 
   def landing
     if !current_user.blank?
@@ -29,35 +28,35 @@ class UserController < ApplicationController
     if !@user_data.blank?
       if @user_data.forget_password_key_set
         @response = "Successfully link sent to your mail"
-        render 'forget_password_response', :flash => { :notice =>  "Successfully sent link" }
+        render 'forget_password_response', flash: { notice: "Successfully sent link" }
       else
-        redirect_back(:fallback_location => { :action => :forget_password_request }, :flash => { :notice =>  "there is something went wrong" })
+        redirect_back(fallback_location: { action: :forget_password_request }, flash: { notice: "there is something went wrong" } )
       end
     else
-      redirect_back(:fallback_location => { :action => :forget_password_request })
+      redirect_back(fallback_location: { action: :forget_password_request } )
     end
   end
 
   def save_user_phone
 
     if params[:user_id].blank?
-      render :json => { :status => 0, :error => 1, :msg =>"error occured" } and return
+      render json: { status: 0, error: 1, msg: "error occured" } and return
     end
 
     if params[:phone].blank?
-      render :json => { :status => 0, :error => 1, :msg =>"error occured" } and return
+      render json: { status: 0, error: 1, msg: "error occured" } and return
     end
 
     @user = User.find_by_id(params[:user_id])
     if !@user 
-      render :json => { :status => 0, :error => 1, :msg =>"error occured" } and return
+      render json: { status: 0, error: 1, msg: "error occured" } and return
     end
     
     @user.phone = params[:phone]
     if @user.save
-      render :json => { :status => 1, :error => 0, :msg => "phone number updated" }
+      render json: { status: 1, error: 0, msg: 'phone number updated' }
     else
-      render :json => { :status => 0, :error => 1, :msg =>"error occured" }
+      render json: { status: 0, error: 1, msg: 'error occured' }
     end
   end
 
@@ -111,12 +110,12 @@ class UserController < ApplicationController
       @user.updating_password = true
       check = @user.update_password(password_update_params_check)
       if check
-        redirect_to user_settings_path, :flash => { :notice =>  "Successfully updated password" }
+        redirect_to user_settings_path, flash: { notice: "Successfully updated password" }
       else
-        redirect_to get_password_update_path, :flash => { :error => @user.errors.full_messages }
+        redirect_to get_password_update_path, flash: { error: @user.errors.full_messages }
       end
     else
-      redirect_to get_password_update_path, :flash => { :error => ['password does not match'] }
+      redirect_to get_password_update_path, flash: { error: ['password does not match'] }
     end
   end
 
@@ -125,12 +124,12 @@ class UserController < ApplicationController
     if !@user
       check = @user.email_verification_key_set
       if check
-        render :json => { :status => 1, :error => 0, :msg => 'successfully sent mail' }
+        render json: { status: 1, error: 0, msg: 'successfully sent mail' }
       else
-        render :json => { :status => 0, :error => 1, :msg => 'sorry there is a problem' }
+        render json: { status: 0, error: 1, msg: 'sorry there is a problem' }
       end
     else
-      render :json => { :status => 0, :error => 1, :msg => 'sorry there is sa problem' }
+      render json: { status: 0, error: 1, msg: 'sorry there is sa problem' }
     end
   end
 
@@ -138,18 +137,18 @@ class UserController < ApplicationController
     @user = User.find_by_confirm_token_email(params[:id])
     if @user
       @user.activate_email
-      redirect_to root_path, :flash => { :notice =>  "Successfully verified email" }
+      redirect_to root_path, flash: { notice: "Successfully verified email" }
     else
-      redirect_to root_path, :flash => { :error => "Some thing went wrong" }
+      redirect_to root_path, flash: { error: "Some thing went wrong" }
     end
   end
 
   def verify_email
     user = User.find_by_id(params[:user_id])
     if user && user.email_confirmed
-      render :json => { :status => 1,  :error => 0, :msg => 'email verified' }
+      render json: { status: 1,  error: 0, msg: 'email verified' }
     else
-      render :json => { :status => 0, error:1, :msg => 'email not verified' }
+      render json: { status: 0, error: 1, msg: 'email not verified' }
     end
   end
 
@@ -157,38 +156,38 @@ class UserController < ApplicationController
   def ws_get_cities
     cities = State.get_cities(params[:state_id])
     option = get_city_options(cities)
-    render :json => { :html => option }
+    render json: { html: option }
   end
 
   def ws_user_cover_pic_upload
     image = params[:cover_pic]
     @user = User.find_by_id(params[:id])
     if(@user.blank?)
-      render :json => { :status => 0,  :error => 1 } and return
+      render json: { status: 0,  error: 1 } and return
     end
     ch = @user.cover_pic.attach(params[:cover_pic])
     if ch
-      render :json => { :image => url_for(@user.cover_pic),  :error => 0, :status => 1 }
+      render json: { image: url_for(@user.cover_pic),  error: 0, status: 1 }
     else
-      render :json => { :status => 0, :error => 1 }
+      render json: { status: 0, error: 1 }
     end
   rescue
-    render :json => { :status => 0, :error => 1 }
+    render json: { status: 0, error: 1 }
   end
 
   def ws_user_profile_pic_upload
     image = params[:profile_pic]
     @user = User.find_by_id(params[:id])
     if @user.blank?
-      render :json => { :status => 0,  :error => 1 }
+      render json: { status: 0,  error: 1 }
     end
 
     ch = @user.profile_pic.attach image
 
     if ch
-      render :json => { :image => url_for(@user.profile_pic), :status => 1, :error => 0, :ch => ch }
+      render json: { image: url_for(@user.profile_pic), status: 1, error: 0, ch: ch }
     else
-      render :json => { :status => 0, :error => 1, :ch => ch }
+      render json: { status: 0, error: 1, ch: ch }
     end
   end
 
@@ -210,7 +209,7 @@ class UserController < ApplicationController
     offset = page*10
     sellers = User.seller_with_offset(offset)
     sellers = seller_formated(sellers)
-    render :json => { :sellers => sellers }
+    render json: { sellers: sellers }
   end
 
   def user_settings
@@ -225,9 +224,9 @@ class UserController < ApplicationController
     check = user.user_profile_update(update_user)
 
     if check
-      redirect_to user_settings_path, :flash => { :notice =>  "Successfully updated! account" }
+      redirect_to user_settings_path, flash: { notice: "Successfully updated! account" }
     else
-      redirect_to user_settings_path, :flash => { :error => user.errors.full_messages }
+      redirect_to user_settings_path, flash: { error: user.errors.full_messages }
     end
 
   end
@@ -235,13 +234,13 @@ class UserController < ApplicationController
   def ws_get_states
     states = Country.get_states(params)
     options = get_state_options(states)
-    render :json => { :html => options }
+    render json: { html: options }
   end
 
   def ws_get_car_models
     car_models = CarModel.get_car_models_by_brand(params)
     options = get_car_model_options(car_models)
-    render :json => { :html => options }
+    render json: { html: options }
   end
 
   def check_status_appointment
@@ -253,24 +252,25 @@ class UserController < ApplicationController
       appointment = SellerAppointment.find_by_id(appointment_id);
     end
     if !appointment
-      render :json => { :status => 1, :error => 0, :msg => appointment.status }
+      render json: { status: 1, error: 0, msg: appointment.status }
     else
-      render :json => { :status => 0, :error => 1, :msg => 'not found' }
+      render json: { status: 0, error: 1, msg: 'not found' }
     end
   end
 
   def get_filtered_cars
     cars = SellerAppointment.params_filter(params)
     cars = car_formated(cars)
-    render :json => { :cars => cars }
+    render json: { cars: cars }
   end
 
   def login
   end
 
   private
+  
   def password_update_params_check
     params.permit(:password, :password_confirmation)
   end
-
 end
+

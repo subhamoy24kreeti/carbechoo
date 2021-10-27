@@ -1,14 +1,13 @@
 class BuyerAppointment < ApplicationRecord
-
   belongs_to :user
   belongs_to :seller_appointment
 
   after_create :appointment_creation_mail
 
-  scope :all_appointments, ->(user_id) { where(:user_id => user_id )}
+  scope :all_appointments, ->(user_id) { where(user_id: user_id) }
 
   def get_status_code
-    statuses = { 'processing' => 0,'scheduled' => 1, 'rejected' => 2, 'sold out'=> 3 }
+    statuses = { 'processing' => 0, 'scheduled' => 1, 'rejected' => 2, 'sold out' => 3 }
     statuses[status]
   end
 
@@ -29,8 +28,9 @@ class BuyerAppointment < ApplicationRecord
   end
 
   private
+
   def appointment_creation_mail
     BuyerMailer.appointment_submission_mail(current_user, buyer_appointment.id).deliver
   end
-
 end
+

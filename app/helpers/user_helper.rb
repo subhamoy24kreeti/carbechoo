@@ -26,7 +26,7 @@ module UserHelper
 
   def seller_formated(sellers)
     root_link = root_path
-    sellers.map{|seller| {:id => seller.id, :profile_url => user_profile_path(seller.id), :profile_pic_url => (seller.cover_pic.attached?)?url_for(seller.profile_pic):(root_link+'assets/images/default_profile.png'), :about=> seller.about, :name => seller.full_name, :city => (seller.city ? seller.city.name : ""), :state => (seller.state ? seller.state.name : "") , :country => (seller.country ? seller.country.name : "")}}
+    sellers.map{|seller| {:id => seller.id, :profile_url => user_profile_path(seller.id), :profile_pic_url => (seller.cover_pic.attached?)?url_for(seller.profile_pic):(root_link+'assets/images/default_profile.png'), :about=> seller.about, name: seller.full_name, :city => (seller.city ? seller.city.name : ""), :state => (seller.state ? seller.state.name : "") , :country => (seller.country ? seller.country.name : "")}}
   end
 
   def car_formated(cars)

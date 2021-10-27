@@ -9,9 +9,9 @@ class Admin::CarVariantController < ApplicationController
   def create
     p = CarVariant.new(car_variant_params_check)
     if p.save
-      redirect_to new_admin_car_variant_path, :flash => { :notice => "Successfully updated" }
+      redirect_to new_admin_car_variant_path, flash: { notice: "Successfully updated" }
     else
-      redirect_to new_admin_car_variant_path, :flash => { :error => 'an error occured' }
+      redirect_to new_admin_car_variant_path, flash: { error: 'an error occured' }
     end
   end
 
@@ -20,12 +20,12 @@ class Admin::CarVariantController < ApplicationController
     if @car_variant
       check = @car_variant.update(car_variant_params_check)
       if check
-        redirect_to admin_car_variant_index_path, :flash => { :notice => "Successfully updated" }
+        redirect_to admin_car_variant_index_path, flash: { notice: "Successfully updated" }
       else
-        redirect_to admin_car_variant_index_path, :flash => { :error => 'an error occured' }
+        redirect_to admin_car_variant_index_path, flash: { error: 'an error occured' }
       end
     else
-      redirect_to admin_car_variant_index_path, :flash => { :error => 'cannot be deleted' }
+      redirect_to admin_car_variant_index_path, flash: { error: 'cannot be deleted' }
     end
   end
 
@@ -37,9 +37,9 @@ class Admin::CarVariantController < ApplicationController
     @car_variant = CarVariant.find_by_id(params[:id])
     if @car_variant
       @car_variant.destroy
-      redirect_to admin_car_variant_index_path, :flash => { :notice => "Successfully deleted" }
+      redirect_to admin_car_variant_index_path, flash: { notice: "Successfully deleted" }
     else 
-      redirect_to admin_car_variant_index_path, :flash => { :error => 'cannot deleted' }
+      redirect_to admin_car_variant_index_path, flash: { error: 'cannot deleted' }
     end
   end
 
@@ -48,8 +48,8 @@ class Admin::CarVariantController < ApplicationController
   end
 
   private
+
   def car_variant_params_check
     params.permit(:variant)
   end
-
 end

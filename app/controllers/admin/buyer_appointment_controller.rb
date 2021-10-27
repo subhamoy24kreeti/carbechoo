@@ -12,12 +12,12 @@ class Admin::BuyerAppointmentController < ApplicationController
     if @buyer_appointment
       check = @buyer_appointment.update_buyer_appointment(update_buyer_appointment_params(params))
       if check
-        redirect_to admin_buyer_appointment_index_path, :flash => { :notice => 'Scccessfully updated' }
+        redirect_to admin_buyer_appointment_index_path, flash: { notice: 'Scccessfully updated' }
       else
-        redirect_to admin_buyer_appointment_index_path, :flash => { :error => 'an error occured' }
+        redirect_to admin_buyer_appointment_index_path, flash: { error: 'an error occured' }
       end
     else
-      edirect_to admin_buyer_appointment_index_path, :flash => { :error => 'cannot be updated' }
+      edirect_to admin_buyer_appointment_index_path, flash: { error: 'cannot be updated' }
     end
   end
 
@@ -34,9 +34,9 @@ class Admin::BuyerAppointmentController < ApplicationController
     @buyer_appointment = BuyerAppointment.find_by_id(params[:id])
     if @buyer_appointment
       @buyer_appointment.destroy
-      redirect_to admin_buyer_appointment_index_path, :flash => { :notice => 'successfully deleted' }
+      redirect_to admin_buyer_appointment_index_path, flash: { notice: 'successfully deleted' }
     else
-      redirect_to admin_buyer_appointment_index_path, :flash => { :notice => 'cannot be deleted' }
+      redirect_to admin_buyer_appointment_index_path, flash: { notice: 'cannot be deleted' }
     end
   end
 end

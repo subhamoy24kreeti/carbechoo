@@ -9,9 +9,9 @@ class Admin::CostRangeController < ApplicationController
   def create
     @cost_range = CostRange.new(check_cost_range_params)
     if(@cost_range.save)
-      redirect_to new_admin_cost_range_path, :flash => { :notice =>  "Successfully created"}
+      redirect_to new_admin_cost_range_path, flash: { notice: "Successfully created"}
     else
-      redirect_to new_admin_cost_range_path, :flash => { :error => 'an error occured' }
+      redirect_to new_admin_cost_range_path, flash: { error: 'an error occured' }
     end
   end
 
@@ -24,12 +24,12 @@ class Admin::CostRangeController < ApplicationController
     if @cost_range
       check = @cost_range.update(check_cost_range_params)
       if check
-        redirect_to admin_cost_range_index_path, :flash => { :notice =>  'Successfully updated' }
+        redirect_to admin_cost_range_index_path, flash: { notice: 'Successfully updated' }
       else
-        redirect_to admin_cost_range_index_path, :flash => { :error => 'an error occured' }
+        redirect_to admin_cost_range_index_path, flash: { error: 'an error occured' }
       end
     else
-      redirect_to admin_cost_range_index_path, :flash => { :error => 'cannot be deleted' }
+      redirect_to admin_cost_range_index_path, flash: { error: 'cannot be deleted' }
     end
   end
 
@@ -41,13 +41,14 @@ class Admin::CostRangeController < ApplicationController
     @cost_range = CostRange.find_by_id(params[:id])
     if @cost_range
       @cost_range.destroy
-      redirect_to admin_cost_range_index_path, :flash => { :notice =>  'Successfully Deleted' }
+      redirect_to admin_cost_range_index_path, flash: { notice: 'Successfully Deleted' }
     else
-      redirect_to admin_cost_range_index_path, :flash => { :error => 'cannot be deleted' }
+      redirect_to admin_cost_range_index_path, flash: { error: 'cannot be deleted' }
     end
   end
 
   private
+
   def check_cost_range_params
     params.permit(:quality, :range1, :range2, :currency)
   end

@@ -7,11 +7,11 @@ class Admin::StateController < ApplicationController
   end
 
   def create
-    p = State.new(country_id: params[:country_id], name: params[:name])
+    p = State.new(state_params)
     if p.save
-      redirect_to new_admin_state_path, :flash => { :notice => "Successfully created" }
+      redirect_to new_admin_state_path, flash: { notice: "Successfully created" }
     else
-      redirect_to new_admin_state_path, :flash => { :error => 'an error occured' }
+      redirect_to new_admin_state_path, flash: { error: 'an error occured' }
     end
   end
 
@@ -22,14 +22,14 @@ class Admin::StateController < ApplicationController
   def update
     @state = State.find_by_id(params[:id])
     if @state
-      check = @state.update(:country_id => params[:country_id], :name => params[:name])
+      check = @state.update(state_params)
       if check
-        redirect_to admin_state_index_path, :flash => { :notice => "Successfully updated" }
+        redirect_to admin_state_index_path, flash: { notice: "Successfully updated" }
       else
-        redirect_to admin_state_index_path, :flash => { :notice => "an error occured" }
+        redirect_to admin_state_index_path, flash: { notice: "an error occured" }
       end
     else
-      redirect_to admin_state_index_path, :flash => { :error => "Cannot be updated" }
+      redirect_to admin_state_index_path, flash: { error: "Cannot be updated" }
     end
   end
 
@@ -37,13 +37,19 @@ class Admin::StateController < ApplicationController
     @state = State.find_by_id(params[:id])
     if @state
       @state.destroy
-      redirect_to admin_state_index_path, :flash => { :notice => "Successfully deleted" }
+      redirect_to admin_state_index_path, flash: { notice: "Successfully deleted" }
     else
-      redirect_to admin_state_index_path, :flash => { :notice => "cannot be deleted" }
+      redirect_to admin_state_index_path, flash: { notice: "cannot be deleted" }
     end
   end
 
   def index
     @states = State.all
+  end
+
+  private
+
+  def state_params
+    params.permit(:country_id, :name)
   end
 end

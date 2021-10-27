@@ -4,10 +4,10 @@
 <% end %>
 <div class="container mt-3">
   <% if flash.key? :notice %>
-  <%= render 'layouts/alert_success',  :notice =>  flash[:notice] %>
+  <%= render 'layouts/alert_success',  notice: flash[:notice] %>
   <% end %>
   <% if flash.key? :error %>
-  <%= render 'layouts/alert_error',  :error => flash[:error]%>
+  <%= render 'layouts/alert_error',  error: flash[:error]%>
   <% end %>
   <div class="cover-image">
     <section>
@@ -118,7 +118,7 @@
       $('#upload-cover').hide()
     }
     },
-     :error => function(err){
+     error: function(err){
 
     }
   })
@@ -140,7 +140,7 @@
       $('#profile-img-modal').modal('hide')
     }
     },
-     :error => function(err){
+     error: function(err){
 
     }
   })

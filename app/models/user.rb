@@ -177,5 +177,4 @@ class User < ApplicationRecord
       UserMailer.email_verification_mail(self).deliver
     end
   end
-  
 end

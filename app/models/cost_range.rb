@@ -1,5 +1,4 @@
 class CostRange < ApplicationRecord
-
   validates :currency, presence: true, allow_blank: false
   validates :quality, presence: true, allow_blank: false
   validates :range1, presence: true, allow_blank: false
@@ -11,5 +10,4 @@ class CostRange < ApplicationRecord
   def name
     currency+" "+range1.to_s+"-"+range2.to_s
   end
-
 end

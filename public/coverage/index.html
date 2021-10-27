@@ -1827,7 +1827,7 @@
 
             
 
-            <code class="ruby">    redirect_to buyer_dashboard_path, :flash => { :notice =>  &quot;Successfully Created! account&quot; }</code>
+            <code class="ruby">    redirect_to buyer_dashboard_path, flash: { notice: &quot;Successfully Created! account&quot; }</code>
           </li>
         </div>
       
@@ -1849,7 +1849,7 @@
 
             
 
-            <code class="ruby">    redirect_to buyer_registration_path, :flash => { :error => @buyer.errors.full_messages }</code>
+            <code class="ruby">    redirect_to buyer_registration_path, flash: { error: @buyer.errors.full_messages }</code>
           </li>
         </div>
       
@@ -1948,7 +1948,7 @@
 
             
 
-            <code class="ruby">    buyer_appointment = BuyerAppointment.new(:user_id => current_user.id, seller_appointment_id: params[:seller_appointment_id]);</code>
+            <code class="ruby">    buyer_appointment = BuyerAppointment.new(user_id: current_user.id, seller_appointment_id: params[:seller_appointment_id]);</code>
           </li>
         </div>
       
@@ -2003,7 +2003,7 @@
 
             
 
-            <code class="ruby">      redirect_to car_single_path(params[:seller_appointment_id]),  :error => &quot;Do not create appointment&quot;</code>
+            <code class="ruby">      redirect_to car_single_path(params[:seller_appointment_id]),  error: &quot;Do not create appointment&quot;</code>
           </li>
         </div>
       
@@ -2069,7 +2069,7 @@
 
             
 
-            <code class="ruby">    @all_buyer_appointments = BuyerAppointment.where(:user_id => params[:id])</code>
+            <code class="ruby">    @all_buyer_appointments = BuyerAppointment.where(user_id: params[:id])</code>
           </li>
         </div>
       
@@ -2289,7 +2289,7 @@
 
             
 
-            <code class="ruby">    @cars = SellerAppointment.where(:status => &#39;approved&#39;)</code>
+            <code class="ruby">    @cars = SellerAppointment.where(status: &#39;approved&#39;)</code>
           </li>
         </div>
       
@@ -2793,7 +2793,7 @@
 
             
 
-            <code class="ruby">      redirect_to root_path, :flash => {  :notice =>  &quot;Successfully Created! account&quot;}</code>
+            <code class="ruby">      redirect_to root_path, flash: {  notice: &quot;Successfully Created! account&quot;}</code>
           </li>
         </div>
       
@@ -2815,7 +2815,7 @@
 
             
 
-            <code class="ruby">      redirect_to seller_registration_path, :flash => {  :error => @seller.errors.full_messages}</code>
+            <code class="ruby">      redirect_to seller_registration_path, flash: {  error: @seller.errors.full_messages}</code>
           </li>
         </div>
       
@@ -2870,7 +2870,7 @@
 
             
 
-            <code class="ruby">    @appointment_under_process = SellerAppointment.limit(5).where(:user_id => current_user.id, :status => &#39;processing&#39;).order(&#39;updated_at DESC&#39;)</code>
+            <code class="ruby">    @appointment_under_process = SellerAppointment.limit(5).where(user_id: current_user.id, status: &#39;processing&#39;).order(&#39;updated_at DESC&#39;)</code>
           </li>
         </div>
       
@@ -2881,7 +2881,7 @@
 
             
 
-            <code class="ruby">    @appointment_under_investigation = SellerAppointment.limit(5).where(:user_id => current_user.id, :status => &#39;investigating&#39;).order(&#39;updated_at DESC&#39;)</code>
+            <code class="ruby">    @appointment_under_investigation = SellerAppointment.limit(5).where(user_id: current_user.id, status: &#39;investigating&#39;).order(&#39;updated_at DESC&#39;)</code>
           </li>
         </div>
       
@@ -2892,7 +2892,7 @@
 
             
 
-            <code class="ruby">    @appointment_approved = SellerAppointment.limit(5).where(:user_id => current_user.id, :status => &#39;approved&#39;).order(&#39;updated_at DESC&#39;)</code>
+            <code class="ruby">    @appointment_approved = SellerAppointment.limit(5).where(user_id: current_user.id, status: &#39;approved&#39;).order(&#39;updated_at DESC&#39;)</code>
           </li>
         </div>
       
@@ -3398,7 +3398,7 @@
 
             
 
-            <code class="ruby">      redirect_to seller_add_car_details_path, :flash => {  :notice =>  &quot;successfully created an appointment&quot;}</code>
+            <code class="ruby">      redirect_to seller_add_car_details_path, flash: {  notice: &quot;successfully created an appointment&quot;}</code>
           </li>
         </div>
       
@@ -3431,7 +3431,7 @@
 
             
 
-            <code class="ruby">      redirect_to seller_add_car_details_path, :flash => { :error => se.errors.full_messages}</code>
+            <code class="ruby">      redirect_to seller_add_car_details_path, flash: { error: se.errors.full_messages}</code>
           </li>
         </div>
       
@@ -3530,7 +3530,7 @@
 
             
 
-            <code class="ruby">    @all_seller_appointments = SellerAppointment.where(:user_id => params[:id])</code>
+            <code class="ruby">    @all_seller_appointments = SellerAppointment.where(user_id: params[:id])</code>
           </li>
         </div>
       
@@ -3825,7 +3825,7 @@
 
             
 
-            <code class="ruby">    @cars = SellerAppointment.where(:status => &#39;approved&#39;)</code>
+            <code class="ruby">    @cars = SellerAppointment.where(status: &#39;approved&#39;)</code>
           </li>
         </div>
       
@@ -3957,7 +3957,7 @@
 
             
 
-            <code class="ruby">    @car = SellerAppointment.where(:status => &#39;approved&#39;).find(params[:id])</code>
+            <code class="ruby">    @car = SellerAppointment.where(status: &#39;approved&#39;).find(params[:id])</code>
           </li>
         </div>
       
@@ -4133,7 +4133,7 @@
 
             
 
-            <code class="ruby">        render &#39;forget_password_response&#39;, :flash => {  :notice =>  &quot;Successfully Created! account&quot;}</code>
+            <code class="ruby">        render &#39;forget_password_response&#39;, flash: {  notice: &quot;Successfully Created! account&quot;}</code>
           </li>
         </div>
       
@@ -4166,7 +4166,7 @@
 
             
 
-            <code class="ruby">        redirect_back(fallback_location: {action: :forget_password_request}, :flash => {  :notice =>  &quot;Successfully Created! account&quot;})</code>
+            <code class="ruby">        redirect_back(fallback_location: {action: :forget_password_request}, flash: {  notice: &quot;Successfully Created! account&quot;})</code>
           </li>
         </div>
       
@@ -4276,7 +4276,7 @@
 
             
 
-            <code class="ruby">      render :json => {:status => 0,  :error => 1, :msg =>&quot;error occured&quot;}</code>
+            <code class="ruby">      render json: {status: 0,  error: 1, msg:&quot;error occured&quot;}</code>
           </li>
         </div>
       
@@ -4320,7 +4320,7 @@
 
             
 
-            <code class="ruby">      render :json => {:status => 0,  :error => 1, :msg =>&quot;error occured&quot;}</code>
+            <code class="ruby">      render json: {status: 0,  error: 1, msg:&quot;error occured&quot;}</code>
           </li>
         </div>
       
@@ -4386,7 +4386,7 @@
 
             
 
-            <code class="ruby">      render :json => {:status => 1,  :error => 0, :msg => &quot;phone number updated&quot; }</code>
+            <code class="ruby">      render json: {status: 1,  error: 0, msg: &quot;phone number updated&quot; }</code>
           </li>
         </div>
       
@@ -4408,7 +4408,7 @@
 
             
 
-            <code class="ruby">      render :json => {:status => 0,  :error => 1, :msg =>&quot;error occured&quot;}</code>
+            <code class="ruby">      render json: {status: 0,  error: 1, msg:&quot;error occured&quot;}</code>
           </li>
         </div>
       
@@ -4441,7 +4441,7 @@
 
             
 
-            <code class="ruby">    render :json => {:status => 0,  :error => 1, :msg =>&quot;error occured&quot;}</code>
+            <code class="ruby">    render json: {status: 0,  error: 1, msg:&quot;error occured&quot;}</code>
           </li>
         </div>
       
@@ -5046,7 +5046,7 @@
 
             
 
-            <code class="ruby">        redirect_to user_settings_path, :flash => { :notice =>  &quot;Successfully updated password&quot;}</code>
+            <code class="ruby">        redirect_to user_settings_path, flash: { notice: &quot;Successfully updated password&quot;}</code>
           </li>
         </div>
       
@@ -5068,7 +5068,7 @@
 
             
 
-            <code class="ruby">        redirect_to get_password_update_path, :flash => { :error => @user.errors.full_messages}</code>
+            <code class="ruby">        redirect_to get_password_update_path, flash: { error: @user.errors.full_messages}</code>
           </li>
         </div>
       
@@ -5101,7 +5101,7 @@
 
             
 
-            <code class="ruby">      redirect_to get_password_update_path, :flash => { :error => [&#39;password does not match&#39;]}</code>
+            <code class="ruby">      redirect_to get_password_update_path, flash: { error: [&#39;password does not match&#39;]}</code>
           </li>
         </div>
       
@@ -5211,7 +5211,7 @@
 
             
 
-            <code class="ruby">        render :json => {:status => 1,  :error => 0, :msg => &#39;successfully sent mail&#39; }</code>
+            <code class="ruby">        render json: {status: 1,  error: 0, msg: &#39;successfully sent mail&#39; }</code>
           </li>
         </div>
       
@@ -5233,7 +5233,7 @@
 
             
 
-            <code class="ruby">        render :json => {:status => 0,  :error => 1, :msg => &#39;sorry there is a problem&#39;}</code>
+            <code class="ruby">        render json: {status: 0,  error: 1, msg: &#39;sorry there is a problem&#39;}</code>
           </li>
         </div>
       
@@ -5266,7 +5266,7 @@
 
             
 
-            <code class="ruby">      render :json => {:status => 0,  :error => 1, :msg => &#39;sorry there is sa problem&#39;}</code>
+            <code class="ruby">      render json: {status: 0,  error: 1, msg: &#39;sorry there is sa problem&#39;}</code>
           </li>
         </div>
       
@@ -5299,7 +5299,7 @@
 
             
 
-            <code class="ruby">    render :json => {:status => 0,  :error => 1, :msg => &#39;sorry there is sa problem&#39;}</code>
+            <code class="ruby">    render json: {status: 0,  error: 1, msg: &#39;sorry there is sa problem&#39;}</code>
           </li>
         </div>
       
@@ -5376,7 +5376,7 @@
 
             
 
-            <code class="ruby">      redirect_to root_path, :flash => {  :notice =>  &quot;Successfully verified email&quot;}</code>
+            <code class="ruby">      redirect_to root_path, flash: {  notice: &quot;Successfully verified email&quot;}</code>
           </li>
         </div>
       
@@ -5398,7 +5398,7 @@
 
             
 
-            <code class="ruby">      redirect_to root_path, :flash => { alert: &quot;Some thing went wrong&quot;}</code>
+            <code class="ruby">      redirect_to root_path, flash: { alert: &quot;Some thing went wrong&quot;}</code>
           </li>
         </div>
       
@@ -5475,7 +5475,7 @@
 
             
 
-            <code class="ruby">      render :json => {:status => 1,  :error => 0, :msg => &#39;email verified&#39;}</code>
+            <code class="ruby">      render json: {status: 1,  error: 0, msg: &#39;email verified&#39;}</code>
           </li>
         </div>
       
@@ -5497,7 +5497,7 @@
 
             
 
-            <code class="ruby">      render :json => {:status => 0, error:1, :msg => &#39;email not verified&#39;}</code>
+            <code class="ruby">      render json: {status: 0, error:1, msg: &#39;email not verified&#39;}</code>
           </li>
         </div>
       
@@ -5530,7 +5530,7 @@
 
             
 
-            <code class="ruby">    render :json => {:status => 0,  :error => 1, :msg => &#39;not found&#39;}</code>
+            <code class="ruby">    render json: {status: 0,  error: 1, msg: &#39;not found&#39;}</code>
           </li>
         </div>
       
@@ -5640,7 +5640,7 @@
 
             
 
-            <code class="ruby">    render :json => {html: option}</code>
+            <code class="ruby">    render json: {html: option}</code>
           </li>
         </div>
       
@@ -5728,7 +5728,7 @@
 
             
 
-            <code class="ruby">      render :json => {:status => 0,  :error => 1} and return</code>
+            <code class="ruby">      render json: {status: 0,  error: 1} and return</code>
           </li>
         </div>
       
@@ -5772,7 +5772,7 @@
 
             
 
-            <code class="ruby">      render :json => {image: url_for(@user.cover_pic),  :error => 0, :status =>1}</code>
+            <code class="ruby">      render json: {image: url_for(@user.cover_pic),  error: 0, status:1}</code>
           </li>
         </div>
       
@@ -5794,7 +5794,7 @@
 
             
 
-            <code class="ruby">      render :json => {:status => 0,  :error => 1}</code>
+            <code class="ruby">      render json: {status: 0,  error: 1}</code>
           </li>
         </div>
       
@@ -5827,7 +5827,7 @@
 
             
 
-            <code class="ruby">    render :json => {:status => 0,  :error => 1}</code>
+            <code class="ruby">    render json: {status: 0,  error: 1}</code>
           </li>
         </div>
       
@@ -5915,7 +5915,7 @@
 
             
 
-            <code class="ruby">      render :json => {:status => 0,  :error => 1}</code>
+            <code class="ruby">      render json: {status: 0,  error: 1}</code>
           </li>
         </div>
       
@@ -5981,7 +5981,7 @@
 
             
 
-            <code class="ruby">      render :json => {image: url_for(@user.profile_pic), :status => 1,  :error => 0, ch: ch}</code>
+            <code class="ruby">      render json: {image: url_for(@user.profile_pic), status: 1,  error: 0, ch: ch}</code>
           </li>
         </div>
       
@@ -6003,7 +6003,7 @@
 
             
 
-            <code class="ruby">      render :json => {:status => 0,  :error => 1, ch: ch}</code>
+            <code class="ruby">      render json: {status: 0,  error: 1, ch: ch}</code>
           </li>
         </div>
       
@@ -6036,7 +6036,7 @@
 
             
 
-            <code class="ruby">    render :json => {:status => 0,  :error => 1, ch: ch}</code>
+            <code class="ruby">    render json: {status: 0,  error: 1, ch: ch}</code>
           </li>
         </div>
       
@@ -6091,7 +6091,7 @@
 
             
 
-            <code class="ruby">    @latest_seller_items = SellerAppointment.limit(5).where(:user_id => params[:id], :status => &#39;approved&#39;).order(&#39;updated_at DESC&#39;)</code>
+            <code class="ruby">    @latest_seller_items = SellerAppointment.limit(5).where(user_id: params[:id], status: &#39;approved&#39;).order(&#39;updated_at DESC&#39;)</code>
           </li>
         </div>
       
@@ -6300,7 +6300,7 @@
 
             
 
-            <code class="ruby">    render :json => {sellers: sellers}</code>
+            <code class="ruby">    render json: {sellers: sellers}</code>
           </li>
         </div>
       
@@ -6817,7 +6817,7 @@
 
             
 
-            <code class="ruby">      redirect_to user_settings_path, :flash => {  :notice =>  &quot;Successfully updated! account&quot;}</code>
+            <code class="ruby">      redirect_to user_settings_path, flash: {  notice: &quot;Successfully updated! account&quot;}</code>
           </li>
         </div>
       
@@ -6850,7 +6850,7 @@
 
             
 
-            <code class="ruby">      redirect_to user_settings_path, :flash => {  :error => user.errors.full_messages }</code>
+            <code class="ruby">      redirect_to user_settings_path, flash: {  error: user.errors.full_messages }</code>
           </li>
         </div>
       
@@ -6960,7 +6960,7 @@
 
             
 
-            <code class="ruby">    render :json => {html: options}</code>
+            <code class="ruby">    render json: {html: options}</code>
           </li>
         </div>
       
@@ -7059,7 +7059,7 @@
 
             
 
-            <code class="ruby">    render :json => {html: options}</code>
+            <code class="ruby">    render json: {html: options}</code>
           </li>
         </div>
       
@@ -7191,7 +7191,7 @@
 
             
 
-            <code class="ruby">      render :json => {:status => 1,  :error => 0, :msg => appointment.status}</code>
+            <code class="ruby">      render json: {status: 1,  error: 0, msg: appointment.status}</code>
           </li>
         </div>
       
@@ -7213,7 +7213,7 @@
 
             
 
-            <code class="ruby">      render :json => {:status => 0,  :error => 1, :msg => &#39;not found&#39;}</code>
+            <code class="ruby">      render json: {status: 0,  error: 1, msg: &#39;not found&#39;}</code>
           </li>
         </div>
       
@@ -7246,7 +7246,7 @@
 
             
 
-            <code class="ruby">    render :json => {:status => 0,  :error => 1, :msg => &#39;not found&#39;}</code>
+            <code class="ruby">    render json: {status: 0,  error: 1, msg: &#39;not found&#39;}</code>
           </li>
         </div>
       
@@ -7422,7 +7422,7 @@
 
             
 
-            <code class="ruby">    render :json => { cars: cars }</code>
+            <code class="ruby">    render json: { cars: cars }</code>
           </li>
         </div>
       
@@ -9136,7 +9136,7 @@
 
             
 
-            <code class="ruby">        where(:status => &#39;approved&#39;).where(conditions).search_filter(params[:search])</code>
+            <code class="ruby">        where(status: &#39;approved&#39;).where(conditions).search_filter(params[:search])</code>
           </li>
         </div>
       
@@ -9158,7 +9158,7 @@
 
             
 
-            <code class="ruby">        where(:status => &#39;approved&#39;).where(conditions)</code>
+            <code class="ruby">        where(status: &#39;approved&#39;).where(conditions)</code>
           </li>
         </div>
       
@@ -9202,7 +9202,7 @@
 
             
 
-            <code class="ruby">        where(:status => &#39;approved&#39;).where(conditions).search_filter(params[:search])</code>
+            <code class="ruby">        where(status: &#39;approved&#39;).where(conditions).search_filter(params[:search])</code>
           </li>
         </div>
       
@@ -9224,7 +9224,7 @@
 
             
 
-            <code class="ruby">        where(:status => &#39;approved&#39;).where(conditions)</code>
+            <code class="ruby">        where(status: &#39;approved&#39;).where(conditions)</code>
           </li>
         </div>
       

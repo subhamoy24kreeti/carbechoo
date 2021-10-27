@@ -40,7 +40,7 @@
   </div>
   <% if flash.key? :error %>
   <% flash[:error].each do |e| %>
-  <%= render 'layouts/alert_error', :error => e %>
+  <%= render 'layouts/alert_error', error: e %>
    <% end %>
   <% end %>
   <div class="rounded border signup-box">

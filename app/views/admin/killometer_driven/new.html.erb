@@ -6,11 +6,11 @@
   <section>
   <div class="container mt-3">
   <% if flash.key? :notice %>
-  <%= render 'layouts/alert_success',  :notice =>  flash[:notice] %>
+  <%= render 'layouts/alert_success',  notice: flash[:notice] %>
   <% end %>
 
   <% if flash.key? :error %>
-  <%= render 'layouts/alert_error',  :error => flash[:error]%>
+  <%= render 'layouts/alert_error',  error: flash[:error]%>
   <% end %>
   <%= form_with url: admin_killometer_driven_create_path,  method: :post do |f|%>
   <div class="form-group">

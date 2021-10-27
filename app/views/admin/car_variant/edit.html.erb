@@ -5,7 +5,7 @@
    <%= render "admin/layouts/header" %>
   <section>
   <% if flash.key? :error %>
-    <%= render 'layouts/alert_error',  :error => flash[:error]%>
+    <%= render 'layouts/alert_error',  error: flash[:error]%>
   <% end %>
   <div class="container">
     <%= form_with url: admin_car_variant_update_path,  method: :put do |f|%>

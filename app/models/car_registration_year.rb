@@ -1,5 +1,4 @@
 class CarRegistrationYear < ApplicationRecord
-
   validates_numericality_of :range2, :greater_than => :range1
 
   def self.year_map
@@ -12,5 +11,5 @@ class CarRegistrationYear < ApplicationRecord
     end
     years
   end
-  
 end
+

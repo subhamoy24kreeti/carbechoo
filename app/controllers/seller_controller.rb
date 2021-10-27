@@ -11,9 +11,9 @@ class SellerController < ApplicationController
     @seller = User.new(seller_create_params_check)
     if @seller.save
       session[:user_id] = @seller.id
-      redirect_to root_path, :flash => { :notice => "Successfully Created! account"}
+      redirect_to root_path, flash: { notice: "Successfully Created! account"}
     else
-      redirect_to seller_registration_path, :flash => { :error => @seller.errors.full_messages}
+      redirect_to seller_registration_path, flash: { error: @seller.errors.full_messages}
     end
   end
 
@@ -31,9 +31,9 @@ class SellerController < ApplicationController
   def create_seller_appointment
     se = SellerAppointment.new(params_check_seller_appointment_check)
     if se.save
-      redirect_to seller_add_car_details_path, :flash => { :notice => "successfully created an appointment"}
+      redirect_to seller_add_car_details_path, flash: { notice: "successfully created an appointment"}
     else
-      redirect_to seller_add_car_details_path, :flash => { :error => se.errors.full_messages }
+      redirect_to seller_add_car_details_path, flash: { error: se.errors.full_messages }
     end
   end
 
@@ -46,13 +46,14 @@ class SellerController < ApplicationController
   end
 
   private
+  
   def seller_create_params_check
     params.require(:seller).permit(:first_name, :last_name, :email, :password, :password_confirmation, :country_id, :state_id, :city_id, :zip_code).merge!(role: 'seller')
   end
 
   def params_check_seller_appointment_check
     params.require(:seller_appointment).permit(:city_id, :killometer_driven_id, :car_variant_id, :car_model_id, :car_registration_id, :brand_id, :country_id,  :state_id, :city_id, :zip_code, :price, :description, :user_id,
-      :year_of_buy, :currency, :car_images => []).merge!(:status => 'processing')
+      :year_of_buy, :currency, :car_images => []).merge!(status: 'processing')
   end
 
 end

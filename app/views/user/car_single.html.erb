@@ -219,7 +219,7 @@ $('#phone-put').submit(function(e){
     method: 'put',
     data: {
     phone: p,
-    :user_id => '<%= (!current_user.blank?)? (current_user.id) : "" %>'
+    user_id: '<%= (!current_user.blank?)? (current_user.id) : "" %>'
     },
     url: "<%= save_user_phone_path %>",
     success: function(data){
@@ -232,7 +232,7 @@ $('#phone-put').submit(function(e){
       $("#car-details").submit()
     }
     },
-     :error => function(error){
+     error: function(error){
     console.log(error)
     $('.notify-phone-success').text('')
     $('.notify-phone-error').text('there is some error occured')
@@ -242,7 +242,7 @@ $('#phone-put').submit(function(e){
 })
 function generate_verification_email(){
   data = {
-  :user_id => '<%= (!current_user.blank?)?(current_user.id) : "" %>',
+  user_id: '<%= (!current_user.blank?)?(current_user.id) : "" %>',
   }
   $.ajax({
   type: 'get',
@@ -258,7 +258,7 @@ function generate_verification_email(){
     $('.notify-email-error').text(data.msg)
     }
   },
-   :error => function(err){
+   error: function(err){
     console.log(err)
     $('.notify-email-success').text('')
     $('.notify-email-error').text('there is some error occured')
@@ -269,7 +269,7 @@ function generate_verification_email(){
 
 function verify_email(){
   data ={
-  :user_id => '<%= (!current_user.blank?)?(current_user.id) : "" %>'
+  user_id: '<%= (!current_user.blank?)?(current_user.id) : "" %>'
   }
   $.ajax({
   type: 'get',
@@ -284,7 +284,7 @@ function verify_email(){
     $("#verify-email").hide()
     }
   },
-   :error => function(error){
+   error: function(error){
     console.log(error)
     $('.notify-email-success').text('')
     $('.notify-email-error').text('there is some error occured')

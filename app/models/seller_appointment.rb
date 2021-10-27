@@ -1,5 +1,4 @@
 class SellerAppointment < ApplicationRecord
-  
   has_many_attached :car_images, dependent: :destroy
   belongs_to :user
   belongs_to :city
@@ -18,19 +17,19 @@ class SellerAppointment < ApplicationRecord
   after_create :appointment_creation_mail
 
   scope :search_filter, ->(search) {
-    where(:status => 'approved').joins(:city, :killometer_driven, :state, :country, :car_variant, :car_model, :brand).where('cities.name LIKE :search OR killometer_drivens.killometer_range LIKE :search OR states.name LIKE :search OR countries.name LIKE :search OR car_variants.variant LIKE :search OR car_models.name LIKE :search OR brands.brand_name LIKE :search OR seller_appointments.zip_code LIKE :search', search: "%#{search}%")
+    where(status: 'approved').joins(:city, :killometer_driven, :state, :country, :car_variant, :car_model, :brand).where('cities.name LIKE :search OR killometer_drivens.killometer_range LIKE :search OR states.name LIKE :search OR countries.name LIKE :search OR car_variants.variant LIKE :search OR car_models.name LIKE :search OR brands.brand_name LIKE :search OR seller_appointments.zip_code LIKE :search', search: "%#{search}%")
   }
 
   scope :recent_processing_appointments, ->(user) {
-    limit(5).where(:user_id => user.id, :status => 'processing').order('updated_at DESC')
+    limit(5).where(user_id: user.id, status: 'processing').order('updated_at DESC')
   }
 
   scope :recent_investigating_appointments, ->(user)  {
-    limit(5).where(:user_id => user.id, :status => 'investigating').order('updated_at DESC')
+    limit(5).where(user_id: user.id, status: 'investigating').order('updated_at DESC')
   }
 
   scope :recent_approved_appointments, ->(user) {
-    limit(5).where(:user_id => user.id, :status => 'approved').order('updated_at DESC')
+    limit(5).where(user_id: user.id, status: 'approved').order('updated_at DESC')
   }
 
   scope :params_filter, ->(params){
@@ -50,17 +49,17 @@ class SellerAppointment < ApplicationRecord
     conditions[:cost_range_id] = params[:cost_range_id] if !params[:cost_range_id].blank?
 
     if !params[:search].blank?
-      offset(page*10).limit(10).where(:status => 'approved').where(conditions).search_filter(params[:search])
+      offset(page*10).limit(10).where(status: 'approved').where(conditions).search_filter(params[:search])
     else
-      offset(page*10).limit(10).where(:status => 'approved').where(conditions)
+      offset(page*10).limit(10).where(status: 'approved').where(conditions)
     end
   }
 
-  scope :cars, ->{ where(:status => 'approved').order('updated_at DESC') }
+  scope :cars, ->{ where(status: 'approved').order('updated_at DESC') }
 
-  scope :seller_appointments, ->(user_id) { where(:user_id => user_id) }
+  scope :seller_appointments, ->(user_id) { where(user_id: user_id) }
 
-  scope :latest_seller_cars, ->(params) { limit(5).where(:user_id => params[:id], :status => 'approved').order('updated_at DESC') }
+  scope :latest_seller_cars, ->(params) { limit(5).where(user_id: params[:id], status: 'approved').order('updated_at DESC') }
 
   def get_status_code
     statuses = { 'processing' => 0, 'investigating' => 1, 'approved' => 2, 'rejecting' => 3, 'sold out'=> 4 }
@@ -92,8 +91,9 @@ class SellerAppointment < ApplicationRecord
   end
 
   private
+
   def appointment_creation_mail
     SellerMailer.appointment_submission_mail(user, id).deliver
   end
-
 end
+
