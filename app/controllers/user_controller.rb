@@ -146,7 +146,7 @@ class UserController < ApplicationController
   def verify_email
     user = User.find_by_id(params[:user_id])
     if user && user.email_confirmed
-      render json: { status: 1,  error: 0, msg: 'email verified' }
+      render json: { status: 1, error: 0, msg: 'email verified' }
     else
       render json: { status: 0, error: 1, msg: 'email not verified' }
     end
@@ -163,7 +163,7 @@ class UserController < ApplicationController
     image = params[:cover_pic]
     @user = User.find_by_id(params[:id])
     if(@user.blank?)
-      render json: { status: 0,  error: 1 } and return
+      render json: { status: 0, error: 1 } and return
     end
     ch = @user.cover_pic.attach(params[:cover_pic])
     if ch
