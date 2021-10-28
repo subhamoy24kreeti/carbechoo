@@ -152,6 +152,7 @@
 <div>
 </div>
 </main>
+
 <%= render 'layouts/helper_address' %>
 
 <script>
@@ -174,19 +175,6 @@ let phone = '<%= current_user.phone %>'
     var y = $('#year').val()
     var f = $('.car_image_uploads').length
     var zip_code = $('#zip-code').val()
-    console.log(b)
-    console.log(cm)
-    console.log(kd)
-    console.log(cr)
-    console.log(cv)
-    console.log(d)
-    console.log(ep)
-    console.log(c)
-    console.log(st)
-    console.log(ci)
-    console.log(f)
-    console.log(y)
-    console.log(zip_code)
     if(b && cm && kd && cr && cv && d && ep && c && st && ci && f && y && zip_code){
     if(!phone){
       $('#phone-modal').modal('show')
@@ -198,11 +186,8 @@ let phone = '<%= current_user.phone %>'
       e.preventDefault();
       return false
     }
-
-    console.log("pop0")
     return true
     }else{
-    console.log("pop")
     e.preventDefault();
     return false
     }
@@ -383,26 +368,24 @@ function verify_email(){
   user_id: '<%= current_user.id %>'
   }
   $.ajax({
-  type: 'get',
-  data: data,
-  url: '<%= email_verification_url %>',
-  success: function(data){
-    console.log(data)
-    if(data.status == 1){
-    user_email_verified = true
-    $('.notify-email-error').text('')
-    $('.notify-email-success').text(data.msg)
-    $("#verify-email").modal('hide')
-    }else{
-    $('.notify-email-success').text('')
-    $('.notify-email-error').text(data.msg)
+    type: 'get',
+    data: data,
+    url: '<%= email_verification_url %>',
+    success: function(data){
+      if(data.status == 1){
+        user_email_verified = true
+        $('.notify-email-error').text('')
+        $('.notify-email-success').text(data.msg)
+        $("#verify-email").modal('hide')
+      }else{
+        $('.notify-email-success').text('')
+        $('.notify-email-error').text(data.msg)
+      }
+    },
+    error: function(error){
+      $('.notify-email-success').text('')
+      $('.notify-email-error').text('there is some error occured')
     }
-  },
-   error: function(error){
-    $('.notify-email-success').text('')
-    $('.notify-email-error').text('there is some error occured')
-    console.log(error)
-  }
   })
 }
 
