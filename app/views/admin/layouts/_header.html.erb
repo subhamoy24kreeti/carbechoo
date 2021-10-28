@@ -1,48 +1,7 @@
-<style>
-  .wrapper{
-    display: flex;
-    width: 100%;
-    align-items: stretch;
-  }
-  #header{
-    position: fixed;
-    width: 100%;
-  }
-  #sidebar.active{
-    margin-left: -250px;
-  }
-  .user-content{
-    padding:30px;
-  }
-  .user-card{
-    border: 2px solid blue;
-  }
-  #sidebar{
-    min-height: 100vh;
-    width: 250px;
-    background-color: rgb(0, 140, 255);
-    cursor: pointer;
-  }
-  #sidebar ul li{
-    padding: 10px 0px 10px 0px
-  }
-  .border-top a{
-    all:unset;
-  }
-  .border-top a{
-    padding:10px;
-  }
-  .border-top a:hover{
-  padding:10px;
-  border: none;
-  color: white;
-  }
+<% content_for :stylesheets do %>
+<%= stylesheet_link_tag 'admin/header' , media: 'all', 'data-turbolinks-track': 'reload'%>
+<% end %>
 
-  .fa{
-    font-size: 30px;
-    margin-right: 10px;
-  }
-</style>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <button class="btn btn-info" id="sidebarCollapse">

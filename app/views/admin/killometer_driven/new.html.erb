@@ -2,7 +2,7 @@
 <div class="wrapper">
 <%= render "admin/layouts/sidebar" %>
 <div class='container-fluid p-0'>
-   <%= render "admin/layouts/header" %>
+  <%= render "admin/layouts/header" %>
   <section>
   <div class="container mt-3">
   <% if flash.key? :notice %>
@@ -12,6 +12,7 @@
   <% if flash.key? :error %>
   <%= render 'layouts/alert_error',  error: flash[:error]%>
   <% end %>
+
   <%= form_with url: admin_killometer_driven_create_path,  method: :post do |f|%>
   <div class="form-group">
      <%f.label 'killometer ranges' %>
@@ -19,6 +20,7 @@
   </div>
   <%=f.submit :add ,class: "btn btn-info" %>
   <% end%>
+  
   </div>
   </section>
 </div>

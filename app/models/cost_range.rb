@@ -3,7 +3,7 @@ class CostRange < ApplicationRecord
   validates :quality, presence: true, allow_blank: false
   validates :range1, presence: true, allow_blank: false
   validates :range2, presence: true, allow_blank: false
-  validates :range2, numericality: { :greater_than => :range1 }
+  validates :range2, numericality: { greater_than: :range1 }
 
   scope :cost_range_map, -> { all.map {|cr| [cr.name, cr.id]} }
 

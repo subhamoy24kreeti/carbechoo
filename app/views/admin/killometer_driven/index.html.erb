@@ -1,14 +1,7 @@
-<style>
-table{
-  border-collapse: collapse;
-  width: 100%;
-}
-td,th{
-  border: 1px solid #dddddd;
-  text-align:left;
-  padding: 8px;
-}
-</style>
+<% content_for :stylesheets do %>
+<%= stylesheet_link_tag 'admin/common_table' , media: 'all', 'data-turbolinks-track': 'reload'%>
+<% end %>
+
 <div class="wrapper d-flex">
 <%= render "admin/layouts/sidebar" %>
 <div class='container-fluid p-0'>
@@ -21,7 +14,8 @@ td,th{
   <% if flash.key? :error %>
   <%= render 'layouts/alert_error',  error: flash[:error]%>
   <% end %>
-   <div class="container-fluid mt-3">
+
+  <div class="container-fluid mt-3">
   <table>
   <thead>
    <tr>
@@ -31,6 +25,7 @@ td,th{
   </tr>
   </thead>
   <tbody>
+  
   <% @killometer_drivens.each do |km| %>
   <tr>
   <td><%=km.id%></td>
@@ -41,6 +36,7 @@ td,th{
   </td>
   </tr>
   <% end %>
+
   </tbody>
   </table>
   </div>

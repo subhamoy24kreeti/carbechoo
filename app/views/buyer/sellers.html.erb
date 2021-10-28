@@ -1,30 +1,7 @@
 <%= render 'user/layouts/header' %>
-
-<style>
-  .seller-image{
-  width: 100%;
-  height: 210px;
-  border-radius: 50%;
-  background-color: white;
-  }
-  .seller-profile{
-  padding: 10px;
-  }
-  #map {
-    height: 200px;
-  width: 200px;
-  }
-  .maps{
-  height: 100%;
-  width: 100%;
-  }
-  .profile-pic-outer {
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  justify-content: center;
-  }
-</style>
+<% content_for :stylesheets do %>
+<%= stylesheet_link_tag 'buyer/sellers' , media: 'all', 'data-turbolinks-track': 'reload'%>
+<% end %>
 <section>
   <div class="container mt-4 mb-4" id="seller-outer-warp">
    <% @sellers.each do |seller| %>

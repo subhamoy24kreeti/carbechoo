@@ -1,15 +1,25 @@
 <% content_for :stylesheets do %>
 <%= stylesheet_link_tag 'seller/dashboard' , media: 'all', 'data-turbolinks-track': 'reload'%>
 <% end %>
-  <header id="fixed-head">
-  <%= render "user/layouts/header" %>
-  </header>
+ <style>
+  .fixed {
+    position: fixed;
+    width: 100%;
+  }
+  </style>
+
+<header id="fixed-head">
+ <%= render "user/layouts/header" %>
+</header>
+
   <% if flash.key? :notice %>
   <%= render 'layouts/alert_success',  notice: flash[:notice] %>
   <% end %>
+
   <% if flash.key? :error %>
   <%= render 'layouts/alert_error',  error: flash[:error]%>
   <% end %>
+
   <div class="container">
   <div class="m-3">
     <%= link_to "add car details", seller_add_car_details_path,  class: "btn btn-info" %>
@@ -20,15 +30,18 @@
         <h3>Appointments under processing</h3>
         <div class="main-outer">
           <div class="container-fluid" >
+
            <% if !@appointment_under_process.blank?%>
             <div class="d-flex full-width flex-wrap" id="car-content">
             <% @appointment_under_process.each do |car| %>
              <div class="p-3 car-cards">
               <div class="rounded border">
                 <div class="img-box">
+
                 <% if car.car_images.attached? %>
                 <%= image_tag car.car_images[0], class: "img-fixed resize-car", alt:"car images" %>
                 <% end %>
+
                 </div>
                 <div class="p-2">
                 <div class="car-description">
@@ -44,6 +57,7 @@
               </div>
             </div>
             <% end %>
+
             </div>
             <% else %>
              <b>till now no appointment under process</b>
@@ -59,15 +73,19 @@
       <h3>Appointments under investigation</h3>
       <div class="main-outer">
         <div class="container-fluid" >
+
           <% if !@appointment_under_investigation.blank? %>
           <div class="d-flex full-width flex-wrap" id="car-content">
+
             <% @appointment_under_investigation.each do |car| %>
              <div class="p-3 car-cards">
             <div class="rounded border">
               <div class="img-box">
+
               <% if car.car_images.attached? %>
               <%= image_tag car.car_images[0], class: "img-fixed resize-car", alt:"car images" %>
               <% end %>
+
               </div>
               <div class="p-2">
               <div class="car-description">
@@ -83,10 +101,12 @@
             </div>
             </div>
             <% end %>
+
           </div>
           <% else %>
           <b> till now no appointments</b>
           <% end %>
+
         </div>
       </div>
       </div>
@@ -97,15 +117,19 @@
       <h3>Appointments approved</h3>
       <div class="main-outer">
         <div class="container-fluid" >
+
          <% if !@appointment_approved.blank? %>
           <div class="d-flex full-width flex-wrap" id="car-content">
+
           <% @appointment_approved.each do |car| %>
            <div class="p-3 car-cards">
             <div class="rounded border">
               <div class="img-box">
+
               <% if car.car_images.attached? %>
               <%= image_tag car.car_images[0], class: "img-fixed resize-car", alt:"car images" %>
               <% end %>
+
               </div>
               <div class="p-2">
               <div class="car-description">
@@ -121,18 +145,14 @@
             </div>
           </div>
           <% end %>
+
           </div>
           <% else %>
           <b>till now no appointments</b>
           <% end %>
+
         </div>
       </div>
       </div>
     </div>
   </section>
-  <style>
-  .fixed{
-    position: fixed;
-    width: 100%;
-  }
-  </style>

@@ -20,11 +20,11 @@ class User < ApplicationRecord
   validates :password, presence: true, allow_blank: false, confirmation: true, length: {in: 6..20}, if: :password_changed?
   validates_confirmation_of :password, message: "password should match with confirmation", if: :password_changed?
 
-  has_many :seller_appointments, :dependent => :destroy
-  has_many :buyer_appointments, :dependent => :destroy
-  has_many :cities, :through => :seller_appointments
-  has_one_attached :cover_pic, :dependent => :destroy
-  has_one_attached :profile_pic, :dependent => :destroy
+  has_many :seller_appointments, dependent: :destroy
+  has_many :buyer_appointments, dependent: :destroy
+  has_many :cities, through: :seller_appointments
+  has_one_attached :cover_pic, dependent: :destroy
+  has_one_attached :profile_pic, dependent: :destroy
   belongs_to :city, optional: true
   belongs_to :state, optional: true
   belongs_to :country, optional: true
@@ -49,15 +49,15 @@ class User < ApplicationRecord
   }
 
   def is_admin?
-    (role.blank?)? false :(role.eql?"admin")
+    (role.eql?"admin")
   end
 
   def is_buyer?
-    (role.blank?)? false :(role.eql?"buyer")
+    (role.eql?"buyer")
   end
 
   def is_seller?
-    (role.blank?)? false :(role.eql?"seller")
+    (role.eql?"seller")
   end
 
   def full_name
@@ -104,7 +104,6 @@ class User < ApplicationRecord
         @updating_phone = true
       end
     end
-
     update(params)
   end
 

@@ -1,19 +1,7 @@
-<style>
-  .login-form {
-    padding: 40px 200px 40px 200px;
+<% content_for :stylesheets do %>
+<%= stylesheet_link_tag 'login' , media: 'all', 'data-turbolinks-track': 'reload'%>
+<% end %>
 
-  }
-  @media screen and (max-width: 900px) {
-    .login-form {
-      padding: 40px 100px 40px 100px;
-    }
-  }
-  @media screen and (max-width: 700px) {
-    .login-form {
-      padding: 0;
-    }
-  }
-</style>
 <header>
   <%= render "user/layouts/header" %>
 </header>

@@ -1,7 +1,9 @@
 <%= render 'user/layouts/header' %>
+
 <% content_for :stylesheets do %>
 <%= stylesheet_link_tag 'user_settings' , media: 'all', 'data-turbolinks-track': 'reload'%>
 <% end %>
+
 <div class="container mt-3">
   <% if flash.key? :notice %>
   <%= render 'layouts/alert_success',  notice: flash[:notice] %>

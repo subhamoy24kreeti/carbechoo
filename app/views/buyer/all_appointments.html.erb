@@ -1,18 +1,9 @@
-<style>
-table{
-  border-collapse: collapse;
-  width: 100%;
-}
-td,th{
-  border: 1px solid #dddddd;
-  text-align:left;
-  padding: 8px;
-}
-.all-appointments {
-    min-height: 100vh;
-  }
-</style>
+<% content_for :stylesheets do %>
+<%= stylesheet_link_tag 'all_appointments' , media: 'all', 'data-turbolinks-track': 'reload'%>
+<% end %>
+
 <%= render 'user/layouts/header' %>
+
 <main class="all-appointments">
   <div class="container mt-3 mb-3 ">
   <table>

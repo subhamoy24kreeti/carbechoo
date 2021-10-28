@@ -42,6 +42,5 @@ class Admin::AdminController < ApplicationController
 
   def user_view
     @user = User.find(params[:id])
-  end
-
+  end  
 end

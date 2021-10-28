@@ -14,6 +14,7 @@ class SellerAppointment < ApplicationRecord
 
   validates :year_of_buy, presence: true, allow_blank: false
   validates :price, presence: true, allow_blank: false, numericality: true
+  
   after_create :appointment_creation_mail
 
   scope :search_filter, ->(search) {
@@ -56,9 +57,7 @@ class SellerAppointment < ApplicationRecord
   }
 
   scope :cars, ->{ where(status: 'approved').order('updated_at DESC') }
-
   scope :seller_appointments, ->(user_id) { where(user_id: user_id) }
-
   scope :latest_seller_cars, ->(params) { limit(5).where(user_id: params[:id], status: 'approved').order('updated_at DESC') }
 
   def get_status_code

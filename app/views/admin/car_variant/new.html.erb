@@ -12,6 +12,7 @@
   <% if flash.key? :error %>
   <%= render 'layouts/alert_error',  error: flash[:error]%>
   <% end %>
+  
   <%= form_with url: admin_car_variant_create_path,  method: :post do |f|%>
   <div class="form-group">
      <%f.label 'car variant' %>

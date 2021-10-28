@@ -1,19 +1,13 @@
-<style>
-  table{
-    border-collapse: collapse;
-    width: 100%;
-  }
-  td,th{
-    border: 1px solid #dddddd;
-    text-align:left;
-    padding: 8px;
-  }
-</style>
+<% content_for :stylesheets do %>
+<%= stylesheet_link_tag 'admin/common_table' , media: 'all', 'data-turbolinks-track': 'reload'%>
+<% end %>
+
 <div class="wrapper">
 <%= render "admin/layouts/sidebar" %>
 <div class='container-fluid p-0'>
-   <%= render "admin/layouts/header" %>
+  <%= render "admin/layouts/header" %>
   <section>
+  
   <% if flash.key? :notice %>
   <%= render 'layouts/alert_success',  notice: flash[:notice] %>
   <% end %>
@@ -32,6 +26,7 @@
   </tr>
   </thead>
   <tbody>
+
   <% @car_registrations.each do |cr| %>
   <tr>
   <td><%=cr.id%></td>
@@ -42,6 +37,7 @@
   </td>
   </tr>
   <% end %>
+
   </tbody>
   </table>
   </div>

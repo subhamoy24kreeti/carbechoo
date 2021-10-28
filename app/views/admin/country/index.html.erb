@@ -1,15 +1,8 @@
-<style>
-  table{
-  border-collapse: collapse;
-  width: 100%;
-  }
-  td,th{
-  border: 1px solid #dddddd;
-  text-align:left;
-  padding: 8px;
-  }
-  </style>
-  <div class="wrapper">
+<% content_for :stylesheets do %>
+<%= stylesheet_link_tag 'admin/common_table' , media: 'all', 'data-turbolinks-track': 'reload'%>
+<% end %>
+
+<div class="wrapper">
   <%= render "admin/layouts/sidebar" %>
   <div class='container-fluid p-0'>
    <%= render "admin/layouts/header" %>
