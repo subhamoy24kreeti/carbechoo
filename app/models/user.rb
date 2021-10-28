@@ -15,7 +15,7 @@ class User < ApplicationRecord
   has_secure_password
   validates :first_name, presence: true, allow_blank: false
   validates :last_name, presence: true, allow_blank: false
-  validates :email, format: { with: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/ }, uniqueness: { case_sensitive: false }
+  validates :email, format: { with: /\b[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\z/ }, uniqueness: { case_sensitive: false }
   validates :phone, numericality: true, length: { minimum: 10, maximum: 15 }, allow_blank: true, presence: false
   validates :password, presence: true, allow_blank: false, confirmation: true, length: {in: 6..20}, if: :password_changed?
   validates_confirmation_of :password, message: "password should match with confirmation", if: :password_changed?
